@@ -184,10 +184,18 @@ function routeBodyContent(route: SeoRoute): string {
 }
 
 function writePage(relPath: string, html: string): void {
-  // relPath like '/calculateur-taux-horaire-btp' → dist/<path>/index.html
-  const dir = relPath === '/' ? DIST : path.join(DIST, relPath);
-  fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf8');
+  // Home → dist/index.html (served at "/").
+  // Tool route '/foo' → dist/foo.html, which Cloudflare Pages serves at the
+  // clean no-slash URL "/foo" with a 200 (matching our canonical + sitemap +
+  // internal links). Writing dist/foo/index.html instead would make Pages
+  // 308-redirect "/foo" → "/foo/", creating a canonical/served-URL mismatch.
+  if (relPath === '/') {
+    fs.writeFileSync(path.join(DIST, 'index.html'), html, 'utf8');
+    return;
+  }
+  const file = path.join(DIST, `${relPath.replace(/^\//, '')}.html`);
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, html, 'utf8');
 }
 
 function main(): void {
