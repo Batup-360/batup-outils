@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://outils.batup.fr/sitemap.xml
