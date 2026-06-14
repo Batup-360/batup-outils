@@ -121,7 +121,7 @@ export function EmailGate() {
             Votre résultat est prêt
           </h2>
           <p className="mx-auto mt-2 max-w-sm text-center text-sm text-gray-600">
-            Laissez votre email pour le débloquer. Vous le recevez aussi par mail, gratuitement.
+            Saisissez vos infos pour afficher votre résultat. Vous recevrez aussi une copie par email pour le retrouver plus tard.
           </p>
           <p className="mx-auto mt-3 max-w-sm rounded-lg bg-brand-50 px-3 py-2 text-center text-xs font-medium text-brand-700">
             Une seule fois suffit. Vous accédez ensuite librement à tous nos outils gratuits, sans rien ressaisir.
