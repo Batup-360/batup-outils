@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aperçu du mail BatUp - outils gratuits</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f5f6f9;
+      padding: 40px 16px;
+      color: #1a1a2e;
+    }
+    .frame {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .mail-meta {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px 12px 0 0;
+      padding: 16px 20px;
+      font-size: 13px;
+      color: #6b7280;
+    }
+    .mail-meta .row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+    .mail-meta .from { color: #1a1a2e; font-weight: 600; }
+    .mail-meta .subject { color: #1a1a2e; font-weight: 600; margin-top: 6px; font-size: 14px; }
+    .mail {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-top: 0;
+      border-radius: 0 0 12px 12px;
+      padding: 36px 32px 28px;
+    }
+    .header {
+      text-align: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #ECECFF;
+    }
+    .header img {
+      width: 56px;
+      height: 56px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .header .name {
+      font-size: 26px;
+      font-weight: 700;
+      color: #0a0a0a;
+      letter-spacing: -0.5px;
+      vertical-align: middle;
+      margin-left: 12px;
+    }
+    .header .tagline {
+      font-size: 12px;
+      color: #6b7280;
+      margin: 10px 0 0;
+    }
+    .greeting { padding: 28px 0 4px; }
+    .greeting p { font-size: 16px; color: #1a1a2e; margin: 0 0 16px; }
+    .greeting .intro { font-size: 15px; line-height: 1.6; color: #4b5563; margin: 0; }
+    .greeting .tool-name { color: #5368EE; font-weight: 600; }
+    .result-card {
+      margin: 24px 0;
+      padding: 28px 24px;
+      background: #F7F8FE;
+      border: 1px solid #E0E3F8;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .result-card .label {
+      font-size: 11px;
+      color: #6b7280;
+      margin: 0 0 8px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .result-card .value {
+      font-size: 42px;
+      font-weight: 700;
+      color: #5368EE;
+      margin: 0;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+    }
+    .result-card .sub {
+      font-size: 12px;
+      color: #6b7280;
+      margin: 10px 0 0;
+    }
+    .relink {
+      text-align: center;
+      margin: 16px 0 28px;
+    }
+    .relink a {
+      font-size: 14px;
+      color: #5368EE;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .pitch {
+      margin: 28px 0;
+      padding: 22px 0;
+      border-top: 1px solid #ECECFF;
+      border-bottom: 1px solid #ECECFF;
+    }
+    .pitch .eyebrow { font-size: 14px; color: #6b7280; margin: 0 0 4px; }
+    .pitch .title { font-size: 15px; color: #1a1a2e; font-weight: 600; margin: 0 0 12px; line-height: 1.4; }
+    .pitch .body { font-size: 14px; line-height: 1.6; color: #4b5563; margin: 0; }
+    .cta { text-align: center; margin: 4px 0 8px; }
+    .cta a {
+      display: inline-block;
+      background: #5368EE;
+      color: white;
+      padding: 14px 30px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .cta .small { font-size: 12px; color: #6b7280; margin: 12px 0 0; }
+    .footer {
+      margin-top: 36px;
+      padding-top: 22px;
+      border-top: 1px solid #ECECFF;
+      text-align: center;
+    }
+    .footer p { font-size: 11px; color: #9ca3af; line-height: 1.6; margin: 0 0 8px; }
+    .footer a { color: #9ca3af; text-decoration: underline; }
+    .placeholder { color: #d1483a; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+
+    <div class="mail-meta">
+      <div class="row">
+        <span class="from">BatUp &lt;contact@batup.fr&gt;</span>
+        <span>il y a 1 minute</span>
+      </div>
+      <div>À : thomas.durand@chantier-renov.fr</div>
+      <div class="subject">Votre résultat : Calculateur heures supplémentaires BTP</div>
+    </div>
+
+    <div class="mail">
+
+      <div class="header">
+        <img src="/email-logo.png" alt="BatUp" />
+        <span class="name">BatUp</span>
+      </div>
+
+      <div class="greeting">
+        <p>Bonjour Thomas,</p>
+        <p class="intro">Voici le résultat de votre simulation sur le <span class="tool-name">Calculateur heures supplémentaires BTP</span>.</p>
+      </div>
+
+      <div class="result-card">
+        <p class="label">Total brut semaine</p>
+        <p class="value">498 €</p>
+        <p class="sub">Brut hebdomadaire incluant heures sup, panier, trajet, grand déplacement</p>
+      </div>
+
+      <div class="relink">
+        <a href="https://outils.batup.fr/calculateur-heures-supplementaires-btp">Modifier mes valeurs et recalculer →</a>
+      </div>
+
+      <div class="pitch">
+        <p class="eyebrow">Une astuce pour ne plus refaire ce calcul</p>
+        <p class="title">Et si BatUp le calculait automatiquement à partir de vos pointages chantier ?</p>
+        <p class="body">Heures, paniers, trajets, grands déplacements. BatUp Pointage récupère tout depuis le terrain et alimente la paie sans Excel. Plus d'oubli en fin de mois.</p>
+      </div>
+
+      <div class="cta">
+        <a href="https://app.batup.fr/signup?source=calculateur-heures-supplementaires-btp">Essayer BatUp gratuitement</a>
+        <p class="small">14 jours d'essai, sans carte bancaire</p>
+      </div>
+
+      <div class="footer">
+        <p>
+          Vous recevez ce mail parce que vous avez utilisé un outil gratuit sur outils.batup.fr.<br />
+          BatUp · 60 rue François I<sup>er</sup>, 75008 Paris · contact@batup.fr
+        </p>
+        <p>
+          <a href="#">Se désinscrire</a> · <a href="#">Mentions légales</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

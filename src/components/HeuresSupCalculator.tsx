@@ -3,7 +3,12 @@ import { ArrowRight, HelpCircle } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
 import { StickyResultBar } from './StickyResultBar';
+import { GatedReveal } from './GatedReveal';
+import { useEmailGate } from '@/lib/email-gate-context';
 import { computeHeuresSup } from '@/lib/heures-sup-math';
+
+const TOOL_SLUG = 'calculateur-heures-supplementaires-btp';
+const TOOL_LABEL = 'Calculateur heures supplémentaires BTP';
 
 type Convention = 'ouvrier' | 'etam';
 type ZoneTrajet = '1A' | '1B' | '2' | '3' | '4' | '5';
@@ -65,6 +70,7 @@ function fmtEuro(n: number, decimals = 0): string {
 
 export function HeuresSupCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
+  const { unlocked } = useEmailGate();
 
   const updateNum = (key: keyof Inputs, value: string) => {
     const num = parseFloat(value.replace(',', '.')) || 0;
@@ -199,64 +205,72 @@ export function HeuresSupCalculator() {
 
       <div className="lg:col-span-2">
         <div className="sticky top-20">
-          <Card className="border-brand-500/20 bg-gradient-to-br from-brand-50 to-white">
-            <CardHeader>
-              <CardTitle>Votre résultat</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-5">
-              <div>
-                <p className="text-xs uppercase tracking-wider text-gray-500">Total brut semaine</p>
-                <p className="mt-1 text-4xl font-bold text-brand-500 sm:text-5xl">{fmtEuro(results.totalSemaine)}</p>
-                <p className="mt-1 text-xs text-gray-500">Brut hebdomadaire incluant heures sup, panier, trajet, grand déplacement</p>
-              </div>
+          <GatedReveal
+            toolSlug={TOOL_SLUG}
+            toolLabel={TOOL_LABEL}
+            resultPreview={`Total brut semaine ${fmtEuro(results.totalSemaine)}`}
+          >
+            <Card className="border-brand-500/20 bg-gradient-to-br from-brand-50 to-white">
+              <CardHeader>
+                <CardTitle>Votre résultat</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-5">
+                <div>
+                  <p className="text-xs uppercase tracking-wider text-gray-500">Total brut semaine</p>
+                  <p className="mt-1 text-4xl font-bold text-brand-500 sm:text-5xl">{fmtEuro(results.totalSemaine)}</p>
+                  <p className="mt-1 text-xs text-gray-500">Brut hebdomadaire incluant heures sup, panier, trajet, grand déplacement</p>
+                </div>
 
-              <div className="space-y-2 border-t border-gray-100 pt-4 text-sm">
-                <Row label="Salaire de base" value={fmtEuro(results.salaireBase, 2)} />
-                <Row
-                  label={`Heures sup 25 % (${results.heures25.toFixed(1)} h)`}
-                  value={fmtEuro(results.majoration25, 2)}
-                />
-                <Row
-                  label={`Heures sup 50 % (${results.heures50.toFixed(1)} h)`}
-                  value={fmtEuro(results.majoration50, 2)}
-                />
-                <Row label="Panier (semaine)" value={fmtEuro(results.panierSemaine, 2)} />
-                <Row label="Indemnité trajet (semaine)" value={fmtEuro(results.indemniteSemaine, 2)} />
-                {inputs.grandDeplacement && (
-                  <Row label="Grand déplacement (semaine)" value={fmtEuro(results.grandDeplSemaine, 2)} />
-                )}
-              </div>
+                <div className="space-y-2 border-t border-gray-100 pt-4 text-sm">
+                  <Row label="Salaire de base" value={fmtEuro(results.salaireBase, 2)} />
+                  <Row
+                    label={`Heures sup 25 % (${results.heures25.toFixed(1)} h)`}
+                    value={fmtEuro(results.majoration25, 2)}
+                  />
+                  <Row
+                    label={`Heures sup 50 % (${results.heures50.toFixed(1)} h)`}
+                    value={fmtEuro(results.majoration50, 2)}
+                  />
+                  <Row label="Panier (semaine)" value={fmtEuro(results.panierSemaine, 2)} />
+                  <Row label="Indemnité trajet (semaine)" value={fmtEuro(results.indemniteSemaine, 2)} />
+                  {inputs.grandDeplacement && (
+                    <Row label="Grand déplacement (semaine)" value={fmtEuro(results.grandDeplSemaine, 2)} />
+                  )}
+                </div>
 
-              <div className="space-y-2 border-t border-gray-100 pt-4 text-sm">
-                <Row label="Total brut mois" value={fmtEuro(results.totalMois)} />
-                <Row label="Panier (mois)" value={fmtEuro(results.panierMois)} />
-                <Row label="Indemnité trajet (mois)" value={fmtEuro(results.indemniteMois)} />
-                {inputs.grandDeplacement && (
-                  <Row label="Grand déplacement (mois)" value={fmtEuro(results.grandDeplMois)} />
-                )}
-              </div>
+                <div className="space-y-2 border-t border-gray-100 pt-4 text-sm">
+                  <Row label="Total brut mois" value={fmtEuro(results.totalMois)} />
+                  <Row label="Panier (mois)" value={fmtEuro(results.panierMois)} />
+                  <Row label="Indemnité trajet (mois)" value={fmtEuro(results.indemniteMois)} />
+                  {inputs.grandDeplacement && (
+                    <Row label="Grand déplacement (mois)" value={fmtEuro(results.grandDeplMois)} />
+                  )}
+                </div>
 
-              <div className="space-y-2 pt-2">
-                <a href={ctaSignupHref} data-testid="cta-signup">
-                  <Button className="h-11 w-full rounded-full">
-                    Essayer Batup gratuitement
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </a>
-                <p className="text-xs text-center text-gray-500">
-                  Vous gérez {fmtEuro(results.extrasMois)} d'extras par mois — Batup Pointage les calcule automatiquement.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+                <div className="space-y-2 pt-2">
+                  <a href={ctaSignupHref} data-testid="cta-signup">
+                    <Button className="h-11 w-full rounded-full">
+                      Essayer Batup gratuitement
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </a>
+                  <p className="text-xs text-center text-gray-500">
+                    Vous gérez {fmtEuro(results.extrasMois)} d'extras par mois — Batup Pointage les calcule automatiquement.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </GatedReveal>
         </div>
       </div>
 
-      <StickyResultBar
-        label="Total brut semaine"
-        value={fmtEuro(results.totalSemaine)}
-        ctaHref={ctaSignupHref}
-      />
+      {unlocked && (
+        <StickyResultBar
+          label="Total brut semaine"
+          value={fmtEuro(results.totalSemaine)}
+          ctaHref={ctaSignupHref}
+        />
+      )}
     </div>
   );
 }

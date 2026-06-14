@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { ReactNode, ButtonHTMLAttributes, InputHTMLAttributes, LabelHTMLAttributes } from 'react';
 
 /**
@@ -26,15 +27,18 @@ export function CardContent({ children, className = '' }: { children: ReactNode;
   return <div className={`p-6 pt-0 ${className}`}>{children}</div>;
 }
 
-export function Input(props: InputHTMLAttributes<HTMLInputElement>) {
-  const { className = '', ...rest } = props;
-  return (
-    <input
-      {...rest}
-      className={`flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
-    />
-  );
-}
+export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
+  function Input(props, ref) {
+    const { className = '', ...rest } = props;
+    return (
+      <input
+        ref={ref}
+        {...rest}
+        className={`flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+      />
+    );
+  },
+);
 
 export function Label(props: LabelHTMLAttributes<HTMLLabelElement>) {
   const { className = '', children, ...rest } = props;

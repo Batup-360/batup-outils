@@ -1,5 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { Route, Switch } from 'wouter';
+import { EmailGateProvider } from '@/lib/email-gate-context';
+import { EmailGate } from '@/components/EmailGate';
 
 const Home = lazy(() => import('./pages/home'));
 const NotFound = lazy(() => import('./pages/not-found'));
@@ -53,8 +55,9 @@ function LoadingFallback() {
 
 export default function App() {
   return (
-    <Suspense fallback={<LoadingFallback />}>
-      <Switch>
+    <EmailGateProvider>
+      <Suspense fallback={<LoadingFallback />}>
+        <Switch>
         <Route path="/" component={Home} />
 
         {/* Pricing & marge */}
@@ -111,8 +114,10 @@ export default function App() {
         <Route path="/simulateur-rc-pro-btp" component={SimulateurRcPro} />
         <Route path="/calculateur-roi-certification-rge" component={CalculateurRoiRge} />
 
-        <Route component={NotFound} />
-      </Switch>
-    </Suspense>
+          <Route component={NotFound} />
+        </Switch>
+      </Suspense>
+      <EmailGate />
+    </EmailGateProvider>
   );
 }
