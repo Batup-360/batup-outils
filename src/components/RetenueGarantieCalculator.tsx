@@ -3,7 +3,12 @@ import { ArrowRight, CalendarDays, HelpCircle, ShieldCheck } from 'lucide-react'
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
 import { StickyResultBar } from './StickyResultBar';
+import { GatedReveal } from './GatedReveal';
+import { useEmailGate } from '@/lib/email-gate-context';
 import { montantTTC, retenueGarantieFromTTC } from '@/lib/retenue-garantie-math';
+
+const TOOL_SLUG = 'calculateur-retenue-de-garantie';
+const TOOL_LABEL = 'Calculateur de retenue de garantie';
 
 interface Inputs {
   montantHT: number;
@@ -51,6 +56,7 @@ function addOneYear(d: Date): Date {
 
 export function RetenueGarantieCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
+  const { unlocked } = useEmailGate();
 
   const updateNumber = (key: keyof Inputs, value: string) => {
     const num = parseFloat(value.replace(',', '.')) || 0;
@@ -166,6 +172,11 @@ export function RetenueGarantieCalculator() {
 
       <div className="lg:col-span-2">
         <div className="sticky top-20 space-y-4">
+          <GatedReveal
+            toolSlug={TOOL_SLUG}
+            toolLabel={TOOL_LABEL}
+            resultPreview={`Retenue 5 % du TTC ${fmtEuro(results.retenueEffective)}`}
+          >
           <Card className="border-brand-500/20 bg-gradient-to-br from-brand-50 to-white">
             <CardHeader>
               <CardTitle>Votre retenue de garantie</CardTitle>
@@ -234,14 +245,17 @@ export function RetenueGarantieCalculator() {
               </div>
             </CardContent>
           </Card>
+          </GatedReveal>
         </div>
       </div>
 
-      <StickyResultBar
-        label="Retenue 5 % du TTC"
-        value={fmtEuro(results.retenueEffective)}
-        ctaHref={ctaSignupHref}
-      />
+      {unlocked && (
+        <StickyResultBar
+          label="Retenue 5 % du TTC"
+          value={fmtEuro(results.retenueEffective)}
+          ctaHref={ctaSignupHref}
+        />
+      )}
     </div>
   );
 }

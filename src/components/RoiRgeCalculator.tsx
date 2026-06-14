@@ -3,6 +3,11 @@ import { ArrowRight, CheckCircle, AlertTriangle, TrendingDown } from 'lucide-rea
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
 import { StickyResultBar } from './StickyResultBar';
+import { GatedReveal } from './GatedReveal';
+import { useEmailGate } from '@/lib/email-gate-context';
+
+const TOOL_SLUG = 'calculateur-roi-certification-rge';
+const TOOL_LABEL = 'Calculateur ROI certification RGE';
 
 interface Inputs {
   coutCertif: number;
@@ -69,6 +74,7 @@ const VERDICT_CONFIG: Record<
 
 export function RoiRgeCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
+  const { unlocked } = useEmailGate();
 
   const updateNumber = (key: keyof Inputs, value: string) => {
     const num = parseFloat(value.replace(',', '.')) || 0;
@@ -297,6 +303,11 @@ export function RoiRgeCalculator() {
 
       <div className="lg:col-span-2">
         <div className="sticky top-20 space-y-4">
+          <GatedReveal
+            toolSlug={TOOL_SLUG}
+            toolLabel={TOOL_LABEL}
+            resultPreview={`Marge supplémentaire annuelle ${fmtEuro(results.margeSuppAnnuelle)} (ROI an 1 ${fmtPct(results.roiAn1Pct)})`}
+          >
           <Card className="border-brand-500/20 bg-gradient-to-br from-brand-50 to-white">
             <CardHeader>
               <CardTitle>Votre rentabilité RGE</CardTitle>
@@ -388,14 +399,17 @@ export function RoiRgeCalculator() {
               </p>
             </CardContent>
           </Card>
+          </GatedReveal>
         </div>
       </div>
 
-      <StickyResultBar
-        label="Marge supplémentaire / an"
-        value={fmtEuro(results.margeSuppAnnuelle)}
-        ctaHref={ctaSignupHref}
-      />
+      {unlocked && (
+        <StickyResultBar
+          label="Marge supplémentaire / an"
+          value={fmtEuro(results.margeSuppAnnuelle)}
+          ctaHref={ctaSignupHref}
+        />
+      )}
     </div>
   );
 }

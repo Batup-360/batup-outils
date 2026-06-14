@@ -3,6 +3,11 @@ import { ArrowRight, Check, Minus } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Label, Button } from './ui';
 import { StickyResultBar } from './StickyResultBar';
+import { GatedReveal } from './GatedReveal';
+import { useEmailGate } from '@/lib/email-gate-context';
+
+const TOOL_SLUG = 'comparateur-statut-juridique-artisan-btp';
+const TOOL_LABEL = 'Comparateur de statut juridique artisan BTP';
 
 type CAOption = 'lt30' | '30_80' | '80_200' | 'gt200';
 type AssociesOption = 'seul' | '2_3' | '4plus';
@@ -282,6 +287,7 @@ const PRIORITE_LABELS: Record<PrioriteOption, string> = {
 };
 
 export function StatutJuridiqueComparator() {
+  const { unlocked } = useEmailGate();
   const [answers, setAnswers] = useState<Answers>({
     ca: null,
     associes: null,
@@ -366,6 +372,11 @@ export function StatutJuridiqueComparator() {
 
         <div className="lg:col-span-2">
           <div className="sticky top-20 space-y-4">
+            <GatedReveal
+              toolSlug={TOOL_SLUG}
+              toolLabel={TOOL_LABEL}
+              resultPreview={allAnswered && top ? `Statut juridique recommandé : ${STATUT_LABELS[top.statut]}` : 'Statut juridique recommandé (à déterminer)'}
+            >
             <Card className="border-brand-500/20 bg-gradient-to-br from-brand-50 to-white">
               <CardHeader>
                 <CardTitle>Notre recommandation</CardTitle>
@@ -436,6 +447,7 @@ export function StatutJuridiqueComparator() {
                 </div>
               </CardContent>
             </Card>
+            </GatedReveal>
           </div>
         </div>
       </div>
@@ -488,11 +500,13 @@ export function StatutJuridiqueComparator() {
         </CardContent>
       </Card>
 
-      <StickyResultBar
-        label="Statut recommandé"
-        value={allAnswered && top ? STATUT_LABELS[top.statut] : 'À déterminer'}
-        ctaHref={ctaSignupHref}
-      />
+      {unlocked && (
+        <StickyResultBar
+          label="Statut recommandé"
+          value={allAnswered && top ? STATUT_LABELS[top.statut] : 'À déterminer'}
+          ctaHref={ctaSignupHref}
+        />
+      )}
     </div>
   );
 }

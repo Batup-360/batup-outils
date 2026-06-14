@@ -3,6 +3,8 @@ import { ArrowRight, HelpCircle, Info } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
 import { StickyResultBar } from './StickyResultBar';
+import { GatedReveal } from './GatedReveal';
+import { useEmailGate } from '@/lib/email-gate-context';
 import {
   computePrimeAnciennete,
   getPaliers,
@@ -10,6 +12,9 @@ import {
   CHARGES_PATRONALES_BTP,
   type Contrat,
 } from '@/lib/prime-anciennete-math';
+
+const TOOL_SLUG = 'calculateur-prime-anciennete-ccn-batiment';
+const TOOL_LABEL = "Calculateur prime d'ancienneté CCN bâtiment";
 
 interface Inputs {
   salaireBrut: number;
@@ -34,6 +39,7 @@ function fmtEuro(n: number, decimals = 0): string {
 
 export function PrimeAncienneteCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
+  const { unlocked } = useEmailGate();
 
   const updateNum = (key: keyof Inputs, value: string) => {
     const num = parseFloat(value.replace(',', '.')) || 0;
@@ -187,6 +193,11 @@ export function PrimeAncienneteCalculator() {
 
       <div className="lg:col-span-2">
         <div className="sticky top-20">
+          <GatedReveal
+            toolSlug={TOOL_SLUG}
+            toolLabel={TOOL_LABEL}
+            resultPreview={results.applicable ? `Prime d'ancienneté mensuelle ${fmtEuro(results.primeMensuelle, 2)}` : "Prime d'ancienneté non applicable"}
+          >
           <Card className="border-brand-500/20 bg-gradient-to-br from-brand-50 to-white">
             <CardHeader>
               <CardTitle>Votre résultat</CardTitle>
@@ -270,14 +281,17 @@ export function PrimeAncienneteCalculator() {
               )}
             </CardContent>
           </Card>
+          </GatedReveal>
         </div>
       </div>
 
-      <StickyResultBar
-        label="Prime d'ancienneté mensuelle"
-        value={results.applicable ? fmtEuro(results.primeMensuelle, 2) : 'Non applicable'}
-        ctaHref={ctaSignupHref}
-      />
+      {unlocked && (
+        <StickyResultBar
+          label="Prime d'ancienneté mensuelle"
+          value={results.applicable ? fmtEuro(results.primeMensuelle, 2) : 'Non applicable'}
+          ctaHref={ctaSignupHref}
+        />
+      )}
     </div>
   );
 }

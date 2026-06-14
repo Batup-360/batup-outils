@@ -6,6 +6,11 @@ import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
 import { ResultVerdict } from './ResultVerdict';
 import { StickyResultBar } from './StickyResultBar';
+import { GatedReveal } from './GatedReveal';
+import { useEmailGate } from '@/lib/email-gate-context';
+
+const TOOL_SLUG = 'calculateur-marge-nette-coefficient-btp';
+const TOOL_LABEL = 'Calculateur marge nette / coefficient BTP';
 
 type Mode = 'coefficient' | 'marge';
 
@@ -44,6 +49,7 @@ function fmtPct(n: number): string {
 
 export function MargeNetteCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
+  const { unlocked } = useEmailGate();
 
   const update = (key: keyof Inputs, value: string) => {
     const num = parseFloat(value.replace(',', '.')) || 0;
@@ -194,6 +200,11 @@ export function MargeNetteCalculator() {
 
       <div className="lg:col-span-2">
         <div className="sticky top-20 space-y-4">
+          <GatedReveal
+            toolSlug={TOOL_SLUG}
+            toolLabel={TOOL_LABEL}
+            resultPreview={`Prix de vente HT recommandé ${fmtEuro(results.prixVente)}`}
+          >
           <Card className="border-brand-500/20 bg-gradient-to-br from-brand-50 to-white">
             <CardHeader>
               <CardTitle>Votre résultat</CardTitle>
@@ -234,14 +245,17 @@ export function MargeNetteCalculator() {
               </div>
             </CardContent>
           </Card>
+          </GatedReveal>
         </div>
       </div>
 
-      <StickyResultBar
-        label="Prix de vente HT"
-        value={fmtEuro(results.prixVente)}
-        ctaHref={ctaSignupHref}
-      />
+      {unlocked && (
+        <StickyResultBar
+          label="Prix de vente HT"
+          value={fmtEuro(results.prixVente)}
+          ctaHref={ctaSignupHref}
+        />
+      )}
     </div>
   );
 }

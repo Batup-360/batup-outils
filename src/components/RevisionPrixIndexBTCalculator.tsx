@@ -3,7 +3,12 @@ import { ArrowRight, AlertTriangle, HelpCircle, ExternalLink } from 'lucide-reac
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
 import { StickyResultBar } from './StickyResultBar';
+import { GatedReveal } from './GatedReveal';
+import { useEmailGate } from '@/lib/email-gate-context';
 import { computeRevisionIndexBT } from '@/lib/index-bt-math';
+
+const TOOL_SLUG = 'calculateur-revision-prix-index-bt';
+const TOOL_LABEL = 'Calculateur de révision de prix (Index BT)';
 
 interface IndexBTOption {
   code: string;
@@ -104,6 +109,7 @@ function fmtInputNum(n: number): string {
 
 export function RevisionPrixIndexBTCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
+  const { unlocked } = useEmailGate();
 
   const updateNum = (key: keyof Inputs, value: string) => {
     const num = parseFloat(value.replace(',', '.')) || 0;
@@ -254,6 +260,11 @@ export function RevisionPrixIndexBTCalculator() {
 
       <div className="lg:col-span-2">
         <div className="sticky top-20 space-y-4">
+          <GatedReveal
+            toolSlug={TOOL_SLUG}
+            toolLabel={TOOL_LABEL}
+            resultPreview={`Prix révisé HT ${fmtEuro(results.prixRevise)}`}
+          >
           <Card className="border-brand-500/20 bg-gradient-to-br from-brand-50 to-white">
             <CardHeader>
               <CardTitle>Votre résultat</CardTitle>
@@ -344,14 +355,17 @@ export function RevisionPrixIndexBTCalculator() {
               </div>
             </CardContent>
           </Card>
+          </GatedReveal>
         </div>
       </div>
 
-      <StickyResultBar
-        label="Prix révisé HT"
-        value={fmtEuro(results.prixRevise)}
-        ctaHref={ctaSignupHref}
-      />
+      {unlocked && (
+        <StickyResultBar
+          label="Prix révisé HT"
+          value={fmtEuro(results.prixRevise)}
+          ctaHref={ctaSignupHref}
+        />
+      )}
     </div>
   );
 }

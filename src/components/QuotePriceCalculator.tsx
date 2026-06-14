@@ -6,6 +6,11 @@ import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
 import { ResultVerdict } from './ResultVerdict';
 import { StickyResultBar } from './StickyResultBar';
+import { GatedReveal } from './GatedReveal';
+import { useEmailGate } from '@/lib/email-gate-context';
+
+const TOOL_SLUG = 'calculateur-prix-chantier-btp';
+const TOOL_LABEL = 'Calculateur prix chantier BTP';
 
 interface Inputs {
   tauxHoraire: number;
@@ -41,6 +46,7 @@ function fmtEuro(n: number, decimals = 0): string {
 export function QuotePriceCalculator() {
   const search = useSearch();
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
+  const { unlocked } = useEmailGate();
 
   useEffect(() => {
     const params = new URLSearchParams(search);
@@ -159,6 +165,11 @@ export function QuotePriceCalculator() {
 
       <div className="lg:col-span-2">
         <div className="sticky top-20 space-y-4">
+          <GatedReveal
+            toolSlug={TOOL_SLUG}
+            toolLabel={TOOL_LABEL}
+            resultPreview={`Prix de vente HT recommandé ${fmtEuro(results.prixEstime)}`}
+          >
           <Card className="border-brand-500/20 bg-gradient-to-br from-brand-50 to-white">
             <CardHeader>
               <CardTitle>Votre résultat</CardTitle>
@@ -194,14 +205,17 @@ export function QuotePriceCalculator() {
               </div>
             </CardContent>
           </Card>
+          </GatedReveal>
         </div>
       </div>
 
-      <StickyResultBar
-        label="Prix HT recommandé"
-        value={fmtEuro(results.prixEstime)}
-        ctaHref={ctaSignupHref}
-      />
+      {unlocked && (
+        <StickyResultBar
+          label="Prix HT recommandé"
+          value={fmtEuro(results.prixEstime)}
+          ctaHref={ctaSignupHref}
+        />
+      )}
     </div>
   );
 }

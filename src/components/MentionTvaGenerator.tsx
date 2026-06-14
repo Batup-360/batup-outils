@@ -3,6 +3,11 @@ import { ArrowRight, Check, CheckCircle, Clipboard, FileSignature, Info, Trendin
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Button, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
+import { GatedReveal } from './GatedReveal';
+import { useEmailGate } from '@/lib/email-gate-context';
+
+const TOOL_SLUG = 'generateur-mention-tva-facture-btp';
+const TOOL_LABEL = 'Générateur de mention TVA (facture / devis BTP)';
 
 const VERDICT_SHORT_LABEL: Record<Verdict, string> = {
   'tva-20': 'TVA 20 %',
@@ -101,6 +106,7 @@ const SLUG_BY_VERDICT: Record<Verdict, string> = {
 export function MentionTvaGenerator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
   const [copied, setCopied] = useState(false);
+  const { unlocked } = useEmailGate();
 
   const update = <K extends keyof Inputs>(key: K, value: Inputs[K]) => {
     setInputs((prev) => ({ ...prev, [key]: value }));
@@ -238,6 +244,11 @@ export function MentionTvaGenerator() {
 
       <div className="lg:col-span-2">
         <div className="sticky top-20 space-y-4">
+          <GatedReveal
+            toolSlug={TOOL_SLUG}
+            toolLabel={TOOL_LABEL}
+            resultPreview={`Mention TVA applicable : ${verdict ? VERDICT_SHORT_LABEL[verdict] : 'à déterminer'}`}
+          >
           <Card className="border-brand-500/20 bg-gradient-to-br from-brand-50 to-white">
             <CardHeader>
               <CardTitle>Votre verdict</CardTitle>
@@ -274,14 +285,17 @@ export function MentionTvaGenerator() {
               </div>
             </CardContent>
           </Card>
+          </GatedReveal>
         </div>
       </div>
 
-      <StickyResultBar
-        label="Mention TVA"
-        value={verdict ? VERDICT_SHORT_LABEL[verdict] : 'À déterminer'}
-        ctaHref={ctaSignupHref}
-      />
+      {unlocked && (
+        <StickyResultBar
+          label="Mention TVA"
+          value={verdict ? VERDICT_SHORT_LABEL[verdict] : 'À déterminer'}
+          ctaHref={ctaSignupHref}
+        />
+      )}
     </div>
   );
 }

@@ -3,6 +3,11 @@ import { ArrowRight, HelpCircle } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
 import { StickyResultBar } from './StickyResultBar';
+import { GatedReveal } from './GatedReveal';
+import { useEmailGate } from '@/lib/email-gate-context';
+
+const TOOL_SLUG = 'calculateur-cout-salarie-btp';
+const TOOL_LABEL = 'Calculateur de coût salarié employeur BTP';
 
 type Convention = 'ouvrier' | 'etam' | 'cadre';
 type Region = 'idf' | 'autres';
@@ -60,6 +65,7 @@ function fmtRate(n: number): string {
 
 export function CoutSalarieCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
+  const { unlocked } = useEmailGate();
 
   const updateNum = (key: keyof Inputs, value: string) => {
     const num = parseFloat(value.replace(',', '.')) || 0;
@@ -172,6 +178,11 @@ export function CoutSalarieCalculator() {
 
       <div className="lg:col-span-2">
         <div className="sticky top-20">
+          <GatedReveal
+            toolSlug={TOOL_SLUG}
+            toolLabel={TOOL_LABEL}
+            resultPreview={`Coût total employeur ${fmtEuro(results.coutTotal)} / mois`}
+          >
           <Card className="border-brand-500/20 bg-gradient-to-br from-brand-50 to-white">
             <CardHeader>
               <CardTitle>Votre résultat</CardTitle>
@@ -220,14 +231,17 @@ export function CoutSalarieCalculator() {
               </div>
             </CardContent>
           </Card>
+          </GatedReveal>
         </div>
       </div>
 
-      <StickyResultBar
-        label="Coût total employeur"
-        value={fmtEuro(results.coutTotal)}
-        ctaHref={ctaSignupHref}
-      />
+      {unlocked && (
+        <StickyResultBar
+          label="Coût total employeur"
+          value={fmtEuro(results.coutTotal)}
+          ctaHref={ctaSignupHref}
+        />
+      )}
     </div>
   );
 }

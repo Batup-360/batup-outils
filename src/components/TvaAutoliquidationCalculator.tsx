@@ -3,6 +3,11 @@ import { ArrowRight, Check, CheckCircle, Clipboard, Info, TrendingDown } from 'l
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Button, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
+import { GatedReveal } from './GatedReveal';
+import { useEmailGate } from '@/lib/email-gate-context';
+
+const TOOL_SLUG = 'calculateur-tva-autoliquidation-btp';
+const TOOL_LABEL = 'Calculateur TVA autoliquidation BTP';
 
 const VERDICT_SHORT_LABEL: Record<Verdict, string> = {
   autoliquidation: 'Autoliquidation',
@@ -81,6 +86,7 @@ function computeVerdict(inputs: Inputs): Verdict | null {
 export function TvaAutoliquidationCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
   const [copied, setCopied] = useState(false);
+  const { unlocked } = useEmailGate();
 
   const update = <K extends keyof Inputs>(key: K, value: Inputs[K]) => {
     setInputs((prev) => ({ ...prev, [key]: value }));
@@ -196,6 +202,11 @@ export function TvaAutoliquidationCalculator() {
 
       <div className="lg:col-span-2">
         <div className="sticky top-20 space-y-4">
+          <GatedReveal
+            toolSlug={TOOL_SLUG}
+            toolLabel={TOOL_LABEL}
+            resultPreview={`Régime TVA : ${verdict ? VERDICT_SHORT_LABEL[verdict] : 'à déterminer'}`}
+          >
           <Card className="border-brand-500/20 bg-gradient-to-br from-brand-50 to-white">
             <CardHeader>
               <CardTitle>Votre verdict</CardTitle>
@@ -225,14 +236,17 @@ export function TvaAutoliquidationCalculator() {
               </div>
             </CardContent>
           </Card>
+          </GatedReveal>
         </div>
       </div>
 
-      <StickyResultBar
-        label="Régime TVA"
-        value={verdict ? VERDICT_SHORT_LABEL[verdict] : 'À déterminer'}
-        ctaHref={ctaSignupHref}
-      />
+      {unlocked && (
+        <StickyResultBar
+          label="Régime TVA"
+          value={verdict ? VERDICT_SHORT_LABEL[verdict] : 'À déterminer'}
+          ctaHref={ctaSignupHref}
+        />
+      )}
     </div>
   );
 }

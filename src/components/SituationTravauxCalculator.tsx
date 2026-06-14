@@ -3,7 +3,12 @@ import { AlertTriangle, ArrowRight, HelpCircle } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
 import { StickyResultBar } from './StickyResultBar';
+import { GatedReveal } from './GatedReveal';
+import { useEmailGate } from '@/lib/email-gate-context';
 import { retenueGarantieFromTTC } from '@/lib/retenue-garantie-math';
+
+const TOOL_SLUG = 'calculateur-situation-travaux';
+const TOOL_LABEL = 'Calculateur de situation de travaux';
 
 interface Inputs {
   montantMarcheHT: number;
@@ -38,6 +43,7 @@ function fmtEuroSigned(n: number): string {
 
 export function SituationTravauxCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
+  const { unlocked } = useEmailGate();
 
   const updateNumber = (key: keyof Inputs, value: string) => {
     const num = parseFloat(value.replace(',', '.')) || 0;
@@ -190,6 +196,11 @@ export function SituationTravauxCalculator() {
 
       <div className="lg:col-span-2">
         <div className="sticky top-20 space-y-4">
+          <GatedReveal
+            toolSlug={TOOL_SLUG}
+            toolLabel={TOOL_LABEL}
+            resultPreview={`Situation à facturer TTC ${fmtEuro(results.situationTTC)} (net à percevoir ${fmtEuroSigned(results.netAPercevoir)})`}
+          >
           <Card className="border-brand-500/20 bg-gradient-to-br from-brand-50 to-white">
             <CardHeader>
               <CardTitle>Situation à facturer</CardTitle>
@@ -281,14 +292,17 @@ export function SituationTravauxCalculator() {
               </div>
             </CardContent>
           </Card>
+          </GatedReveal>
         </div>
       </div>
 
-      <StickyResultBar
-        label="Situation à facturer TTC"
-        value={fmtEuro(results.situationTTC)}
-        ctaHref={ctaSignupHref}
-      />
+      {unlocked && (
+        <StickyResultBar
+          label="Situation à facturer TTC"
+          value={fmtEuro(results.situationTTC)}
+          ctaHref={ctaSignupHref}
+        />
+      )}
     </div>
   );
 }

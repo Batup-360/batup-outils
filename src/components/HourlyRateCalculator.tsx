@@ -5,6 +5,11 @@ import { calculateBillableHourlyRate } from '@/lib/pricing';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
 import { StickyResultBar } from './StickyResultBar';
+import { GatedReveal } from './GatedReveal';
+import { useEmailGate } from '@/lib/email-gate-context';
+
+const TOOL_SLUG = 'calculateur-taux-horaire-btp';
+const TOOL_LABEL = 'Calculateur de taux horaire BTP';
 
 interface Inputs {
   salaires: number;
@@ -42,6 +47,7 @@ function fmtRate(n: number): string {
 
 export function HourlyRateCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
+  const { unlocked } = useEmailGate();
   const update = (key: keyof Inputs, value: string) => {
     const num = parseFloat(value.replace(',', '.')) || 0;
     setInputs((prev) => ({ ...prev, [key]: num }));
@@ -131,6 +137,11 @@ export function HourlyRateCalculator() {
 
       <div className="lg:col-span-2">
         <div className="sticky top-20">
+          <GatedReveal
+            toolSlug={TOOL_SLUG}
+            toolLabel={TOOL_LABEL}
+            resultPreview={`Taux horaire à facturer ${fmtRate(results.tauxFacturer)}`}
+          >
           <Card className="border-brand-500/20 bg-gradient-to-br from-brand-50 to-white">
             <CardHeader>
               <CardTitle>Votre résultat</CardTitle>
@@ -163,14 +174,17 @@ export function HourlyRateCalculator() {
               </div>
             </CardContent>
           </Card>
+          </GatedReveal>
         </div>
       </div>
 
-      <StickyResultBar
-        label="Taux à facturer"
-        value={fmtRate(results.tauxFacturer)}
-        ctaHref={ctaSignupHref}
-      />
+      {unlocked && (
+        <StickyResultBar
+          label="Taux à facturer"
+          value={fmtRate(results.tauxFacturer)}
+          ctaHref={ctaSignupHref}
+        />
+      )}
     </div>
   );
 }

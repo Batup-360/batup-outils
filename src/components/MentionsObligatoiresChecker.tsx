@@ -3,6 +3,11 @@ import { AlertCircle, ArrowRight, CheckCircle, XCircle } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Button } from './ui';
 import { StickyResultBar } from './StickyResultBar';
+import { GatedReveal } from './GatedReveal';
+import { useEmailGate } from '@/lib/email-gate-context';
+
+const TOOL_SLUG = 'verificateur-mentions-obligatoires-facture-devis-btp';
+const TOOL_LABEL = 'Vérificateur de mentions obligatoires (facture / devis BTP)';
 
 type DocType = 'facture' | 'devis';
 
@@ -350,6 +355,7 @@ const CATEGORY_ORDER: Category[] = [
 export function MentionsObligatoiresChecker() {
   const [docType, setDocType] = useState<DocType>('facture');
   const [checked, setChecked] = useState<Record<string, boolean>>({});
+  const { unlocked } = useEmailGate();
 
   const items = docType === 'facture' ? FACTURE_ITEMS : DEVIS_ITEMS;
 
@@ -504,6 +510,11 @@ export function MentionsObligatoiresChecker() {
 
       <div className="lg:col-span-2">
         <div className="sticky top-20 space-y-4">
+          <GatedReveal
+            toolSlug={TOOL_SLUG}
+            toolLabel={TOOL_LABEL}
+            resultPreview={`Conformité ${docType} : ${isCompliant ? 'conforme' : `${missing.length} mention(s) manquante(s)`}`}
+          >
           <Card className="border-brand-500/20 bg-gradient-to-br from-brand-50 to-white">
             <CardHeader>
               <CardTitle>Votre verdict</CardTitle>
@@ -529,18 +540,21 @@ export function MentionsObligatoiresChecker() {
               </div>
             </CardContent>
           </Card>
+          </GatedReveal>
         </div>
       </div>
 
-      <StickyResultBar
-        label={`Conformité ${docType}`}
-        value={
-          isCompliant
-            ? 'Conforme'
-            : `${missing.length} mention${missing.length > 1 ? 's' : ''} manquante${missing.length > 1 ? 's' : ''}`
-        }
-        ctaHref={ctaSignupHref}
-      />
+      {unlocked && (
+        <StickyResultBar
+          label={`Conformité ${docType}`}
+          value={
+            isCompliant
+              ? 'Conforme'
+              : `${missing.length} mention${missing.length > 1 ? 's' : ''} manquante${missing.length > 1 ? 's' : ''}`
+          }
+          ctaHref={ctaSignupHref}
+        />
+      )}
     </div>
   );
 }

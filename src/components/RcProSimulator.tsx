@@ -3,6 +3,11 @@ import { ArrowRight, AlertTriangle, TrendingUp, TrendingDown, PiggyBank } from '
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
 import { StickyResultBar } from './StickyResultBar';
+import { GatedReveal } from './GatedReveal';
+import { useEmailGate } from '@/lib/email-gate-context';
+
+const TOOL_SLUG = 'simulateur-rc-pro-btp';
+const TOOL_LABEL = 'Simulateur RC Pro BTP';
 
 type MetierKey =
   | 'electricien'
@@ -176,6 +181,7 @@ function computeFactors(inputs: Inputs): FactorImpact[] {
 
 export function RcProSimulator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
+  const { unlocked } = useEmailGate();
 
   const update = <K extends keyof Inputs>(key: K, value: Inputs[K]) => {
     setInputs((prev) => ({ ...prev, [key]: value }));
@@ -331,6 +337,11 @@ export function RcProSimulator() {
 
       <div className="lg:col-span-2">
         <div className="sticky top-20 space-y-4">
+          <GatedReveal
+            toolSlug={TOOL_SLUG}
+            toolLabel={TOOL_LABEL}
+            resultPreview={`Prime RC Pro annuelle entre ${fmtEuro(results.min)} et ${fmtEuro(results.max)}`}
+          >
           <Card className="border-brand-500/20 bg-gradient-to-br from-brand-50 to-white">
             <CardHeader>
               <CardTitle>Votre fourchette RC Pro estimée</CardTitle>
@@ -412,6 +423,7 @@ export function RcProSimulator() {
               </p>
             </CardContent>
           </Card>
+          </GatedReveal>
 
           <Card>
             <CardHeader>
@@ -426,11 +438,13 @@ export function RcProSimulator() {
         </div>
       </div>
 
-      <StickyResultBar
-        label="Prime RC Pro / an"
-        value={`${fmtEuro(results.min)} – ${fmtEuro(results.max)}`}
-        ctaHref={ctaSignupHref}
-      />
+      {unlocked && (
+        <StickyResultBar
+          label="Prime RC Pro / an"
+          value={`${fmtEuro(results.min)} – ${fmtEuro(results.max)}`}
+          ctaHref={ctaSignupHref}
+        />
+      )}
     </div>
   );
 }

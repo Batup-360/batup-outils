@@ -3,6 +3,11 @@ import { ArrowRight, HelpCircle } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
 import { StickyResultBar } from './StickyResultBar';
+import { GatedReveal } from './GatedReveal';
+import { useEmailGate } from '@/lib/email-gate-context';
+
+const TOOL_SLUG = 'calculateur-charges-sociales-artisan-btp';
+const TOOL_LABEL = 'Calculateur de charges sociales artisan BTP';
 
 type Statut = 'micro' | 'ei_reel' | 'eurl' | 'sarl' | 'sas';
 
@@ -185,6 +190,7 @@ function computeResults(inputs: Inputs): Results {
 
 export function ChargesSocialesCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
+  const { unlocked } = useEmailGate();
 
   const update = (key: keyof Inputs, value: string | boolean | Statut) => {
     setInputs((prev) => {
@@ -329,6 +335,11 @@ export function ChargesSocialesCalculator() {
 
       <div className="lg:col-span-2">
         <div className="sticky top-20 space-y-4">
+          <GatedReveal
+            toolSlug={TOOL_SLUG}
+            toolLabel={TOOL_LABEL}
+            resultPreview={`Cotisations totales estimées ${fmtEuro(results.totalCotisations + results.isAmount)}`}
+          >
           <Card className="border-brand-500/20 bg-gradient-to-br from-brand-50 to-white">
             <CardHeader>
               <CardTitle>Vos cotisations estimées</CardTitle>
@@ -379,14 +390,17 @@ export function ChargesSocialesCalculator() {
               </div>
             </CardContent>
           </Card>
+          </GatedReveal>
         </div>
       </div>
 
-      <StickyResultBar
-        label="Cotisations totales"
-        value={fmtEuro(results.totalCotisations + results.isAmount)}
-        ctaHref={ctaSignupHref}
-      />
+      {unlocked && (
+        <StickyResultBar
+          label="Cotisations totales"
+          value={fmtEuro(results.totalCotisations + results.isAmount)}
+          ctaHref={ctaSignupHref}
+        />
+      )}
     </div>
   );
 }
