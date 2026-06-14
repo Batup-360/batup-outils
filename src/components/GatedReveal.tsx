@@ -34,7 +34,7 @@ export function GatedReveal({ toolSlug, toolLabel, resultPreview, children }: Ga
           </div>
           <p className="text-sm font-semibold text-gray-900">Votre résultat est prêt</p>
           <p className="mt-1 text-xs leading-relaxed text-gray-600">
-            Saisissez votre prénom et email pour l'afficher ici. Une copie part aussi par mail.
+            Saisissez votre email pour l'afficher ici. Une copie part aussi par mail.
           </p>
           <Button
             type="button"
