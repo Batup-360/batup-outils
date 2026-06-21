@@ -348,8 +348,48 @@ export function PublicNav({
               ))}
             </div>
 
-            {/* Footer CTA : 2 cards (Centre d'aide dark + Tous les outils light) */}
-            <div className="mt-8 grid grid-cols-2 gap-4 border-t border-gray-100 pt-6">
+            {/* Footer CTA : 4 cards (Comparatifs + Nouveautés + Centre d'aide + Tous les outils) */}
+            <div className="mt-8 grid grid-cols-2 gap-3 border-t border-gray-100 pt-6">
+              {/* Card Comparatifs logiciels BTP (NEW) */}
+              <a
+                href={`${MARKETING_BASE}/comparatifs-logiciels-btp`}
+                className="group flex items-start gap-3 rounded-xl border border-gray-200 p-4 transition-all hover:border-brand-600/40 hover:bg-gray-50"
+              >
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600">
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                  </svg>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-semibold leading-tight text-gray-900 group-hover:text-brand-600">
+                    Comparatifs logiciels BTP
+                  </p>
+                  <p className="mt-0.5 text-[11px] text-gray-500">
+                    BatUp vs Batappli, Obat, Vertuoza...
+                  </p>
+                </div>
+              </a>
+
+              {/* Card Nouveautés (NEW) */}
+              <a
+                href={`${MARKETING_BASE}/nouveautes`}
+                className="group flex items-start gap-3 rounded-xl border border-gray-200 p-4 transition-all hover:border-brand-600/40 hover:bg-gray-50"
+              >
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600">
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-semibold leading-tight text-gray-900 group-hover:text-brand-600">
+                    Nouveautés
+                  </p>
+                  <p className="mt-0.5 text-[11px] text-gray-500">
+                    Les améliorations produit ce mois-ci.
+                  </p>
+                </div>
+              </a>
+
               {/* Card Centre d'aide DARK */}
               <a
                 href={`${MARKETING_BASE}/centre-aide`}
@@ -588,8 +628,46 @@ export function PublicNav({
                   </div>
                 ))}
 
-                {/* 2 CTA cards mobile */}
+                {/* CTA cards mobile (4 cards : Comparatifs + Nouveautés + Centre d'aide + Tous les outils) */}
                 <div className="mt-2 grid grid-cols-1 gap-2">
+                  <a
+                    href={`${MARKETING_BASE}/comparatifs-logiciels-btp`}
+                    className="flex items-center gap-3 rounded-lg border border-gray-200 p-3 transition-colors hover:bg-gray-50"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600">
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                      </svg>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold leading-tight text-gray-900">
+                        Comparatifs logiciels BTP
+                      </p>
+                      <p className="text-[11px] leading-snug text-gray-500">
+                        BatUp vs Batappli, Obat, Vertuoza...
+                      </p>
+                    </div>
+                  </a>
+                  <a
+                    href={`${MARKETING_BASE}/nouveautes`}
+                    className="flex items-center gap-3 rounded-lg border border-gray-200 p-3 transition-colors hover:bg-gray-50"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600">
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold leading-tight text-gray-900">
+                        Nouveautés
+                      </p>
+                      <p className="text-[11px] leading-snug text-gray-500">
+                        Les améliorations produit ce mois-ci.
+                      </p>
+                    </div>
+                  </a>
                   <a
                     href={`${MARKETING_BASE}/centre-aide`}
                     className="flex items-center gap-3 rounded-lg border border-gray-200 p-3 transition-colors hover:bg-gray-50"
