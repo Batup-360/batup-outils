@@ -1,10 +1,12 @@
 import { Link } from 'wouter';
 import { PublicNav } from '@/components/PublicNav';
+import { TopBanner } from '@/components/TopBanner';
 import { PublicFooter } from '@/components/PublicFooter';
 
 export default function NotFound() {
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen flex-col" style={{ backgroundColor: '#f5f5ff' }}>
+      <TopBanner />
       <PublicNav />
       <main className="flex-1 py-20">
         <div className="mx-auto max-w-2xl px-4 text-center sm:px-6 lg:px-8">

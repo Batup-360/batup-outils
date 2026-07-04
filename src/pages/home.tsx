@@ -25,6 +25,7 @@ import {
   X,
 } from 'lucide-react';
 import { PublicNav } from '@/components/PublicNav';
+import { TopBanner } from '@/components/TopBanner';
 import { PublicFooter } from '@/components/PublicFooter';
 import { SEOHead } from '@/lib/seo-head';
 import { siteOrigin } from '@/lib/urls';
@@ -264,12 +265,13 @@ export default function Home() {
   const hasFilters = query.trim() !== '' || activeTheme !== 'Tous' || activeType !== 'Tous';
 
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen flex-col" style={{ backgroundColor: '#f5f5ff' }}>
       <SEOHead
         title="19 outils BTP gratuits — calculateurs taux horaire, marge, TVA, paie, décennale | Batup"
         description="19 calculateurs et simulateurs gratuits pour artisans et PME du BTP : taux horaire, marge, heures sup, coût salarié, TVA autoliquidation, charges sociales, situation, DGD, retenue, décennale, RC Pro, RGE. Sans inscription."
         canonicalUrl={`${base}/`}
       />
+      <TopBanner />
       <PublicNav />
       <main className="flex-1">
 

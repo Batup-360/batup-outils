@@ -20,6 +20,7 @@ interface ToolLink {
   desc: string;
   href: string;
   icon: string; // SVG path data (Heroicons-style stroke)
+  external?: boolean;
 }
 
 interface ToolCategory {
@@ -28,6 +29,50 @@ interface ToolCategory {
   links: ToolLink[];
 }
 
+// === Mega Menu Ressources — synchronisé avec batup.fr/src/components/Navbar.astro ===
+const MAIN_RESSOURCES: ToolLink[] = [
+  {
+    label: 'Comparatifs logiciels BTP',
+    desc: 'BatUp vs Batappli, Obat, Vertuoza... pour choisir en connaissance de cause.',
+    href: `${MARKETING_BASE}/comparatifs-logiciels-btp`,
+    icon: 'M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4',
+  },
+  {
+    label: 'Boîte à outils',
+    desc: '19 calculateurs et simulateurs gratuits, sans inscription.',
+    href: '/',
+    icon: 'M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z',
+  },
+  {
+    label: 'Nouveautés',
+    desc: 'Toutes les améliorations produit ce mois-ci, mises à jour en continu.',
+    href: `${MARKETING_BASE}/nouveautes`,
+    icon: 'M13 10V3L4 14h7v7l9-11h-7z',
+  },
+  {
+    label: 'Facturation électronique 2026',
+    desc: 'Réforme obligatoire au 1er septembre 2026. BatUp est Plateforme agréée.',
+    href: `${MARKETING_BASE}/facturation-electronique-btp`,
+    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+  },
+];
+
+const SECONDARY_RESSOURCES: ToolLink[] = [
+  {
+    label: 'Blog',
+    desc: "Conseils, retours d'expérience et actualités du BTP.",
+    href: `${MARKETING_BASE}/blog`,
+    icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
+  },
+  {
+    label: "Centre d'aide",
+    desc: 'Guides, FAQ et tutos pour bien démarrer avec BatUp.',
+    href: `${MARKETING_BASE}/centre-aide`,
+    icon: 'M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093M12 17h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+  },
+];
+
+// Ancien mega menu 3 colonnes des 19 outils — gardé pour compat mais plus utilisé
 const RESSOURCES_MENU: ToolCategory[] = [
   {
     title: 'Chiffrer & marger',
@@ -295,61 +340,184 @@ export function PublicNav({
         </div>
       </div>
 
-      {/* Mega menu Ressources */}
+      {/* Mega menu Ressources — synchronisé avec batup.fr : 4 items gauche + 2 secondaires + card compact */}
       {ressourcesOpen && (
         <div
-          className="absolute left-0 right-0 top-full z-50 hidden px-4 pt-2 sm:px-6 lg:block lg:px-8"
+          className="absolute left-1/2 top-full z-50 hidden -translate-x-1/2 px-4 pt-2 sm:px-6 lg:block lg:px-8"
           onMouseEnter={showRessources}
           onMouseLeave={scheduleHideRessources}
         >
-          <div className="mx-auto max-w-7xl rounded-2xl border border-gray-100 bg-white px-6 py-8 shadow-2xl">
-            <div className="grid grid-cols-3 gap-10">
-              {RESSOURCES_MENU.map((category) => (
-                <div key={category.title}>
-                  <h3 className="mb-1 text-sm font-bold uppercase tracking-wider text-gray-900">
-                    {category.title}
-                  </h3>
-                  <p className="mb-5 border-b border-gray-100 pb-4 text-xs text-gray-500">
-                    {category.description}
-                  </p>
-                  <div className="space-y-2">
-                    {category.links.map((link) => (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        className="group -mx-2 flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-gray-50"
-                        onClick={() => setRessourcesOpen(false)}
+          <div className="w-[820px] max-w-[calc(100vw-2rem)] rounded-2xl border border-gray-100 bg-white px-5 py-6 shadow-2xl">
+            <div className="grid grid-cols-2 gap-6">
+              {/* Colonne gauche : 4 entrées principales */}
+              <div className="space-y-1">
+                {MAIN_RESSOURCES.map((item) => {
+                  const isInternal = item.href.startsWith('/');
+                  const linkClasses =
+                    'group flex items-start gap-4 rounded-xl p-4 transition-colors hover:bg-gray-50';
+                  const Icon = (
+                    <div
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-colors"
+                      style={{ background: 'linear-gradient(135deg, #ECECFF 0%, #E0E3FA 100%)' }}
+                    >
+                      <svg
+                        className="h-5 w-5 text-brand-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
                       >
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600 transition-colors group-hover:bg-brand-600/15">
-                          <svg
-                            className="h-4 w-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d={link.icon}
-                            />
-                          </svg>
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-brand-600">
-                            {link.label}
-                          </div>
-                          <div className="mt-0.5 text-xs text-gray-500">{link.desc}</div>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d={item.icon}
+                        />
+                      </svg>
+                    </div>
+                  );
+                  const Body = (
+                    <div className="min-w-0 flex-1">
+                      <div className="text-base font-semibold text-gray-900 transition-colors group-hover:text-brand-600">
+                        {item.label}
+                      </div>
+                      <div className="mt-0.5 text-sm text-gray-500">{item.desc}</div>
+                    </div>
+                  );
+                  return isInternal ? (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={linkClasses}
+                      onClick={() => setRessourcesOpen(false)}
+                    >
+                      {Icon}
+                      {Body}
+                    </Link>
+                  ) : (
+                    <a key={item.href} href={item.href} className={linkClasses}>
+                      {Icon}
+                      {Body}
+                    </a>
+                  );
+                })}
+              </div>
 
-            {/* Footer CTA : 4 cards (Comparatifs + Nouveautés + Centre d'aide + Tous les outils) */}
-            <div className="mt-8 grid grid-cols-2 gap-3 border-t border-gray-100 pt-6">
+              {/* Colonne droite : 2 secondaires + card outil le plus utilisé */}
+              <div className="flex flex-col gap-2">
+                {SECONDARY_RESSOURCES.map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className="group flex items-center gap-3 rounded-xl p-3 transition-colors hover:bg-gray-50"
+                  >
+                    <div
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
+                      style={{ background: 'linear-gradient(135deg, #ECECFF 0%, #E0E3FA 100%)' }}
+                    >
+                      <svg
+                        className="h-4 w-4 text-brand-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d={item.icon}
+                        />
+                      </svg>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="text-sm font-semibold leading-tight text-gray-900 transition-colors group-hover:text-brand-600">
+                        {item.label}
+                      </div>
+                      <div className="mt-0.5 truncate text-[11px] leading-tight text-gray-500">
+                        {item.desc}
+                      </div>
+                    </div>
+                  </a>
+                ))}
+
+                {/* Card Outil le plus utilisé */}
+                <Link
+                  href="/calculateur-taux-horaire-btp"
+                  className="group/featured relative mt-1 block overflow-hidden rounded-xl border border-brand-600/20 p-4 transition-all hover:border-brand-600/40 hover:shadow-lg"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, #FFFFFF 0%, #F5F3FF 60%, #EFFDDA 100%)',
+                  }}
+                  onClick={() => setRessourcesOpen(false)}
+                >
+                  <div
+                    className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full blur-3xl"
+                    style={{
+                      background:
+                        'radial-gradient(circle, rgba(231,251,188,0.85) 0%, transparent 70%)',
+                    }}
+                  />
+                  <div
+                    className="pointer-events-none absolute -bottom-8 -left-8 h-24 w-24 rounded-full blur-3xl"
+                    style={{
+                      background:
+                        'radial-gradient(circle, rgba(191,198,244,0.8) 0%, transparent 70%)',
+                    }}
+                  />
+                  <div className="relative flex items-start gap-3">
+                    <div
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-white"
+                      style={{ background: 'linear-gradient(135deg, #BFC6F4, #5368EE)' }}
+                    >
+                      <svg
+                        className="h-4 w-4"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+                        />
+                      </svg>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <span className="inline-block text-[9px] font-bold uppercase leading-none tracking-wider text-brand-600">
+                        Outil le plus utilisé
+                      </span>
+                      <p className="mt-1 text-sm font-bold leading-tight text-gray-900">
+                        Calculateur taux horaire BTP
+                      </p>
+                      <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-semibold text-brand-600 transition-all group-hover/featured:gap-2">
+                        Essayer
+                        <svg
+                          className="h-3 w-3"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M17 8l4 4m0 0l-4 4m4-4H3"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Ancien mega menu (bloc mort) — jamais rendu, kept for git diff readability */}
+      {false && (
+        <div className="hidden">
+          <div className="mt-8 grid grid-cols-2 gap-3 border-t border-gray-100 pt-6">
               {/* Card Comparatifs logiciels BTP (NEW) */}
               <a
                 href={`${MARKETING_BASE}/comparatifs-logiciels-btp`}
@@ -386,6 +554,26 @@ export function PublicNav({
                   </p>
                   <p className="mt-0.5 text-[11px] text-gray-500">
                     Les améliorations produit ce mois-ci.
+                  </p>
+                </div>
+              </a>
+
+              {/* Card Facturation électronique 2026 (NEW) */}
+              <a
+                href={`${MARKETING_BASE}/facturation-electronique-btp`}
+                className="group col-span-2 flex items-start gap-3 rounded-xl border border-gray-200 p-4 transition-all hover:border-brand-600/40 hover:bg-gray-50"
+              >
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600">
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-semibold leading-tight text-gray-900 group-hover:text-brand-600">
+                    Facturation électronique 2026
+                  </p>
+                  <p className="mt-0.5 text-[11px] text-gray-500">
+                    Réforme obligatoire au 1er septembre 2026. BatUp est Plateforme agréée.
                   </p>
                 </div>
               </a>
@@ -541,7 +729,6 @@ export function PublicNav({
               </Link>
             </div>
           </div>
-        </div>
       )}
 
       {/* Mobile overlay */}
@@ -586,49 +773,69 @@ export function PublicNav({
                 <ChevronDown className="h-5 w-5 text-gray-500 transition-transform group-open/acc:rotate-180" />
               </summary>
               <div className="space-y-4 rounded-2xl border border-gray-100 bg-white p-3 pb-4 shadow-sm">
-                {RESSOURCES_MENU.map((category) => (
-                  <div key={category.title}>
-                    <p className="mb-2 px-2 text-[11px] font-bold uppercase tracking-wider text-gray-500">
-                      {category.title}
-                    </p>
-                    <div className="space-y-1">
-                      {category.links.map((link) => (
-                        <Link
-                          key={link.href}
-                          href={link.href}
-                          className="flex items-start gap-3 rounded-lg p-2.5 transition-colors hover:bg-gray-50"
-                          onClick={() => setMobileOpen(false)}
-                        >
-                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600">
-                            <svg
-                              className="h-4 w-4"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d={link.icon}
-                              />
-                            </svg>
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <p className="text-sm font-semibold leading-tight text-gray-900">
-                              {link.label}
-                            </p>
-                            <p className="mt-0.5 text-[11px] leading-snug text-gray-500">
-                              {link.desc}
-                            </p>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                ))}
+                {/* Mobile : 4 items principaux (identique à batup.fr) */}
+                <div className="space-y-1">
+                  {MAIN_RESSOURCES.map((item) => {
+                    const isInternal = item.href.startsWith('/');
+                    const Body = (
+                      <>
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600">
+                          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={item.icon} />
+                          </svg>
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-semibold leading-tight text-gray-900">{item.label}</p>
+                          <p className="mt-0.5 text-[11px] leading-snug text-gray-500">{item.desc}</p>
+                        </div>
+                      </>
+                    );
+                    return isInternal ? (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className="flex items-start gap-3 rounded-lg p-2.5 transition-colors hover:bg-gray-50"
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        {Body}
+                      </Link>
+                    ) : (
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        className="flex items-start gap-3 rounded-lg p-2.5 transition-colors hover:bg-gray-50"
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        {Body}
+                      </a>
+                    );
+                  })}
+                </div>
 
-                {/* CTA cards mobile (4 cards : Comparatifs + Nouveautés + Centre d'aide + Tous les outils) */}
+                {/* Mobile : 2 items secondaires */}
+                <div className="space-y-1 border-t border-gray-100 pt-3">
+                  {SECONDARY_RESSOURCES.map((item) => (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      className="flex items-start gap-3 rounded-lg p-2.5 transition-colors hover:bg-gray-50"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600">
+                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={item.icon} />
+                        </svg>
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-semibold leading-tight text-gray-900">{item.label}</p>
+                        <p className="mt-0.5 text-[11px] leading-snug text-gray-500">{item.desc}</p>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+
+                {/* Ancien bloc CTA cards mobile — jamais rendu */}
+                {false && (
                 <div className="mt-2 grid grid-cols-1 gap-2">
                   <a
                     href={`${MARKETING_BASE}/comparatifs-logiciels-btp`}
@@ -665,6 +872,25 @@ export function PublicNav({
                       </p>
                       <p className="text-[11px] leading-snug text-gray-500">
                         Les améliorations produit ce mois-ci.
+                      </p>
+                    </div>
+                  </a>
+                  <a
+                    href={`${MARKETING_BASE}/facturation-electronique-btp`}
+                    className="flex items-center gap-3 rounded-lg border border-gray-200 p-3 transition-colors hover:bg-gray-50"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600">
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                      </svg>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold leading-tight text-gray-900">
+                        Facturation électronique 2026
+                      </p>
+                      <p className="text-[11px] leading-snug text-gray-500">
+                        Réforme obligatoire au 1er septembre 2026. BatUp est Plateforme agréée.
                       </p>
                     </div>
                   </a>
@@ -733,6 +959,7 @@ export function PublicNav({
                     </div>
                   </Link>
                 </div>
+                )}
               </div>
             </details>
 

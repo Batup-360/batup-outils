@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { SEOHead } from '@/lib/seo-head';
 import { APP_BASE } from '@/lib/urls';
 import { PublicNav } from './PublicNav';
+import { TopBanner } from './TopBanner';
 import { PublicFooter } from './PublicFooter';
 import { MethodologySection } from './MethodologySection';
 import { FAQAccordion, type FAQItem } from './FAQAccordion';
@@ -91,6 +92,7 @@ export function PublicToolLayout({
         ogImageUrl={seo.ogImageUrl}
         jsonLd={jsonLd}
       />
+      <TopBanner />
       <PublicNav signupHref={signupHref} />
       <main className="flex-1">
         {/* Hero aere : plus d'espace nav→H1, H1→sous-titre, sous-titre→outil */}
