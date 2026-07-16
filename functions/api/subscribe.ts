@@ -94,11 +94,114 @@ interface EmailParams {
   result: string | null;
 }
 
+// Astuce/pitch produit adaptée à la famille de l'outil : un calculateur de
+// métré ne doit pas pousser le module paie. Chaque famille pointe vers le
+// produit BatUp réellement pertinent.
+interface Astuce {
+  label: string;
+  headline: string;
+  body: string;
+}
+
+type AstuceKey = 'metre' | 'pricing' | 'paie' | 'fiscal' | 'cash' | 'assurance';
+
+const ASTUCES: Record<AstuceKey, Astuce> = {
+  metre: {
+    label: 'Une astuce pour ne plus refaire ce métré',
+    headline: 'Et si ce métré devenait un devis chiffré en un clic ?',
+    body: "Vos quantités, vos prix, votre bibliothèque d'ouvrages : BatUp Devis & Facturation transforme votre métré en devis conforme (TVA, mentions légales) en quelques minutes.",
+  },
+  pricing: {
+    label: 'Une astuce pour sécuriser vos marges',
+    headline: 'Et si votre marge était suivie sur chaque chantier ?',
+    body: 'BatUp Rentabilité compare le devisé au réel — heures pointées, achats, sous-traitance — et vous alerte dès qu’un chantier commence à déraper.',
+  },
+  paie: {
+    label: 'Une astuce pour ne plus refaire ce calcul',
+    headline: 'Et si BatUp le calculait à partir de vos pointages chantier ?',
+    body: 'Heures, paniers, trajets, grands déplacements : BatUp Pointage récupère tout depuis le terrain et alimente la paie, sans Excel ni oubli en fin de mois.',
+  },
+  fiscal: {
+    label: 'Une astuce pour des factures toujours conformes',
+    headline: 'Et si le bon taux de TVA et les mentions s’appliquaient tout seuls ?',
+    body: "BatUp Devis & Facturation gère l'autoliquidation, les taux réduits, les mentions obligatoires et la facture électronique 2026 — sans erreur de conformité.",
+  },
+  cash: {
+    label: 'Une astuce pour piloter vos marchés',
+    headline: 'Et si situations, DGD et retenues se suivaient automatiquement ?',
+    body: 'BatUp centralise le marché, les avenants, les situations émises et la retenue de garantie, avec relances automatiques avant chaque échéance.',
+  },
+  assurance: {
+    label: 'Une astuce pour intégrer ces coûts à vos prix',
+    headline: 'Et si vos assurances et certifications étaient intégrées à vos prix ?',
+    body: 'BatUp Rentabilité répartit vos frais généraux — assurances, RGE, véhicules — sur vos chantiers, pour un taux horaire juste et une marge protégée.',
+  },
+};
+
+const DEFAULT_ASTUCE: Astuce = {
+  label: 'Une astuce pour gagner du temps',
+  headline: 'Et si vous pilotiez tout votre chantier depuis un seul outil ?',
+  body: "Devis, facturation, pointage, planning et rentabilité réunis : BatUp fait gagner des heures d'administratif aux artisans et PME du BTP.",
+};
+
+const TOOL_ASTUCE: Record<string, AstuceKey> = {
+  // Pricing & marge
+  'calculateur-taux-horaire-btp': 'pricing',
+  'calculateur-prix-chantier-btp': 'pricing',
+  'calculateur-marge-nette-coefficient-btp': 'pricing',
+  'calculateur-charges-sociales-artisan-btp': 'pricing',
+  'comparateur-statut-juridique-artisan-btp': 'pricing',
+  // Paie & RH
+  'calculateur-heures-supplementaires-btp': 'paie',
+  'calculateur-cout-salarie-btp': 'paie',
+  'calculateur-jours-intemperies-cibtp': 'paie',
+  'calculateur-prime-anciennete-ccn-batiment': 'paie',
+  // Fiscal & légal
+  'calculateur-tva': 'fiscal',
+  'calculateur-tva-autoliquidation-btp': 'fiscal',
+  'generateur-mention-tva-facture-btp': 'fiscal',
+  'generateur-attestation-tva': 'fiscal',
+  'verificateur-mentions-obligatoires-facture-devis-btp': 'fiscal',
+  // Cash, marchés
+  'calculateur-situation-travaux': 'cash',
+  'calculateur-dgd-decompte-general-definitif': 'cash',
+  'calculateur-retenue-de-garantie': 'cash',
+  'calculateur-revision-prix-index-bt': 'cash',
+  // Assurances & certification
+  'simulateur-decennale-btp': 'assurance',
+  'simulateur-rc-pro-btp': 'assurance',
+  'calculateur-roi-certification-rge': 'assurance',
+  // Métré & quantités
+  'calculateur-beton': 'metre',
+  'calculateur-surface': 'metre',
+  'calculateur-volume': 'metre',
+  'calculateur-escalier': 'metre',
+  'calculateur-mortier': 'metre',
+  'calculateur-chape': 'metre',
+  'calculateur-pente-toiture': 'metre',
+  'calculateur-papier-peint': 'metre',
+  'calculateur-parpaings': 'metre',
+  'calculateur-briques': 'metre',
+  'calculateur-placo': 'metre',
+  'calculateur-carrelage': 'metre',
+  'calculateur-parquet': 'metre',
+  'calculateur-terrasse': 'metre',
+  'calculateur-isolant': 'metre',
+  'calculateur-peinture': 'metre',
+  'calculateur-consommation-materiaux': 'metre',
+};
+
+function astuceFor(toolSlug: string): Astuce {
+  const key = TOOL_ASTUCE[toolSlug];
+  return key ? ASTUCES[key] : DEFAULT_ASTUCE;
+}
+
 function buildEmailHtml({ prenom, toolLabel, toolSlug, result }: EmailParams): string {
   const safePrenom = escapeHtml(prenom);
   const safeTool = escapeHtml(toolLabel);
   const toolUrl = `${ORIGIN}/${toolSlug}`;
   const signupUrl = `${APP_BASE}/signup?source=${encodeURIComponent(toolSlug)}`;
+  const astuce = astuceFor(toolSlug);
 
   const resultBlock = result
     ? `
@@ -134,9 +237,9 @@ function buildEmailHtml({ prenom, toolLabel, toolSlug, result }: EmailParams): s
 
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #ECECFF;border-bottom:1px solid #ECECFF;margin:28px 0;">
             <tr><td style="padding:22px 0;">
-              <p style="font-size:14px;color:#6b7280;margin:0 0 4px;">Une astuce pour ne plus refaire ce calcul</p>
-              <p style="font-size:15px;color:#1a1a2e;font-weight:600;margin:0 0 12px;line-height:1.4;">Et si BatUp le calculait automatiquement à partir de vos pointages chantier ?</p>
-              <p style="font-size:14px;line-height:1.6;color:#4b5563;margin:0;">Heures, paniers, trajets, grands déplacements. BatUp Pointage récupère tout depuis le terrain et alimente la paie sans Excel. Plus d'oubli en fin de mois.</p>
+              <p style="font-size:14px;color:#6b7280;margin:0 0 4px;">${escapeHtml(astuce.label)}</p>
+              <p style="font-size:15px;color:#1a1a2e;font-weight:600;margin:0 0 12px;line-height:1.4;">${escapeHtml(astuce.headline)}</p>
+              <p style="font-size:14px;line-height:1.6;color:#4b5563;margin:0;">${escapeHtml(astuce.body)}</p>
             </td></tr>
           </table>
 
