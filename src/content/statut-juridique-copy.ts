@@ -1,8 +1,8 @@
 export const statutJuridiqueCopy = {
   seo: {
-    title: 'Comparateur statut juridique artisan BTP — micro, EI, EURL, SARL, SAS | Batup',
+    title: "Comparateur statut juridique artisan BTP | Batup",
     description:
-      'Répondez à 4 questions et obtenez le statut juridique le mieux adapté à votre activité BTP : micro-entreprise, EI au réel, EURL, SARL ou SAS. Comparateur gratuit basé sur le barème 2026.',
+      "Micro, EI, EURL, SARL ou SAS pour votre activité BTP ? Comparateur gratuit en 4 questions avec recommandation personnalisée.",
     canonicalPath: '/comparateur-statut-juridique-artisan-btp',
   },
   webApplication: {

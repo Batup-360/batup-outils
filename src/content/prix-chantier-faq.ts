@@ -2,48 +2,43 @@ import type { FAQItem } from '@/components/FAQAccordion';
 
 export const prixChantierFAQ: FAQItem[] = [
   {
-    question: 'Comment chiffrer un chantier BTP sans perdre d’argent ?',
+    question: 'Comment calculer le prix de vente d’un chantier ?',
     answer:
-      "Trois étapes : (1) lister honnêtement vos coûts (heures de main d'œuvre × votre taux facturé, matériaux × coefficient, sous-traitance, frais divers) ; (2) appliquer votre marge nette cible ; (3) vérifier que la marge résultante est au-dessus du seuil de sécurité de 14,5 %. Le calculateur ci-dessus fait ces trois étapes pour vous.",
+      "Partez du déboursé sec (main-d'œuvre + fournitures + matériel), ajoutez les frais généraux (15 à 25 %), puis appliquez votre marge. En pratique : prix de vente HT = déboursé sec × coefficient. Le calculateur applique votre coefficient ou votre marge cible et affiche le prix HT à viser, avec un verdict de rentabilité.",
   },
   {
-    question: 'Quel coefficient appliquer sur les matériaux ?',
+    question: 'Qu’est-ce que le déboursé sec et comment le calculer ?',
     answer:
-      "Un coefficient de 1,30 sur le prix d'achat HT correspond à environ 23 % de marge nette : c'est la norme dans le BTP français pour des chantiers de rénovation classique. Pour des matériaux à faible rotation, des projets sur-mesure ou de la fourniture spécialisée, montez à 1,40–1,50. Pour de la pure pose avec matériaux fournis par le client, le coefficient ne s'applique évidemment pas.",
+      "Le déboursé sec est le coût direct d'un chantier, sans marge ni frais de structure : main-d'œuvre (heures × coût horaire chargé) + fournitures + matériel loué. C'est la base de tout chiffrage. On lui ajoute ensuite les frais généraux puis la marge pour obtenir le prix de vente. Oublier une part du déboursé, c'est vendre à perte sans le voir.",
   },
   {
-    question: 'Marge nette ou marge brute, quelle différence ?',
+    question: 'Quel coefficient multiplicateur appliquer dans le BTP ?',
     answer:
-      'La marge nette est calculée sur le prix de vente : (PV − coût) / PV. La marge brute (parfois appelée taux de marge) est calculée sur le coût : (PV − coût) / coût. Pour le même chantier, une marge brute de 30 % correspond à une marge nette de 23 %. Le calculateur travaille en marge nette, qui est la référence comptable correcte et qui correspond à ce qui rentre vraiment dans votre poche.',
+      "Le coefficient moyen du bâtiment tourne autour de 1,30, mais il varie selon la prestation : fournitures seules 1,3 à 1,5, main-d'œuvre / pose 1,8 à 2,2, fourniture + pose 1,5 à 1,8, sous-traitance 1,15 à 1,25, études 2,5 à 3,5. Un plombier vise 1,8 à 2,0 sur le matériel, un électricien 2,0 à 2,2. Le bon coefficient couvre vos frais tout en restant compétitif.",
   },
   {
-    question: 'Pourquoi le verdict passe en orange en dessous de 14,5 % ?',
+    question: 'Quelle est la différence entre taux de marge et taux de marque ?',
     answer:
-      "14,5 % de marge nette est le seuil en dessous duquel un aléa moyen suffit à transformer le chantier en perte : un retard de 15 jours sur un paiement, une remise commerciale de fin de chantier, un poste oublié dans le devis, une intempérie. Au-dessus de 14,5 %, vous avez du coussin pour absorber ces imprévus. C'est le seuil que nous utilisons dans Batup pour alerter sur les chantiers à risque.",
+      "Le taux de marge se calcule sur le coût (marge ÷ coût de revient) ; le taux de marque se calcule sur le prix de vente (marge ÷ prix de vente HT). C'est la confusion n°1 : annoncer « 30 % » sans préciser la base fait chiffrer environ 5 points trop bas. Pour fixer un prix, raisonnez en taux de marque : prix = coût ÷ (1 − marque).",
   },
   {
-    question: 'Comment gérer les frais imprévus dans un devis ?',
+    question: 'Quelle marge viser pour qu’un chantier soit rentable ?',
     answer:
-      "Deux options. Option A : ajouter une ligne « aléas / imprévus » représentant 3 à 5 % du chantier — c'est transparent et le client le comprend généralement. Option B : appliquer une marge nette cible légèrement supérieure (par exemple 28 % au lieu de 23 %) qui absorbe les aléas sans qu'ils apparaissent en clair. La plupart des artisans expérimentés font les deux.",
+      "Une marge nette de 20 à 35 % est une zone saine. En dessous de 15 %, la rentabilité est fragile : le moindre aléa fait basculer en perte. Au-dessus de 40 %, vous risquez de perdre l'appel d'offres. Attention : la marge nette moyenne du secteur n'est que de 1 à 3 % du chiffre d'affaires — beaucoup d'artisans croient gagner 30 % et n'en gardent que 8.",
   },
   {
-    question: 'Faut-il refacturer la sous-traitance avec une marge ?',
+    question: 'Comment intégrer les aléas de chantier dans le devis ?',
     answer:
-      "Légalement, vous le pouvez, et c'est souvent recommandé car la sous-traitance vous coûte aussi en temps de coordination, de qualité-contrôle et de trésorerie. Une marge de 10 à 15 % sur la sous-traitance est usuelle. Si vous refacturez au coût réel (pass-through), assurez-vous que votre main d'œuvre absorbe le temps de gestion.",
+      "Ajoutez une provision pour imprévus de 10 à 15 % du déboursé sec : intempéries, découvertes en rénovation, reprises, retards. Comptez aussi un coefficient de perte sur les matériaux (5 à 10 % pour le carrelage, 8 à 15 % pour les revêtements de sol). Sans ces marges, un chantier calculé « au plus juste » finit presque toujours en dessous de sa marge prévue.",
   },
   {
-    question: 'Pourquoi le calculateur ne demande pas la TVA ?',
+    question: 'Quelle TVA appliquer sur un devis de travaux ?',
     answer:
-      "Tout est en HT. Pour le client final, vous appliquerez la TVA selon votre régime (10 % rénovation, 20 % neuf, 5,5 % travaux d'efficacité énergétique). La TVA collectée est reversée à l'État, elle n'intervient pas dans votre marge.",
+      "20 % pour le neuf et les locaux professionnels ; 10 % pour l'amélioration ou l'entretien d'un logement de plus de 2 ans ; 5,5 % pour la rénovation énergétique. Depuis mars 2025, une mention certifiée par le client sur le devis remplace l'ancienne attestation papier. Le prix de vente que vous calculez est un montant HT auquel s'ajoute cette TVA.",
   },
   {
-    question: 'Mon client dit que mon prix est trop élevé. Comment réagir ?',
+    question: 'Comment chiffrer plus vite et sans erreur ses chantiers ?',
     answer:
-      'Avant de baisser le prix, vérifiez le verdict du calculateur. Si vous êtes en marge nette < 14,5 %, ne descendez pas : vous travaillerez à perte. Préférez ajuster le périmètre (matériaux moins chers, finitions simplifiées, phasage du chantier). Si vous êtes confortablement au-dessus, vous pouvez accorder une remise de 3 à 5 % sans danger.',
-  },
-  {
-    question: 'Le calculateur garde-t-il mes données ?',
-    answer:
-      "Non. Tout est calculé en local dans votre navigateur, rien n'est envoyé sur nos serveurs. Si vous voulez sauvegarder vos devis, les comparer, les envoyer à vos clients ou suivre vos marges sur l'année, c'est précisément ce que Batup propose — essai gratuit ci-dessous.",
+      "En sortant d'Excel, source d'oublis et d'erreurs dès qu'on gère plusieurs chantiers. Batup calcule le déboursé sec à partir de vos coûts réels, applique vos coefficients et marges, et génère un devis complet et conforme en quelques minutes — avec la marge visible avant l'envoi. Essai gratuit, sans carte bancaire.",
   },
 ];

@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react';
-import { Lock, X, CheckCircle2 } from 'lucide-react';
+import { Mail, X } from 'lucide-react';
 import { useEmailGate } from '@/lib/email-gate-context';
 import { Button, Input, Label } from './ui';
 
@@ -11,7 +11,7 @@ export function EmailGate() {
   const { pending, closeGate, markUnlocked } = useEmailGate();
   const [prenom, setPrenom] = useState('');
   const [email, setEmail] = useState('');
-  const [rgpd, setRgpd] = useState(true);
+  const [rgpd, setRgpd] = useState(false);
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -112,19 +112,19 @@ export function EmailGate() {
         {/* Header avec halo signature BatUp */}
         <div className="relative bg-gradient-to-br from-brand-50 via-white to-white px-6 pt-7 pb-5 sm:px-8 sm:pt-8">
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#BFC6F4] via-[#7076F1] to-[#5368EE] text-white shadow-md">
-            <Lock className="h-5 w-5" />
+            <Mail className="h-5 w-5" />
           </div>
           <h2
             id={titleId}
             className="text-center text-xl font-bold text-gray-900 sm:text-2xl"
           >
-            Votre résultat est prêt
+            Recevez votre résultat par email
           </h2>
           <p className="mx-auto mt-2 max-w-sm text-center text-sm text-gray-600">
-            Saisissez votre email pour afficher votre résultat. Vous recevrez aussi une copie par mail pour le retrouver plus tard.
+            Saisissez votre email : on vous en envoie une copie à garder et à retrouver quand vous voulez.
           </p>
           <p className="mx-auto mt-3 max-w-sm rounded-lg bg-brand-50 px-3 py-2 text-center text-xs font-medium text-brand-700">
-            Une seule fois suffit. Vous accédez ensuite librement à tous nos outils gratuits, sans rien ressaisir.
+            Recevez aussi nos nouveaux outils et astuces BatUp. Désinscription en un clic, à tout moment.
           </p>
           <p className="mx-auto mt-2 max-w-sm text-center text-xs text-gray-500">
             Pensez à vérifier vos spams si vous ne recevez pas le mail dans quelques minutes.
@@ -190,12 +190,12 @@ export function EmailGate() {
             {status === 'submitting' ? (
               <span className="inline-flex items-center gap-2">
                 <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
-                Déblocage…
+                Envoi…
               </span>
             ) : (
               <span className="inline-flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4" />
-                Voir mon résultat
+                <Mail className="h-4 w-4" />
+                M'envoyer le résultat
               </span>
             )}
           </Button>

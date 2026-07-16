@@ -2,48 +2,43 @@ import type { FAQItem } from '@/components/FAQAccordion';
 
 export const coutSalarieFAQ: FAQItem[] = [
   {
-    question: "Combien coûte un salarié à un employeur du BTP ?",
+    question: 'Combien coûte réellement un salarié dans le BTP pour l’employeur ?',
     answer:
-      "Un salarié du BTP coûte en moyenne 1,6 à 1,7 fois son salaire brut, soit environ 1,9 à 2,0 fois son salaire net. Pour un brut mensuel de 2 200 €, le coût total employeur tourne autour de 3 600 € (charges patronales ~920 €, CIBTP ~460 €). C'est plus élevé que dans d'autres secteurs en raison de la cotisation CIBTP (congés payés + intempéries) et du taux accident du travail propre au bâtiment. Le coût horaire chargé pour un temps plein ressort autour de 23 à 25 €/h, ce qui constitue le plancher de facturation à ne pas franchir.",
+      "Environ 1,6 à 1,65 fois le salaire brut pour un ouvrier du bâtiment. Pour 2 500 € brut, le coût total employeur avoisine 4 100 €, une fois ajoutées les charges patronales (~40 à 45 %) et la cotisation CIBTP congés payés (~20,7 %). Le BTP est plus cher que les autres secteurs à cause de cette CIBTP. Le calculateur détaille le coût à partir du brut.",
   },
   {
-    question: "Qu'est-ce que la CIBTP et pourquoi mon entreprise doit-elle cotiser ?",
+    question: 'Quelle est la différence entre salaire brut, net et coût employeur ?',
     answer:
-      "La Caisse des Congés Intempéries du BTP est une caisse paritaire propre au secteur du bâtiment et des travaux publics. Elle collecte deux cotisations versées exclusivement par l'employeur : la cotisation congés payés (≈ 19 % du brut), qui permet à la caisse de payer directement les salariés pendant leurs congés (contrairement aux autres secteurs où l'employeur paie lui-même), et la cotisation intempéries (≈ 0,5 à 2 % du brut selon les régions), qui finance le maintien de salaire en cas d'arrêt météo. L'affiliation est obligatoire dès qu'il y a un salarié.",
+      "Le brut est le salaire de référence du contrat. Le net (environ 77 à 78 % du brut) est ce que touche le salarié après cotisations salariales. Le coût employeur (ou « super-brut ») est le brut augmenté des charges patronales et de la CIBTP : c'est ce que paie réellement l'entreprise, soit environ 1,6 fois le brut dans le BTP.",
   },
   {
-    question: 'Quel est le taux de charges patronales dans le BTP en 2026 ?',
+    question: 'Pour 1 € net versé, combien coûte le salarié à l’entreprise ?',
     answer:
-      "Le taux moyen de charges patronales d'un employeur du BTP en 2026 se situe entre 40 % et 45 % du salaire brut, hors CIBTP. Il inclut : sécurité sociale (~13 %), retraite complémentaire (~6 %), prévoyance et mutuelle (~3 %), formation et apprentissage (~1,5 %), accident du travail (taux variable, en moyenne ~3 % dans le BTP contre 1,5 % dans le tertiaire), Fnal et CSA (~0,5 %), Pôle emploi (~4 %). La réduction Fillon allège les cotisations sur les bas salaires (jusqu'à 1,6 SMIC), surtout dans les entreprises de moins de 50 salariés.",
+      "Environ 2 € dans le BTP. Le passage du net au coût total cumule les cotisations salariales (pour remonter au brut) puis les charges patronales et la CIBTP (pour atteindre le coût employeur). Résultat : pour 1 € réellement perçu par l'ouvrier, l'entreprise débourse à peu près le double. Le calculateur affiche ce ratio directement.",
   },
   {
-    question: "Pourquoi le taux CIBTP est-il différent en Île-de-France ?",
+    question: 'Quel est le taux de charges patronales dans le bâtiment en 2026 ?',
     answer:
-      "Parce que la cotisation intempéries est calculée sur des bases régionales, et que les caisses régionales appliquent des taux différents selon le risque historique observé. En Île-de-France, le taux global CIBTP (congés payés + intempéries) tourne autour de 21 % du brut, contre environ 19 % dans les autres régions. Les TP (travaux publics) ont également un barème distinct, légèrement différent du bâtiment. Pour le taux exact applicable à votre entreprise, consultez votre attestation CIBTP annuelle ou votre comptable.",
+      "Les charges patronales représentent environ 40 à 45 % du brut selon la taille de l'entreprise, auxquelles s'ajoute la cotisation CIBTP congés payés d'environ 20,7 % propre au BTP. C'est cette CIBTP qui explique pourquoi le coût d'un salarié du bâtiment dépasse celui des autres secteurs. Les bas salaires bénéficient en plus de la réduction générale de cotisations.",
   },
   {
-    question: 'Comment passer du salaire brut au salaire net dans le BTP ?',
+    question: 'Qu’est-ce que la cotisation CIBTP congés payés et qui la paie ?',
     answer:
-      "Les cotisations salariales (sécurité sociale, retraite complémentaire, chômage, CSG/CRDS) représentent environ 23 % du salaire brut pour un salarié du BTP. Le salaire net avant impôt sur le revenu équivaut donc à environ 77 % du brut. Pour un brut de 2 200 €, le net avant prélèvement à la source ressort autour de 1 690 €. Après prélèvement à la source (taux personnalisé du salarié, généralement entre 0 % et 15 %), il faut soustraire encore le montant de l'impôt pour obtenir le net en poche.",
+      "Dans le BTP, les congés payés ne sont pas gérés par l'entreprise mais par une caisse externe, la CIBTP. L'employeur y cotise environ 20,7 % de la masse salariale (2026), et c'est la caisse qui verse les congés aux salariés. Cette cotisation s'ajoute aux charges patronales classiques : elle est la principale raison du surcoût du travail dans le bâtiment.",
   },
   {
-    question: 'Le coût horaire chargé est-il le bon repère pour facturer ?',
+    question: 'Comment calculer le coût horaire chargé d’un ouvrier BTP ?',
     answer:
-      "Non, c'est le plancher absolu, pas le tarif à facturer. Le coût horaire chargé ne couvre que le salaire et les charges. Il ne couvre pas vos charges fixes (local, véhicules, assurances, logiciels, marketing, votre propre rémunération si vous êtes dirigeant) ni votre marge. Pour obtenir le taux horaire à facturer, ajoutez les charges fixes annuelles à votre masse salariale, divisez par les heures facturables, puis appliquez votre marge nette cible. Notre calculateur de taux horaire BTP fait ce calcul complet en intégrant tous les postes.",
+      "Divisez le coût total employeur annuel par le nombre d'heures réellement productives, pas par les heures payées. Un ouvrier payé 1 607 h/an n'est productif qu'environ 1 200 à 1 400 h (déplacements, intempéries, absences). Diviser par les heures payées sous-estime le coût horaire et fait perdre de l'argent sur les devis. Utilisez le coût productif pour chiffrer.",
   },
   {
-    question: "Combien d'heures mensuelles compter pour un temps plein ?",
+    question: 'Qu’est-ce que la réduction générale de cotisations sur les bas salaires ?',
     answer:
-      "Le standard légal en France est de 151,67 heures mensuelles pour un temps plein de 35 heures hebdomadaires (35 × 52 ÷ 12). C'est la valeur utilisée par défaut dans ce calculateur. Pour un coût horaire chargé encore plus réaliste dans le BTP, descendez à 140-145 heures si vous voulez tenir compte des absences pour intempéries, formation et arrêts maladie sectoriels. Plus vous descendez le diviseur, plus le coût horaire monte — et plus votre devis sera prudent.",
+      "La réduction générale (ex-réduction Fillon, devenue RGDU en 2026) diminue les charges patronales sur les salaires proches du SMIC. Depuis 2026, elle s'annule à 3 SMIC (contre 1,6 SMIC auparavant), ce qui élargit le nombre de salaires concernés. Elle réduit sensiblement le coût réel d'un ouvrier payé au SMIC ou légèrement au-dessus.",
   },
   {
-    question: "Le forfait social et la part patronale mutuelle sont-ils inclus ?",
+    question: 'Comment passer du coût d’un salarié au taux horaire à facturer ?',
     answer:
-      "Oui, dans le taux moyen de 42 % de charges patronales utilisé ici, la part patronale de mutuelle obligatoire (généralement 50 % de la cotisation, plafonnée par accord de branche) et le forfait social sur la prévoyance sont inclus. Si votre entreprise verse des avantages supplémentaires (titres-restaurant, indemnités kilométriques, primes de bilan, intéressement), il faut les ajouter au-delà : les titres-restaurant sont soumis à charges sur la part employeur au-delà de 7,18 € en 2026, et les primes de bilan sont des compléments de salaire entièrement chargés.",
-  },
-  {
-    question: "Pourquoi le coût horaire chargé doit-il être suivi chantier par chantier ?",
-    answer:
-      "Parce que deux salariés payés 12 €/h ne coûtent pas la même chose à l'entreprise : un apprenti déclenche des allègements de charges, un cadre coûte plus en raison de la cotisation Apec, un salarié en grand déplacement génère des indemnités exonérées qui n'entrent pas dans le coût horaire mais qu'il faut quand même facturer. Sans suivi par salarié et par chantier, vous facturez en moyenne, et vous perdez de l'argent sur les chantiers à forte intensité de main d'œuvre coûteuse. Batup réintègre automatiquement ce coût dans la rentabilité de chaque chantier.",
+      "Le coût horaire chargé n'est pas le prix de vente : il faut y ajouter les frais généraux et une marge. En pratique, on multiplie souvent le coût horaire chargé par 1,8 à 2,5 pour obtenir le taux horaire à facturer au client. Utilisez le calculateur de taux horaire BTP pour intégrer vos charges de structure et votre marge cible.",
   },
 ];

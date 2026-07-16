@@ -1,8 +1,8 @@
 export const situationTravauxCopy = {
   seo: {
-    title: 'Calculateur de situation de travaux BTP — acompte intermédiaire | Batup',
+    title: "Calculateur de situation de travaux BTP | Batup",
     description:
-      "Calculez en 30 secondes le montant d'une situation de travaux mensuelle : avancement, retenue de garantie 5 %, TVA, net à percevoir. Outil gratuit pour artisans et entreprises du bâtiment (marchés > 3 mois).",
+      "Calculez votre situation de travaux mensuelle : avancement, montant du marché, déjà facturé, retenue. Calculateur BTP gratuit.",
     canonicalPath: '/calculateur-situation-travaux',
   },
   webApplication: {

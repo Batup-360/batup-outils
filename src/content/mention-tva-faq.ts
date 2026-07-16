@@ -2,43 +2,43 @@ import type { FAQItem } from '@/components/FAQAccordion';
 
 export const mentionTvaFAQ: FAQItem[] = [
   {
-    question: 'Quel taux de TVA pour des travaux de rénovation classique ?',
+    question: 'Comment savoir si la TVA est à 10 ou 20 % pour mes travaux ?',
     answer:
-      "Pour des travaux d'amélioration, de transformation, d'aménagement ou d'entretien portant sur un logement achevé depuis plus de deux ans, le taux applicable est 10 % (article 279-0 bis du CGI). Cela couvre la majorité des chantiers de rénovation : peinture, plomberie, électricité, carrelage, menuiserie, ravalement. Le client particulier doit signer une attestation TVA (CERFA 1300 ou 1301) à conserver 5 ans. Pour un local professionnel, un logement de moins de 2 ans, ou des travaux de construction neuve, le taux reste de 20 %.",
+      "10 % pour les travaux d'amélioration, de transformation, d'aménagement ou d'entretien d'un logement achevé depuis plus de 2 ans. 20 % pour le neuf, un logement de moins de 2 ans, un local professionnel, ou des travaux qui augmentent la surface de plancher de plus de 10 % ou reviennent à produire un immeuble neuf. Le générateur ci-dessus tranche selon votre situation.",
   },
   {
-    question: 'Quand puis-je appliquer la TVA à 5,5 % ?',
+    question: 'Quels travaux bénéficient de la TVA à 5,5 % ?',
     answer:
-      "Le taux réduit de 5,5 % s'applique aux travaux d'amélioration de la qualité énergétique d'un logement achevé depuis plus de deux ans (article 278-0 bis A du CGI). Sont concernés : l'isolation thermique (combles, murs, planchers, fenêtres double vitrage à isolation renforcée), les pompes à chaleur air-eau, eau-eau ou géothermiques, les chaudières biomasse (granulés ou bûches), les chauffe-eau solaires, les VMC double flux. Les équipements doivent respecter les caractéristiques de l'arrêté du 30 décembre 2019. L'attestation TVA signée par le client est obligatoire.",
+      "Uniquement les travaux d'amélioration de la qualité énergétique d'un logement de plus de 2 ans : isolation thermique, chaudière à haute performance, pompe à chaleur, double vitrage, ainsi que les travaux induits indissociables. Tous les autres travaux de rénovation relèvent du 10 %, pas du 5,5 %. C'est une confusion fréquente : le 5,5 % n'est pas le taux de toute rénovation.",
   },
   {
-    question: 'La TVA à 10 % est-elle applicable sur les matériaux ?',
+    question: 'Quelle mention TVA écrire sur un devis ou une facture en 2026 ?',
     answer:
-      "Oui, mais sous condition. Quand l'entreprise fournit ET pose les matériaux dans le cadre d'un chantier de rénovation éligible, l'ensemble — main d'œuvre et matériaux — bénéficie du taux à 10 %. Mais si le particulier achète lui-même les matériaux dans un magasin de bricolage et fait seulement appel à un artisan pour la pose, l'achat des matériaux reste au taux à 20 % en magasin. Le taux réduit ne s'applique pas non plus aux gros équipements (chaudière classique non éligible, ascenseur, etc.) listés dans l'article 279-0 bis du CGI.",
+      "Pour un taux réduit, le client appose sur le devis ou la facture une mention certifiant que le logement a plus de 2 ans et la nature des travaux (art. 279-0 bis pour le 10 %, 278-0 bis A pour le 5,5 %). En sous-traitance : « Autoliquidation ». En franchise : « TVA non applicable, art. 293 B du CGI ». Le générateur produit la mention exacte à copier.",
   },
   {
-    question: 'Qu’est-ce que l’attestation TVA obligatoire et qui doit la remplir ?',
+    question: 'L’attestation TVA (Cerfa 1300 / 1301) est-elle encore obligatoire ?',
     answer:
-      "Pour bénéficier du taux à 10 % ou 5,5 %, le client particulier doit remplir et signer une attestation TVA avant la facturation : formulaire CERFA n° 1300-SD (simplifié) si les travaux sont inférieurs à 300 € TTC, formulaire CERFA n° 1301-SD (normal) au-delà. L'attestation engage la responsabilité du client sur l'ancienneté du logement (+ de 2 ans) et la nature des travaux. L'entreprise conserve une copie pendant 5 ans avec la facture. Sans cette attestation, l'administration redresse l'entreprise sur le différentiel de TVA (10 ou 14,5 points selon le taux appliqué).",
+      "Non, plus depuis le 1er mars 2025. Le formulaire CERFA d'attestation a été supprimé : il est remplacé par une mention de certification que le client appose et signe directement sur le devis ou la facture. Beaucoup de sites indiquent encore le contraire — c'est faux. La règle est confirmée par le BOFiP BOI-TVA-LIQ-30-20-90-40 du 22 octobre 2025.",
   },
   {
-    question: 'La franchise en base permet-elle de facturer sans TVA ?',
+    question: 'Faut-il la mention si les travaux sont inférieurs à 1 000 € ?',
     answer:
-      "Oui. La franchise en base de TVA (article 293 B du CGI) dispense l'entreprise de collecter la TVA, quel que soit le client ou le type de travaux. Plafonds 2026 — la réforme du seuil unique à 25 000 € a été suspendue en mars 2025 : 37 500 € HT (seuil) / 41 250 € HT (seuil majoré) pour les prestations de service, 85 000 € HT (seuil) / 93 500 € HT (seuil majoré) pour les livraisons de biens. La mention « TVA non applicable — article 293 B du CGI » doit obligatoirement figurer sur chaque facture. Contrepartie : l'entreprise ne peut pas déduire la TVA sur ses propres achats (matériaux, outillage, sous-traitance), ce qui peut rendre la franchise moins avantageuse au-delà d'un certain volume d'achats.",
+      "Pour des travaux d'entretien ou de réparation inférieurs à 1 000 € TTC, la mention de certification n'est pas exigée. La facture doit néanmoins comporter le nom et l'adresse du client, l'adresse du chantier, la nature des travaux et l'ancienneté du logement (plus de 2 ans). Au-delà de ce seuil, la mention signée du client redevient nécessaire pour le taux réduit.",
   },
   {
-    question: 'Que se passe-t-il si je me trompe de taux de TVA ?',
+    question: 'Quelle mention pour un auto-entrepreneur en franchise de TVA ?',
     answer:
-      "Si vous facturez à un taux inférieur à celui dû (10 % au lieu de 20 %, par exemple, sans attestation), l'administration peut redresser l'entreprise sur le différentiel de TVA, majoré d'intérêts de retard de 0,20 % par mois et d'une pénalité de 40 % en cas de manquement délibéré (article 1729 du CGI). Si vous facturez un taux supérieur à celui dû (20 % au lieu de 10 %), vous devez reverser la TVA facturée, mais le client peut vous demander une facture rectificative. Dans les deux cas, le contrôle est rétroactif sur 3 ans (délai de reprise de l'article L169 du LPF).",
+      "« TVA non applicable, art. 293 B du CGI ». En franchise en base, vous facturez en HT sans TVA et n'appliquez ni le taux réduit ni l'autoliquidation. Les seuils 2026 sont de 37 500 € pour les prestations de services (majoré 41 250 €) ; le projet de seuil unique à 25 000 € a été suspendu. Surveillez le franchissement en cours d'année.",
   },
   {
-    question: 'Comment refacturer un sous-traitant : avec ou sans TVA ?',
+    question: 'Quelle TVA si le client achète lui-même les matériaux ?',
     answer:
-      "Si vous êtes sous-traitant d'une entreprise du BTP titulaire du marché vis-à-vis du client final, vous facturez en autoliquidation : montant HT seul, sans ligne TVA, avec la mention obligatoire « TVA due par le preneur — Autoliquidation, article 283-2 nonies du CGI ». C'est le donneur d'ordre qui collecte et déduit la TVA sur sa propre déclaration CA3. Le mécanisme est neutre financièrement mais sécurise la collecte pour l'État. Cette règle s'applique sur tous les chantiers (rénovation, neuf, démolition, travaux publics), à condition que le donneur d'ordre soit un assujetti à la TVA établi en France.",
+      "Le taux réduit ne s'applique qu'à une prestation globale de fourniture et de pose par l'entreprise. Si le client fournit lui-même les matériaux, seule la main-d'œuvre peut bénéficier du taux réduit, et les matériaux qu'il achète restent à 20 %. C'est une erreur coûteuse fréquente : facturer à 10 % des matériaux fournis par le client expose à un redressement.",
   },
   {
-    question: 'Le taux à 5,5 % s’applique-t-il aussi à l’isolation ?',
+    question: 'Qui est responsable en cas d’erreur de taux de TVA ?',
     answer:
-      "Oui, à condition que l'isolation respecte les caractéristiques techniques de l'arrêté du 30 décembre 2019. Pour l'isolation des combles, la résistance thermique R doit être ≥ 7 m².K/W (combles perdus) ou ≥ 6 m².K/W (rampants). Pour les murs : R ≥ 3,7 m².K/W. Pour les planchers bas : R ≥ 3 m².K/W. Pour les fenêtres : Uw ≤ 1,3 W/m².K et Sw ≥ 0,3. Si les performances ne sont pas atteintes (par exemple, un simple double vitrage classique sans isolation renforcée), le taux à 5,5 % ne s'applique pas — on retombe à 10 % pour rénovation classique sur logement de + 2 ans, ou 20 % sinon.",
+      "L'entreprise est responsable de l'application du bon taux, mais le client qui certifie les conditions (ancienneté, nature des travaux) est solidairement redevable du complément de TVA si sa déclaration est inexacte. C'est tout l'intérêt de la mention signée : elle engage le client. Conservez-la 5 ans avec la facture à l'appui de votre comptabilité.",
   },
 ];

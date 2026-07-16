@@ -158,6 +158,13 @@ export function HourlyRateCalculator() {
                 <Row label="CA minimum annuel" value={fmtEuro(results.caMin)} />
                 <Row label="CA minimum mensuel" value={fmtEuro(results.caMinMensuel)} />
               </div>
+              {results.tauxFacturer > 0 && (
+                <p className="rounded-lg border border-gray-200 bg-white p-3 text-xs leading-relaxed text-gray-500">
+                  <strong className="text-gray-700">Repère marché :</strong> un artisan du BTP facture
+                  en moyenne 45 à 70 €/h HT selon le métier et la région (Île-de-France +20 à 30 %).
+                  Votre taux dépend de vos charges réelles, pas de celui du voisin.
+                </p>
+              )}
               <div className="space-y-2 pt-2">
                 <a href={ctaSignupHref}>
                   <Button className="h-11 w-full rounded-full">

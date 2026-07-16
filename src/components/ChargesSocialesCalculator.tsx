@@ -84,8 +84,10 @@ function computeResults(inputs: Inputs): Results {
   }
 
   if (statut === 'micro') {
-    // Micro artisan BTP (prestations BIC) : 21,2 % + 0,3 % CFP
-    const tauxUrssaf = acre ? 0.106 : 0.212;
+    // Micro artisan BTP (prestations BIC) : 21,2 % + 0,3 % CFP.
+    // ACRE = exonération 1ère année : 25 % depuis le 1er juillet 2026 (décret du
+    // 6 février 2026), soit 15,9 % ; 50 % (10,6 %) pour les créations antérieures.
+    const tauxUrssaf = acre ? 0.159 : 0.212;
     const cotisationsUrssaf = ca * tauxUrssaf;
     const cfp = ca * 0.003;
     const total = cotisationsUrssaf + cfp;
@@ -95,7 +97,7 @@ function computeResults(inputs: Inputs): Results {
       breakdown: [
         {
           label: acre
-            ? 'Cotisations URSSAF (10,6 % avec ACRE)'
+            ? 'Cotisations URSSAF (15,9 % avec ACRE)'
             : 'Cotisations URSSAF (21,2 %)',
           amount: cotisationsUrssaf,
         },
@@ -267,7 +269,7 @@ export function ChargesSocialesCalculator() {
               <Label className="flex items-center gap-1">
                 ACRE (1ère année) ?
                 <span
-                  title="ACRE = -50 % de cotisations pendant 12 mois. Conditions : demandeur d'emploi, jeune < 26 ans, RSA, etc."
+                  title="ACRE = exonération partielle des cotisations la 1ère année (12 mois). 25 % depuis le 1er juillet 2026 (50 % avant). Conditions : demandeur d'emploi, jeune < 26 ans, RSA, etc."
                   className="cursor-help text-gray-400"
                 >
                   <HelpCircle className="h-4 w-4" />

@@ -1,8 +1,8 @@
 export const coutSalarieCopy = {
   seo: {
-    title: 'Calculateur coût salarié employeur BTP — simulateur salaire net 2026 | Batup',
+    title: "Calcul coût salarié employeur BTP | Batup",
     description:
-      'Calculez en 30 secondes le coût total employeur d’un salarié du BTP : charges patronales, CIBTP, salaire net, coût horaire chargé. Outil gratuit pour artisans et PME du bâtiment.',
+      "Passez du salaire brut au coût total employeur BTP : charges patronales, CIBTP, coût horaire chargé. Calculateur gratuit.",
     canonicalPath: '/calculateur-cout-salarie-btp',
   },
   webApplication: {

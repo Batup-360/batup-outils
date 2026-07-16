@@ -258,10 +258,11 @@ export function PrimeAncienneteCalculator() {
                   <div className="flex items-start gap-2 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
                     <Info className="mt-0.5 h-4 w-4 flex-shrink-0" />
                     <p>
-                      <span className="font-semibold">Assiette légale :</span> la prime se calcule
-                      sur le salaire minimum conventionnel de la classification (Niveau-Position),
-                      pas sur le brut réel. Si votre salarié est payé au-dessus du minimum, la
-                      prime se calcule sur le minimum (le reste est rémunération libre). L'outil
+                      <span className="font-semibold">À vérifier :</span> la CCN nationale du
+                      bâtiment ne rend pas la prime d'ancienneté obligatoire (elle prévoit des jours
+                      de congés). Une prime en % dépend de votre accord régional, d'entreprise ou du
+                      contrat — ce barème est un exemple à ajuster. L'assiette est en principe le
+                      salaire minimum conventionnel de la classification, pas le brut réel ; l'outil
                       simplifie en utilisant le brut saisi.
                     </p>
                   </div>

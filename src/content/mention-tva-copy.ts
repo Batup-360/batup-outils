@@ -1,8 +1,8 @@
 export const mentionTvaCopy = {
   seo: {
-    title: 'Générateur de mention TVA pour facture BTP — taux 20 / 10 / 5,5 % | Batup',
+    title: "Générateur de mention TVA facture BTP | Batup",
     description:
-      "Générez en 30 secondes la mention TVA exacte à mettre sur votre facture BTP : taux 20 %, 10 %, 5,5 %, autoliquidation (art. 283-2 nonies CGI) ou franchise en base (art. 293 B CGI). Outil gratuit pour artisans et entreprises du bâtiment.",
+      "Trouvez la bonne mention de TVA pour votre facture BTP : 20%, 10%, 5,5%, autoliquidation, franchise. Générateur gratuit.",
     canonicalPath: '/generateur-mention-tva-facture-btp',
   },
   webApplication: {

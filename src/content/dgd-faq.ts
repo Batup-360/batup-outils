@@ -44,6 +44,6 @@ export const dgdFAQ: FAQItem[] = [
   {
     question: 'Comment Batup automatise-t-il le DGD ?',
     answer:
-      "Batup centralise dès la signature du marché : avenants, ordres de service, situations émises, acomptes perçus, pénalités déclarées, retenue consignée et révisions sur indices BT. À la réception, le DGDF est généré automatiquement au format CERFA avec toutes les pièces justificatives. Vous validez d'un clic et transmettez au maître d'œuvre. Les délais d'acceptation tacite sont suivis en temps réel, avec relances automatiques 7 jours avant échéance. Résultat : les artisans Batup clôturent leurs DGD en moyenne 38 jours plus tôt et récupèrent 92 % de leurs retenues à date contre 74 % en moyenne sectorielle.",
+      "Batup centralise dès la signature du marché : avenants, ordres de service, situations émises, acomptes perçus, pénalités déclarées, retenue consignée et révisions sur indices BT. À la réception, le décompte est généré automatiquement avec toutes les pièces justificatives. Vous validez d'un clic et transmettez au maître d'œuvre. Les délais d'acceptation tacite (CCAG-Travaux 2021) sont suivis en temps réel, avec relances automatiques avant échéance — pour clôturer plus vite et ne plus laisser filer une retenue de garantie.",
   },
 ];

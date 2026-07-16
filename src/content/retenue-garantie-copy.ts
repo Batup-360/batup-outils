@@ -1,8 +1,8 @@
 export const retenueGarantieCopy = {
   seo: {
-    title: 'Calculateur de retenue de garantie 5 % BTP — gratuit | Batup',
+    title: "Calculateur de retenue de garantie 5% | Batup",
     description:
-      "Calculez en 30 secondes le montant de la retenue de garantie de 5 % et la date de libération automatique (Loi 71-584). Outil gratuit pour artisans BTP : marché, réserves, caution bancaire.",
+      "Calculez la retenue de garantie de 5% et sa date de libération (Loi 71-584). Caution bancaire en substitution. Outil gratuit.",
     canonicalPath: '/calculateur-retenue-de-garantie',
   },
   webApplication: {

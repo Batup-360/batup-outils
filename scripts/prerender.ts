@@ -28,11 +28,11 @@ const OG_IMAGE = SITE + '/assets/logo-batup-marketing.png';
 // Home page SEO — mirrors the <SEOHead> values in src/pages/home.tsx.
 const HOME = {
   title:
-    '19 outils BTP gratuits — calculateurs taux horaire, marge, TVA, paie, décennale | Batup',
+    '38 outils BTP gratuits — calculateurs taux horaire, marge, TVA, béton, carrelage, peinture, paie, décennale | Batup',
   description:
-    '19 calculateurs gratuits pour artisans et PME du BTP : taux horaire, marge, heures sup, coût salarié, TVA autoliquidation, charges sociales, situation, DGD, retenue, décennale, RC Pro, RGE. Sans inscription.',
-  h1: '19 outils BTP gratuits',
-  lede: "Pricing, paie, fiscalité, trésorerie, assurances : tous les calculs critiques d'une entreprise BTP, dans un outil dédié pour chacun. Sans inscription, sans installation, en quelques secondes.",
+    '38 calculateurs gratuits pour artisans et PME du BTP : taux horaire, marge, TVA, béton, mortier, carrelage, placo, peinture, parpaings, surface, volume, escalier, pente de toiture, paie, charges sociales, DGD, décennale, RC Pro, RGE. Sans inscription.',
+  h1: '38 outils BTP gratuits',
+  lede: "Pricing, paie, fiscalité, trésorerie, assurances, métré : tous les calculs critiques d'une entreprise BTP, dans un outil dédié pour chacun. Sans inscription, sans installation, en quelques secondes.",
 };
 
 function escapeHtml(s: string): string {
@@ -215,6 +215,17 @@ function main(): void {
     html = injectHead(html, routeJsonLd(route, url));
     html = injectRoot(html, routeBodyContent(route));
     writePage(route.path, html);
+    count++;
+  }
+
+  // Bare embed shells (interactive, no SEO) for iframe use inside the Batup app.
+  // Served at /embed/<slug> with a 200; the SPA boots and renders the calculator
+  // alone (no nav/hero/footer) via the /embed/:slug route.
+  for (const route of SEO_ROUTES) {
+    const slug = route.path.replace(/^\//, '');
+    let html = setTitle(template, 'Batup — outil intégré');
+    html = injectHead(html, '    <meta name="robots" content="noindex, nofollow">');
+    writePage(`/embed/${slug}`, html);
     count++;
   }
 

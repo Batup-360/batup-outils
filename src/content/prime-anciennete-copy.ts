@@ -1,9 +1,9 @@
 export const primeAncienneteCopy = {
   seo: {
     title:
-      "Calculateur prime d'ancienneté CCN bâtiment — barème ouvriers et ETAM 2026 | Batup",
+      "Calcul prime d'ancienneté CCN bâtiment | Batup",
     description:
-      "Calculez en 30 secondes la prime d'ancienneté d'un ouvrier ou ETAM du bâtiment selon le barème CCN : 3 % à 3 ans, 6 % à 6 ans, jusqu'à 15 % à 15 ans (ouvriers, art. 6.2). Outil gratuit pour artisans et PME du BTP.",
+      "Calculez la prime d'ancienneté du bâtiment (barème 2 à 15%) : montant mensuel, annuel et coût employeur. Calculateur gratuit.",
     canonicalPath: '/calculateur-prime-anciennete-ccn-batiment',
   },
   webApplication: {
@@ -24,7 +24,7 @@ export const primeAncienneteCopy = {
   methodology: {
     title: "Comment on calcule la prime d'ancienneté CCN bâtiment",
     intro:
-      "La méthode reprend les barèmes canoniques fixés par la convention collective nationale ouvriers du bâtiment (article 6.2, accord du 8 octobre 1990) et la CCN ETAM bâtiment (article 14). Les accords régionaux peuvent fixer des taux légèrement différents d'une caisse CIBTP à l'autre, mais l'écart reste marginal.",
+      "Important : les conventions collectives NATIONALES du bâtiment (ouvriers IDCC 1596/1597, ETAM IDCC 2609) ne prévoient pas de prime d'ancienneté monétaire obligatoire — elles reconnaissent l'ancienneté par des jours de congés supplémentaires. Une prime en pourcentage résulte d'un accord régional, d'un accord d'entreprise ou du contrat de travail. Le barème utilisé ici est un exemple courant, à ajuster selon le texte qui vous est applicable.",
     blocks: [
       {
         heading: '1. Barème ouvriers (CCN art. 6.2) : 3 / 6 / 9 / 12 / 15 %',

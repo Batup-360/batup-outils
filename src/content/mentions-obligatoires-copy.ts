@@ -1,9 +1,9 @@
 export const mentionsObligatoiresCopy = {
   seo: {
     title:
-      'Vérificateur mentions obligatoires facture & devis BTP 2026 | Batup',
+      "Mentions obligatoires facture et devis BTP | Batup",
     description:
-      "Checklist conformité gratuite : vérifiez en 2 minutes que votre devis ou facture BTP comporte toutes les mentions obligatoires (CGI art. 242 nonies A, Code consommation L 111-1, Loi Spinetta). Référence légale + risque pour chaque mention manquante.",
+      "Vérifiez les mentions obligatoires de vos factures et devis BTP : SIRET, décennale, médiateur, pénalités. Checklist gratuite.",
     canonicalPath: '/verificateur-mentions-obligatoires-facture-devis-btp',
   },
   webApplication: {

@@ -23,11 +23,12 @@ interface ToolLink {
   external?: boolean;
 }
 
-interface ToolCategory {
-  title: string;
-  description: string;
-  links: ToolLink[];
-}
+// Commenté le 2026-07-16 avec RESSOURCES_MENU (à supprimer après test) : inutilisé.
+// interface ToolCategory {
+//   title: string;
+//   description: string;
+//   links: ToolLink[];
+// }
 
 // === Mega Menu Ressources — synchronisé avec batup.fr/src/components/Navbar.astro ===
 const MAIN_RESSOURCES: ToolLink[] = [
@@ -72,7 +73,10 @@ const SECONDARY_RESSOURCES: ToolLink[] = [
   },
 ];
 
-// Ancien mega menu 3 colonnes des 19 outils — gardé pour compat mais plus utilisé
+// Ancien mega menu 3 colonnes des 19 outils — gardé pour compat mais plus utilisé.
+// Commenté le 2026-07-16 (à supprimer après test) : inutilisé, bloquait le build
+// via TS6133 (noUnusedLocals). Voir aussi l'interface ToolCategory ci-dessus.
+/*
 const RESSOURCES_MENU: ToolCategory[] = [
   {
     title: 'Chiffrer & marger',
@@ -207,6 +211,7 @@ const RESSOURCES_MENU: ToolCategory[] = [
     ],
   },
 ];
+*/
 
 interface PublicNavProps {
   signupHref?: string;

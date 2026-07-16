@@ -102,6 +102,101 @@ const RELATED: Record<string, string[]> = {
     '/simulateur-rc-pro-btp',
     '/calculateur-prix-chantier-btp',
   ],
+  '/calculateur-beton': [
+    '/calculateur-volume',
+    '/calculateur-surface',
+    '/calculateur-prix-chantier-btp',
+  ],
+  '/calculateur-tva': [
+    '/calculateur-tva-autoliquidation-btp',
+    '/generateur-mention-tva-facture-btp',
+    '/calculateur-prix-chantier-btp',
+  ],
+  '/calculateur-surface': [
+    '/calculateur-volume',
+    '/calculateur-beton',
+    '/calculateur-prix-chantier-btp',
+  ],
+  '/calculateur-volume': [
+    '/calculateur-beton',
+    '/calculateur-surface',
+    '/calculateur-escalier',
+  ],
+  '/calculateur-escalier': [
+    '/calculateur-surface',
+    '/calculateur-volume',
+    '/calculateur-beton',
+  ],
+  '/calculateur-mortier': [
+    '/calculateur-beton',
+    '/calculateur-chape',
+    '/calculateur-surface',
+  ],
+  '/calculateur-chape': [
+    '/calculateur-mortier',
+    '/calculateur-beton',
+    '/calculateur-surface',
+  ],
+  '/calculateur-pente-toiture': [
+    '/calculateur-surface',
+    '/calculateur-volume',
+    '/calculateur-beton',
+  ],
+  '/calculateur-papier-peint': [
+    '/calculateur-surface',
+    '/calculateur-mortier',
+    '/calculateur-chape',
+  ],
+  '/generateur-attestation-tva': [
+    '/generateur-mention-tva-facture-btp',
+    '/calculateur-tva',
+    '/calculateur-tva-autoliquidation-btp',
+  ],
+  '/calculateur-parpaings': [
+    '/calculateur-briques',
+    '/calculateur-mortier',
+    '/calculateur-surface',
+  ],
+  '/calculateur-briques': [
+    '/calculateur-parpaings',
+    '/calculateur-mortier',
+    '/calculateur-surface',
+  ],
+  '/calculateur-placo': [
+    '/calculateur-surface',
+    '/calculateur-peinture',
+    '/calculateur-isolant',
+  ],
+  '/calculateur-carrelage': [
+    '/calculateur-surface',
+    '/calculateur-consommation-materiaux',
+    '/calculateur-parquet',
+  ],
+  '/calculateur-parquet': [
+    '/calculateur-surface',
+    '/calculateur-carrelage',
+    '/calculateur-terrasse',
+  ],
+  '/calculateur-terrasse': [
+    '/calculateur-surface',
+    '/calculateur-parquet',
+    '/calculateur-beton',
+  ],
+  '/calculateur-isolant': [
+    '/calculateur-placo',
+    '/calculateur-surface',
+    '/calculateur-consommation-materiaux',
+  ],
+  '/calculateur-peinture': [
+    '/calculateur-surface',
+    '/calculateur-placo',
+    '/calculateur-papier-peint',
+  ],
+  '/calculateur-consommation-materiaux': [
+    '/calculateur-carrelage',
+    '/calculateur-surface',
+    '/calculateur-peinture',
+  ],
 };
 
 interface RelatedToolsProps {

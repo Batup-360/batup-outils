@@ -1,7 +1,7 @@
-import { Lock } from 'lucide-react';
+import { Mail, CheckCircle2, ShieldCheck } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useEmailGate } from '@/lib/email-gate-context';
-import { Button } from './ui';
+import { useEmbedded } from '@/lib/embed-context';
 
 interface GatedRevealProps {
   toolSlug: string;
@@ -11,43 +11,48 @@ interface GatedRevealProps {
 }
 
 /**
- * Wrap the result section of a calculator. When the visitor hasn't
- * unlocked yet, the content is blurred and an overlay invites them
- * to enter their email via the global EmailGate modal.
+ * Wrap the result section of a calculator. The result is always visible —
+ * below it, the visitor is offered an optional "receive by email" action
+ * that opens the global EmailGate modal. Once they've sent it once, the
+ * offer is replaced by a discreet confirmation.
  */
 export function GatedReveal({ toolSlug, toolLabel, resultPreview, children }: GatedRevealProps) {
   const { unlocked, openGate } = useEmailGate();
+  const embedded = useEmbedded();
 
-  if (unlocked) {
+  // In an embed (iframe inside the Batup app), show the result only — no email
+  // capture, since the user is already an authenticated Batup user.
+  if (embedded) {
     return <>{children}</>;
   }
 
   return (
-    <div className="relative">
-      <div aria-hidden="true" className="pointer-events-none select-none blur-md">
-        {children}
-      </div>
-      <div className="absolute inset-0 z-10 flex items-center justify-center p-4">
-        <div className="w-full max-w-xs rounded-2xl border border-gray-200 bg-white/95 px-5 py-5 text-center shadow-xl backdrop-blur-sm">
-          <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#BFC6F4] via-[#7076F1] to-[#5368EE] text-white">
-            <Lock className="h-4 w-4" />
-          </div>
-          <p className="text-sm font-semibold text-gray-900">Votre résultat est prêt</p>
-          <p className="mt-1 text-xs leading-relaxed text-gray-600">
-            Saisissez votre email pour l'afficher ici. Une copie part aussi par mail.
-          </p>
-          <Button
-            type="button"
-            onClick={() => openGate({ toolSlug, toolLabel, resultPreview })}
-            className="mt-4 h-10 w-full rounded-full text-sm font-semibold"
-          >
-            Voir mon résultat
-          </Button>
-          <p className="mt-2 text-[10px] uppercase tracking-wider text-gray-400">
-            Gratuit · sans engagement
-          </p>
-        </div>
-      </div>
+    <div className="space-y-3">
+      {children}
+      {unlocked ? (
+        <p className="flex items-center justify-center gap-1.5 text-xs font-medium text-emerald-600">
+          <CheckCircle2 className="h-4 w-4" />
+          Résultat envoyé par email
+        </p>
+      ) : (
+        <button
+          type="button"
+          onClick={() => openGate({ toolSlug, toolLabel, resultPreview })}
+          className="flex w-full items-center justify-center gap-2 rounded-full border border-brand-500/30 bg-white px-4 py-2.5 text-sm font-semibold text-brand-600 transition-colors hover:border-brand-500/60 hover:bg-brand-50"
+        >
+          <Mail className="h-4 w-4" />
+          Recevoir mon résultat par email
+        </button>
+      )}
+      <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[11px] text-gray-400">
+        <span className="inline-flex items-center gap-1">
+          <ShieldCheck className="h-3.5 w-3.5" /> 100 % gratuit
+        </span>
+        <span aria-hidden>·</span>
+        <span>Sans inscription</span>
+        <span aria-hidden>·</span>
+        <span>Données en France</span>
+      </p>
     </div>
   );
 }

@@ -38,6 +38,25 @@ interface IncomingPayload {
 
 const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Le formulaire n'est légitimement appelé que depuis le site outils et les
+// pages batup.fr qui l'intègrent (iframe /embed). Toute autre origine est
+// rejetée pour éviter que l'endpoint serve d'expéditeur d'emails ouvert.
+const ALLOWED_ORIGINS = [
+  'https://outils.batup.fr',
+  'https://batup.fr',
+  'https://www.batup.fr',
+  'https://app.batup.fr',
+];
+
+function isAllowedOrigin(request: Request): boolean {
+  const origin = request.headers.get('Origin');
+  if (origin) return ALLOWED_ORIGINS.includes(origin);
+  // Certains contextes (webviews) omettent Origin : on retombe sur Referer.
+  const referer = request.headers.get('Referer');
+  if (referer) return ALLOWED_ORIGINS.some((o) => referer === o || referer.startsWith(`${o}/`));
+  return false;
+}
+
 function jsonResponse(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
     status,
@@ -175,6 +194,7 @@ async function sendResultEmail(
 }
 
 export const onRequestPost: PagesHandler<Env> = async ({ request, env }) => {
+  if (!isAllowedOrigin(request)) return jsonResponse({ ok: false, error: 'Forbidden origin' }, 403);
   if (!env.BREVO_API_KEY) return serverError('BREVO_API_KEY not configured');
   if (!env.BREVO_LIST_ID) return serverError('BREVO_LIST_ID not configured');
   const listId = Number.parseInt(env.BREVO_LIST_ID, 10);

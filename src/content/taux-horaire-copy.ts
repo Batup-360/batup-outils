@@ -1,8 +1,8 @@
 export const tauxHoraireCopy = {
   seo: {
-    title: 'Calculateur de taux horaire BTP — gratuit, sans inscription | Batup',
+    title: "Calculateur de taux horaire BTP gratuit | Batup",
     description:
-      'Calculez en 2 minutes votre taux horaire à facturer pour rester rentable. Outil gratuit pour artisans et PME du BTP, basé sur vos charges fixes et votre marge cible.',
+      "Calculez votre taux horaire à facturer dans le BTP pour couvrir vos charges et dégager une vraie marge. Outil gratuit, sans inscription.",
     canonicalPath: '/calculateur-taux-horaire-btp',
   },
   webApplication: {

@@ -1,8 +1,8 @@
 export const heuresSupCopy = {
   seo: {
-    title: 'Calculateur heures supplémentaires BTP + paniers + indemnités | Batup',
+    title: "Calcul heures supplémentaires BTP gratuit | Batup",
     description:
-      'Calculez en 1 minute le brut réel d’un salarié BTP : heures supplémentaires 25 % et 50 %, panier, indemnité de trajet, grand déplacement. Outil gratuit basé sur la convention collective ouvriers du bâtiment.',
+      "Calculez les heures supplémentaires BTP (25%/50%), paniers, trajets et grand déplacement selon la convention bâtiment. Gratuit.",
     canonicalPath: '/calculateur-heures-supplementaires-btp',
   },
   webApplication: {

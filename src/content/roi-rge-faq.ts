@@ -2,43 +2,43 @@ import type { FAQItem } from '@/components/FAQAccordion';
 
 export const roiRgeFAQ: FAQItem[] = [
   {
-    question: "À quoi sert exactement la certification RGE pour un artisan BTP ?",
+    question: 'Combien coûte la certification RGE en 2026 ?',
     answer:
-      "Le label RGE (Reconnu Garant de l'Environnement) est requis pour que vos clients particuliers puissent bénéficier des aides publiques à la rénovation énergétique : MaPrimeRénov (versée par l'Anah), CEE (Certificats d'Économies d'Énergie versés par les fournisseurs d'énergie), éco-PTZ (prêt à taux zéro). Sans RGE, vos clients perdent l'accès à ces aides — entre 1 000 € et 30 000 € de subventions selon le chantier. Beaucoup de clients comparent les artisans sur ce critère : pas de label = pas de devis chez vous. Le label est donc à la fois un sésame commercial et un argument de vente direct.",
+      "Comptez environ 800 à 1 500 € HT sur 4 ans pour la qualification (soit 240 à 550 € HT par an selon la spécialité), plus l'audit de chantier (environ 320 € HT) et la formation RENOPERF (500 à 1 500 € HT, 1 à 5 jours). La formation est finançable via votre OPCO. Le calculateur additionne ces coûts pour estimer votre investissement réel.",
   },
   {
-    question: "Combien coûte une certification QualibatRGE en 2026 ?",
+    question: 'La certification RGE est-elle rentable pour un artisan ?',
     answer:
-      "QualibatRGE est la qualification la plus courante pour les corps d'état du bâti (maçonnerie, isolation, menuiserie, étanchéité, couverture). Comptez en 2026 environ 1 200 € de frais d'admission la première année (instruction du dossier, audit sur site, droits d'inscription), puis 300 € en moyenne par an pour le maintien (audit de suivi tous les 4 ans, contrôle de réalisation chantier). À cela s'ajoute le coût de la formation FEEBat obligatoire (21 heures, ~700 € de formation + temps non facturé). Le coût total initial réaliste tourne autour de 2 200 à 2 500 €.",
+      "Le plus souvent oui, dès 1 à 3 chantiers. Un chantier de rénovation énergétique rapporte de l'ordre de 5 000 à 15 000 € de marge, et un artisan RGE réalise en moyenne une quinzaine de ces chantiers par an. Face à un coût de qualification d'environ 1 000 à 2 000 € sur 4 ans, l'investissement se rembourse vite si vous captez ne serait-ce que quelques dossiers MaPrimeRénov.",
   },
   {
-    question: "Qu'est-ce que la formation FEEBat et est-elle obligatoire ?",
+    question: 'Faut-il être RGE pour que mes clients touchent MaPrimeRénov ?',
     answer:
-      "FEEBat (Formation aux Économies d'Énergie dans le Bâtiment) est la formation obligatoire imposée pour obtenir une qualification RGE. Le module principal s'appelle RENOVE et dure 21 heures sur 3 jours, dispensé par un organisme agréé. Il couvre l'enveloppe du bâti, les équipements thermiques, la ventilation et l'audit énergétique. Coût moyen : 700 € la formation. Elle peut être financée par votre OPCO (Constructys pour le BTP) ou via le FAF (Fonds d'Assurance Formation) si vous êtes artisan, ce qui ramène le coût à zéro pour beaucoup d'entreprises — mais le temps non facturé reste à votre charge.",
+      "Oui. La certification RGE reste en 2026 une condition indispensable pour que le client bénéficie de MaPrimeRénov, des CEE, de l'éco-PTZ et de la TVA à 5,5 %. Et pas n'importe quel RGE : il faut être qualifié sur le bon domaine de travaux. Un client ne peut pas obtenir l'aide si l'entreprise est RGE pour une autre activité que celle réalisée.",
   },
   {
-    question: "Quelle différence entre QualibatRGE, Qualit'EnR et RGE Éco-Artisan ?",
+    question: 'Comment devenir RGE quand on est artisan ?',
     answer:
-      "Trois organismes qualificateurs principaux, chacun spécialisé : 1) QualibatRGE couvre l'enveloppe du bâti et la rénovation globale — c'est la qualification la plus courante pour maçons, plâtriers, menuisiers, couvreurs ; 2) Qualit'EnR (avec ses labels Qualisol, Qualibois, QualiPAC, QualiPV) couvre les équipements à énergies renouvelables — solaire thermique, bois, pompes à chaleur, photovoltaïque ; 3) RGE Éco-Artisan, porté par la CAPEB, s'adresse aux entreprises artisanales tous corps d'état avec une approche globale de la rénovation. Le choix dépend de votre métier et de votre clientèle cible.",
+      "Il faut suivre la formation RENOPERF (obligatoire depuis le 1er octobre 2025), constituer un dossier auprès d'un organisme (Qualibat, Qualit'EnR, Qualifelec selon l'activité), et passer un audit. Comptez 3 à 6 mois entre le début des démarches et l'obtention. La qualification est valable 4 ans, avec un renouvellement annuel et un audit de chantier sur la période.",
   },
   {
-    question: "À partir de combien de chantiers RGE par an est-ce rentable ?",
+    question: 'Combien de temps faut-il pour devenir RGE ?',
     answer:
-      "Avec un coût total initial de 2 250 € (audit + formation) et un maintien annuel de 300 €, il faut dégager au moins 2 550 € de marge supplémentaire l'année 1 pour rentabiliser. Si votre chantier RGE moyen est facturé 8 000 € avec une marge nette de 23 % (1 840 €/chantier), il faut décrocher 2 chantiers RGE supplémentaires la première année pour atteindre le break-even. À partir de la deuxième année, le seuil tombe à 1 chantier RGE/an (couvre les 300 € de maintien et dégage du gain). C'est donc rentable dès que vous obtenez 2-3 chantiers MaPrimeRénov par an.",
+      "En pratique 3 à 6 mois, pas quelques semaines : il faut le temps de la formation, du montage du dossier, de son instruction par l'organisme certificateur et de l'audit. Anticipez si vous visez une saison de chantiers aidés : un client ne pourra déposer sa demande d'aide qu'une fois votre qualification effective sur le bon domaine.",
   },
   {
-    question: "Quelles aides existent pour financer la certification RGE ?",
+    question: 'Qu’est-ce que le RGE chantier par chantier (RGE à l’acte) ?',
     answer:
-      "Trois leviers principaux : 1) la formation FEEBat est prise en charge à 100 % par Constructys (OPCO du BTP) si vous êtes salarié ou par le FAF (FAFCEA pour les artisans, AGEFICE pour les commerçants) — il ne reste à votre charge que le temps non facturé ; 2) les régions proposent souvent des aides à la qualification (chèque qualification, dispositif Engagement Qualité) — vérifiez auprès de votre CMA ; 3) certaines fédérations professionnelles (CAPEB, FFB) négocient des tarifs préférentiels avec les organismes qualificateurs pour leurs adhérents (jusqu'à 30 % de remise sur les frais d'admission).",
+      "C'est une alternative, élargie en 2026, destinée aux artisans réalisant moins de 5 chantiers de rénovation par an. Plutôt qu'une qualification complète, un audit est réalisé en amont, sur le devis et les plans ; s'il est favorable, ce chantier précis devient éligible aux aides. L'audit coûte environ 600 à 1 200 € selon la complexité. Utile pour tester l'activité rénovation sans s'engager sur 4 ans.",
   },
   {
-    question: "Que se passe-t-il si je perds ma qualification RGE ?",
+    question: 'Comment se déroule l’audit de chantier RGE ?',
     answer:
-      "La qualification peut être suspendue ou retirée si : 1) vous ne payez pas les frais de maintien annuel, 2) vous échouez à l'audit de suivi (non-conformité technique sur un chantier contrôlé), 3) vous ne déclarez pas de chantier RGE pendant 2 années consécutives (preuve d'activité), 4) une fraude est constatée (sous-traitance non déclarée à un non-RGE). En cas de perte, vos clients ne peuvent plus bénéficier des aides pour les chantiers signés après le retrait — et les chantiers en cours peuvent être contestés. La requalification impose de repasser tout le process (audit + frais d'admission complets).",
+      "Depuis 2025, l'organisme certificateur choisit lui-même, de façon aléatoire, un chantier parmi ceux réalisés sur les 4 dernières années (l'entreprise ne le choisit plus). Les contrôles sont renforcés et les sanctions automatiques en cas de non-conformité. D'où l'importance de documenter chaque chantier (devis, factures, photos, fiches techniques) pour être prêt à tout moment.",
   },
   {
-    question: "Comment maximiser le ROI de ma certification RGE ?",
+    question: 'Quelle qualification RGE choisir ?',
     answer:
-      "Cinq leviers : 1) communiquez le label sur tous vos devis, factures, signature email, véhicule, site web (c'est un argument commercial direct), 2) inscrivez-vous sur l'annuaire France Rénov' (france-renov.gouv.fr) — c'est l'orienteur officiel des aides MaPrimeRénov, gratuit, gros pourvoyeur de leads, 3) formez-vous au montage des dossiers MaPrimeRénov pour assister vos clients (ils choisiront l'artisan qui leur simplifie la paperasse), 4) suivez les évolutions réglementaires (MaPrimeRénov évolue chaque année) pour anticiper les arbitrages clients, 5) tracez chaque chantier RGE dans un outil de gestion pour conserver les attestations 5 ans en cas de contrôle.",
+      "Cela dépend de votre métier : Qualibat couvre l'enveloppe du bâtiment (isolation, menuiserie), Qualit'EnR les énergies renouvelables (pompes à chaleur, solaire, bois), Qualifelec les installations électriques. Choisissez le domaine correspondant exactement aux travaux que vous facturez : une qualification sur le mauvais domaine ne rend pas vos chantiers éligibles aux aides.",
   },
 ];

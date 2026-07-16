@@ -4,21 +4,40 @@ import {
   Activity,
   Award,
   ArrowRight,
+  Blocks,
+  Box,
   Calculator,
   CheckSquare,
   Clock,
   CloudRain,
   Coins,
+  Euro,
   FileCheck2,
   FileText,
+  Footprints,
+  Gauge,
+  Grid2x2,
+  Grid3x3,
+  Grip,
   HardHat,
+  Layers,
+  LayoutGrid,
+  PaintBucket,
   Percent,
+  RectangleVertical,
   Receipt,
+  Rows3,
+  Ruler,
   Scale,
+  Scroll,
   Search,
   ShieldCheck,
   Sparkles,
+  SquareStack,
+  Stamp,
   Sun,
+  Thermometer,
+  Triangle,
   TrendingUp,
   Users,
   Wallet,
@@ -31,7 +50,7 @@ import { SEOHead } from '@/lib/seo-head';
 import { siteOrigin } from '@/lib/urls';
 
 type ToolType = 'Calculateur' | 'Simulateur' | 'Générateur' | 'Vérificateur' | 'Comparateur';
-type Theme = 'Pricing & marge' | 'Paie & RH' | 'Fiscal & légal' | 'Trésorerie & marchés' | 'Assurances & aides';
+type Theme = 'Pricing & marge' | 'Paie & RH' | 'Fiscal & légal' | 'Trésorerie & marchés' | 'Assurances & aides' | 'Métré & quantités';
 
 interface Tool {
   href: string;
@@ -215,10 +234,181 @@ const TOOLS: Tool[] = [
     theme: 'Assurances & aides',
     popularity: 5,
   },
+  {
+    href: '/calculateur-beton',
+    icon: <Layers className="h-6 w-6" />,
+    title: 'Calculateur de béton',
+    description: 'Volume de votre dalle ou semelle et dosage exact : ciment (sacs), sable, gravier, eau. Dosage 250 / 350 / 400 kg/m³.',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 9,
+  },
+  {
+    href: '/calculateur-tva',
+    icon: <Euro className="h-6 w-6" />,
+    title: 'Calculateur de TVA (HT ↔ TTC)',
+    description: 'Convertissez HT en TTC et TTC en HT en un clic, avec les taux du bâtiment : 20 %, 10 %, 5,5 %, 2,1 %.',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 8,
+  },
+  {
+    href: '/calculateur-surface',
+    icon: <Ruler className="h-6 w-6" />,
+    title: 'Calculateur de surface',
+    description: 'Additionnez plusieurs zones (rectangle, triangle, cercle) pour la surface totale en m² : sols, murs, pièces.',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 8,
+  },
+  {
+    href: '/calculateur-volume',
+    icon: <Box className="h-6 w-6" />,
+    title: 'Calculateur de volume',
+    description: 'Volume en m³ et en litres : béton, terrassement, déblais, cuve. Formes pavé et cylindre.',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 7,
+  },
+  {
+    href: '/calculateur-escalier',
+    icon: <Footprints className="h-6 w-6" />,
+    title: "Calculateur d'escalier",
+    description: 'Nombre de marches, hauteur, giron et reculement selon la loi de Blondel. Vérification du confort en un clic.',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 6,
+  },
+  {
+    href: '/calculateur-mortier',
+    icon: <Blocks className="h-6 w-6" />,
+    title: 'Calculateur de mortier',
+    description: 'Volume et dosage : ciment (sacs), sable, eau, pour un enduit, un montage ou un scellement. Dosage 300 / 350 / 400 kg/m³.',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 6,
+  },
+  {
+    href: '/calculateur-chape',
+    icon: <SquareStack className="h-6 w-6" />,
+    title: 'Calculateur de chape',
+    description: 'Volume de chape et matériaux (ciment, sable, eau) selon la surface et l’épaisseur. Dosage 350 kg/m³.',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 5,
+  },
+  {
+    href: '/calculateur-pente-toiture',
+    icon: <Triangle className="h-6 w-6" />,
+    title: 'Calculateur de pente de toiture',
+    description: 'Conversion pente en % , en degrés et en cm/m, plus la longueur du rampant. Dans les deux sens.',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 5,
+  },
+  {
+    href: '/calculateur-papier-peint',
+    icon: <Scroll className="h-6 w-6" />,
+    title: 'Calculateur de papier peint',
+    description: 'Nombre de rouleaux selon les dimensions de la pièce, la hauteur sous plafond et le raccord du motif.',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 5,
+  },
+  {
+    href: '/generateur-attestation-tva',
+    icon: <Stamp className="h-6 w-6" />,
+    title: "Générateur d'attestation TVA",
+    description: 'Attestation TVA simplifiée à taux réduit (10 % ou 5,5 %) à faire signer par le client. Prête à copier.',
+    type: 'Générateur',
+    theme: 'Fiscal & légal',
+    popularity: 6,
+  },
+  {
+    href: '/calculateur-parpaings',
+    icon: <Grid2x2 className="h-6 w-6" />,
+    title: 'Calculateur de parpaings',
+    description: 'Nombre de blocs pour monter un mur selon les dimensions, le format de bloc et la marge de perte.',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 6,
+  },
+  {
+    href: '/calculateur-briques',
+    icon: <Grid3x3 className="h-6 w-6" />,
+    title: 'Calculateur de briques',
+    description: 'Nombre de briques nécessaires pour un mur ou un parement selon le type de brique et les dimensions.',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 4,
+  },
+  {
+    href: '/calculateur-placo',
+    icon: <RectangleVertical className="h-6 w-6" />,
+    title: 'Calculateur de placo',
+    description: 'Nombre de plaques de plâtre (BA13) pour vos murs et plafonds, avec estimation des vis.',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 5,
+  },
+  {
+    href: '/calculateur-carrelage',
+    icon: <LayoutGrid className="h-6 w-6" />,
+    title: 'Calculateur de carrelage',
+    description: 'Nombre de carreaux et surface à acheter selon la taille du carreau et la marge de perte.',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 5,
+  },
+  {
+    href: '/calculateur-parquet',
+    icon: <Rows3 className="h-6 w-6" />,
+    title: 'Calculateur de parquet',
+    description: 'Nombre de paquets et surface à acheter pour un parquet ou un sol stratifié, marge incluse.',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 4,
+  },
+  {
+    href: '/calculateur-terrasse',
+    icon: <Grip className="h-6 w-6" />,
+    title: 'Calculateur de terrasse',
+    description: 'Nombre de lames de terrasse (bois ou composite) et surface à acheter selon les dimensions des lames.',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 5,
+  },
+  {
+    href: '/calculateur-isolant',
+    icon: <Thermometer className="h-6 w-6" />,
+    title: "Calculateur d'isolant",
+    description: 'Nombre de rouleaux ou panneaux et surface à isoler pour vos murs, combles ou sol.',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 4,
+  },
+  {
+    href: '/calculateur-peinture',
+    icon: <PaintBucket className="h-6 w-6" />,
+    title: 'Calculateur de peinture',
+    description: 'Litres de peinture et nombre de pots selon la surface, le nombre de couches et le rendement.',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 5,
+  },
+  {
+    href: '/calculateur-consommation-materiaux',
+    icon: <Gauge className="h-6 w-6" />,
+    title: 'Consommation de matériaux',
+    description: 'Quantité totale (kg, litres, sacs) d’un matériau selon la surface et la consommation au m².',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 3,
+  },
 ];
 
 const ALL_TYPES: ToolType[] = ['Calculateur', 'Simulateur', 'Générateur', 'Vérificateur', 'Comparateur'];
-const ALL_THEMES: Theme[] = ['Pricing & marge', 'Paie & RH', 'Fiscal & légal', 'Trésorerie & marchés', 'Assurances & aides'];
+const ALL_THEMES: Theme[] = ['Pricing & marge', 'Paie & RH', 'Fiscal & légal', 'Trésorerie & marchés', 'Assurances & aides', 'Métré & quantités'];
 
 const TYPE_STYLES: Record<ToolType, { bg: string; text: string }> = {
   Calculateur: { bg: 'bg-brand-50', text: 'text-brand-700' },
@@ -267,8 +457,8 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col" style={{ backgroundColor: '#f5f5ff' }}>
       <SEOHead
-        title="19 outils BTP gratuits — calculateurs taux horaire, marge, TVA, paie, décennale | Batup"
-        description="19 calculateurs et simulateurs gratuits pour artisans et PME du BTP : taux horaire, marge, heures sup, coût salarié, TVA autoliquidation, charges sociales, situation, DGD, retenue, décennale, RC Pro, RGE. Sans inscription."
+        title="38 outils BTP gratuits — calculateurs taux horaire, marge, TVA, béton, carrelage, peinture, paie, décennale | Batup"
+        description="38 calculateurs et simulateurs gratuits pour artisans et PME du BTP : taux horaire, marge, TVA, béton, mortier, carrelage, placo, peinture, parpaings, surface, volume, escalier, pente de toiture, paie, charges sociales, DGD, décennale, RC Pro, RGE. Sans inscription."
         canonicalUrl={`${base}/`}
       />
       <TopBanner />

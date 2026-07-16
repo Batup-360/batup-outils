@@ -54,6 +54,46 @@ import { rcProFAQ } from '@/content/rc-pro-faq';
 import { roiRgeCopy } from '@/content/roi-rge-copy';
 import { roiRgeFAQ } from '@/content/roi-rge-faq';
 
+// Métré & quantités
+import { betonCopy } from '@/content/beton-copy';
+import { betonFAQ } from '@/content/beton-faq';
+import { tvaCopy } from '@/content/tva-copy';
+import { tvaFAQ } from '@/content/tva-faq';
+import { surfaceCopy } from '@/content/surface-copy';
+import { surfaceFAQ } from '@/content/surface-faq';
+import { volumeCopy } from '@/content/volume-copy';
+import { volumeFAQ } from '@/content/volume-faq';
+import { escalierCopy } from '@/content/escalier-copy';
+import { escalierFAQ } from '@/content/escalier-faq';
+import { mortierCopy } from '@/content/mortier-copy';
+import { mortierFAQ } from '@/content/mortier-faq';
+import { chapeCopy } from '@/content/chape-copy';
+import { chapeFAQ } from '@/content/chape-faq';
+import { penteToitureCopy } from '@/content/pente-toiture-copy';
+import { penteToitureFAQ } from '@/content/pente-toiture-faq';
+import { papierPeintCopy } from '@/content/papier-peint-copy';
+import { papierPeintFAQ } from '@/content/papier-peint-faq';
+import { attestationTvaCopy } from '@/content/attestation-tva-copy';
+import { attestationTvaFAQ } from '@/content/attestation-tva-faq';
+import { parpaingsCopy } from '@/content/parpaings-copy';
+import { parpaingsFAQ } from '@/content/parpaings-faq';
+import { briquesCopy } from '@/content/briques-copy';
+import { briquesFAQ } from '@/content/briques-faq';
+import { placoCopy } from '@/content/placo-copy';
+import { placoFAQ } from '@/content/placo-faq';
+import { carrelageCopy } from '@/content/carrelage-copy';
+import { carrelageFAQ } from '@/content/carrelage-faq';
+import { parquetCopy } from '@/content/parquet-copy';
+import { parquetFAQ } from '@/content/parquet-faq';
+import { terrasseCopy } from '@/content/terrasse-copy';
+import { terrasseFAQ } from '@/content/terrasse-faq';
+import { isolantCopy } from '@/content/isolant-copy';
+import { isolantFAQ } from '@/content/isolant-faq';
+import { peintureCopy } from '@/content/peinture-copy';
+import { peintureFAQ } from '@/content/peinture-faq';
+import { consommationCopy } from '@/content/consommation-copy';
+import { consommationFAQ } from '@/content/consommation-faq';
+
 export interface SeoFaqItem {
   question: string;
   answer: string;
@@ -153,6 +193,27 @@ export const SEO_ROUTES: SeoRoute[] = [
   toRoute(decennaleCopy, decennaleFAQ, 'Simulateur garantie décennale BTP'),
   toRoute(rcProCopy, rcProFAQ, 'Simulateur RC Pro BTP'),
   toRoute(roiRgeCopy, roiRgeFAQ, 'Calculateur ROI certification RGE'),
+
+  // Métré & quantités
+  toRoute(betonCopy, betonFAQ, 'Calculateur de béton'),
+  toRoute(tvaCopy, tvaFAQ, 'Calculateur de TVA (HT ↔ TTC)'),
+  toRoute(surfaceCopy, surfaceFAQ, 'Calculateur de surface (m²)'),
+  toRoute(volumeCopy, volumeFAQ, 'Calculateur de volume (m³)'),
+  toRoute(escalierCopy, escalierFAQ, "Calculateur d'escalier"),
+  toRoute(mortierCopy, mortierFAQ, 'Calculateur de mortier'),
+  toRoute(chapeCopy, chapeFAQ, 'Calculateur de chape'),
+  toRoute(penteToitureCopy, penteToitureFAQ, 'Calculateur de pente de toiture'),
+  toRoute(papierPeintCopy, papierPeintFAQ, 'Calculateur de papier peint'),
+  toRoute(attestationTvaCopy, attestationTvaFAQ, "Générateur d'attestation TVA"),
+  toRoute(parpaingsCopy, parpaingsFAQ, 'Calculateur de parpaings'),
+  toRoute(briquesCopy, briquesFAQ, 'Calculateur de briques'),
+  toRoute(placoCopy, placoFAQ, 'Calculateur de plaques de placo'),
+  toRoute(carrelageCopy, carrelageFAQ, 'Calculateur de carrelage'),
+  toRoute(parquetCopy, parquetFAQ, 'Calculateur de parquet'),
+  toRoute(terrasseCopy, terrasseFAQ, 'Calculateur de terrasse'),
+  toRoute(isolantCopy, isolantFAQ, "Calculateur d'isolant"),
+  toRoute(peintureCopy, peintureFAQ, 'Calculateur de peinture'),
+  toRoute(consommationCopy, consommationFAQ, 'Calculateur de consommation de matériaux'),
 ];
 
 /** Quick lookup by route path. */

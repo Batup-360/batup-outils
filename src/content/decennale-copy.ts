@@ -1,8 +1,8 @@
 export const decennaleCopy = {
   seo: {
-    title: 'Simulateur garantie décennale BTP — prix par métier 2026 | Batup',
+    title: "Simulateur assurance décennale BTP gratuit | Batup",
     description:
-      "Estimez en 1 minute le prix de votre assurance décennale BTP selon votre métier, votre chiffre d'affaires, votre ancienneté et votre sinistralité. Fourchette indicative gratuite pour artisans et entreprises du bâtiment.",
+      "Estimez le prix de votre assurance décennale BTP selon votre métier, ancienneté et chiffre d'affaires. Simulateur gratuit.",
     canonicalPath: '/simulateur-decennale-btp',
   },
   webApplication: {

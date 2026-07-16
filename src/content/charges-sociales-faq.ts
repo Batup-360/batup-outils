@@ -2,48 +2,43 @@ import type { FAQItem } from '@/components/FAQAccordion';
 
 export const chargesSocialesFAQ: FAQItem[] = [
   {
-    question: 'Quel est le taux de cotisations sociales pour un artisan BTP en micro-entreprise ?',
+    question: 'Quel est le taux de charges sociales d’un artisan du BTP en 2026 ?',
     answer:
-      "Pour un artisan du bâtiment en micro-entreprise (prestations BIC, code APE 41 à 43), le taux global URSSAF appliqué au CA encaissé est de 21,2 % en 2026, auquel s'ajoute 0,3 % de contribution à la formation professionnelle. Avec l'ACRE la première année, le taux est divisé par deux (10,6 %). À noter : les cotisations sont calculées sur le CA encaissé, pas sur le bénéfice. Vous payez donc des cotisations même les mois où vous n'avez aucun bénéfice net.",
+      "En micro-entreprise, un artisan du bâtiment (prestations BIC) paie 21,2 % de cotisations sociales sur le chiffre d'affaires encaissé, plus 0,3 % de contribution à la formation, soit environ 21,5 %. En société ou en entreprise individuelle au réel (statut TNS), les cotisations représentent environ 35 à 45 % du bénéfice, pas du chiffre d'affaires.",
   },
   {
-    question: "Comment l'ACRE réduit-elle mes cotisations sociales ?",
+    question: 'Comment calculer les charges sociales d’un auto-entrepreneur BTP ?',
     answer:
-      "L'Aide aux Créateurs et Repreneurs d'Entreprise (ACRE) est une exonération partielle de cotisations pendant les 12 premiers mois d'activité. Concrètement, le taux est divisé par deux : 10,6 % au lieu de 21,2 % pour un micro-entrepreneur BTP, environ 27 % au lieu de 45 % pour un TNS au réel. Conditions principales : être demandeur d'emploi, jeune de moins de 26 ans, bénéficiaire du RSA, ou créer dans une zone d'urbanisme prioritaire. La demande se fait à l'URSSAF dans les 45 jours suivant la création.",
+      "Multipliez le chiffre d'affaires encaissé par 21,2 % (prestations artisanales BIC). Pour 40 000 € de CA : 8 480 € de cotisations, plus 120 € de formation (0,3 %). En micro, les cotisations sont proportionnelles au CA, même sans bénéfice : c'est simple mais on ne déduit ni charges ni matériaux. Le calculateur ci-dessus le fait selon votre statut.",
   },
   {
-    question: 'Combien gagne réellement un artisan BTP après cotisations sociales ?',
+    question: 'Micro-entreprise ou société : quel statut paie le moins de charges dans le BTP ?',
     answer:
-      "Pour un micro-entrepreneur facturant 80 000 € HT/an, les cotisations URSSAF + CFP représentent environ 17 200 €, soit un reste de 62 800 € avant impôt sur le revenu et avant achats. Pour un EI au réel avec 80 000 € de CA et 30 000 € de bénéfice, les cotisations TNS sont d'environ 13 500 €, soit un reste de 16 500 € avant IR. Ces chiffres restent indicatifs : vos vrais résultats dépendent de votre achat-revente, de votre TVA, et de votre marge nette opérationnelle.",
+      "Cela dépend surtout de vos achats de matériaux. En micro, vous cotisez sur tout le CA sans rien déduire : pénalisant si vous achetez beaucoup de fournitures. En EURL/SARL au réel, vous cotisez sur le bénéfice après déduction des charges et matériaux, souvent plus avantageux pour un BTP à forte matière. Comparez les deux avec le calculateur avant de choisir.",
   },
   {
-    question: 'Faut-il payer la TVA en plus des cotisations sociales ?',
+    question: 'Comment fonctionne l’ACRE pour un artisan en 2026 ?',
     answer:
-      "La TVA n'est pas une charge personnelle mais une taxe que vous collectez pour l'État. En micro-entreprise, vous bénéficiez de la franchise en base de TVA (art. 293 B CGI) jusqu'à 37 500 € de CA HT pour les prestations de service (seuil majoré 41 250 €) ou 85 000 € pour les livraisons de biens (seuil majoré 93 500 €) en 2026 : vous facturez sans TVA et ne la récupérez pas sur vos achats. Plafonds 2026 — la réforme du seuil unique à 25 000 € a été suspendue en mars 2025. Au-delà, ou en EI au réel / SARL / SAS, vous facturez la TVA et la reversez. En BTP rénovation logement, le taux est de 10 % ; en neuf, 20 %. La TVA est neutre fiscalement mais lourde en trésorerie : il faut la mettre de côté chaque mois.",
+      "L'ACRE réduit les cotisations la première année (12 mois). Depuis le décret du 6 février 2026, l'exonération est de 25 % pour les entreprises créées à partir du 1er juillet 2026 (contre 50 % auparavant). Pour un micro-artisan BTP, le taux passe alors de 21,2 % à 15,9 %. La demande se fait dans les 45 jours suivant la création, sous conditions (demandeur d'emploi, jeune, RSA…).",
   },
   {
-    question: 'Faut-il choisir micro-entreprise ou EI au réel pour démarrer ?',
+    question: 'Qu’est-ce que la CSG-CRDS pour un travailleur indépendant ?',
     answer:
-      "La micro est plus simple administrativement, mais elle pénalise les artisans avec beaucoup d'achats matériaux : vous payez des cotisations sur tout le CA sans pouvoir déduire vos achats. L'EI au réel est plus optimisée dès que vous avez 30 % et plus de matériaux dans votre CA : vous ne payez les cotisations que sur le bénéfice réel. Règle empirique : sous 50 000 € de CA et avec peu de matériaux → micro. Au-dessus de 80 000 € ou avec beaucoup d'achats → EI au réel ou EURL.",
+      "La CSG-CRDS est une contribution incluse dans les cotisations sociales de l'indépendant. En micro-entreprise, elle est déjà comprise dans le taux global de 21,2 %. Pour un TNS au réel, elle s'ajoute aux cotisations maladie, retraite et allocations familiales et représente une part significative du total. Elle finance la protection sociale et n'ouvre pas de droits propres.",
   },
   {
-    question: "Quelle est la différence entre cotisations SARL gérant majoritaire et SAS président ?",
+    question: 'Quel chiffre d’affaires pour se verser un SMIC net en tant qu’artisan ?',
     answer:
-      "Le gérant majoritaire de SARL est travailleur non salarié (TNS) : il paye environ 45 % de cotisations sur sa rémunération, sans assurance chômage. Le président de SAS est assimilé salarié : il paye environ 70 à 80 % de cotisations (part employeur + part salarié) mais bénéficie du régime général de la Sécurité sociale. La SAS coûte plus cher en cotisations mais offre une meilleure protection sociale et permet de moduler facilement rémunération et dividendes (les dividendes ne supportent pas les cotisations sociales).",
+      "En micro-artisan BTP, comptez qu'après 21,5 % de cotisations et vos frais (matériaux, véhicule, assurances), il faut environ 2 à 2,5 fois le net souhaité en chiffre d'affaires. Pour un SMIC net (~1 400 €/mois), visez souvent 2 800 à 3 500 € de CA mensuel selon vos charges. Le calculateur donne le net après cotisations ; ajoutez vos frais professionnels pour le net réel.",
   },
   {
-    question: "Le versement libératoire de l'impôt vaut-il le coup ?",
+    question: 'Peut-on déduire ses charges professionnelles en micro-entreprise BTP ?',
     answer:
-      "Le versement libératoire (1,7 % du CA pour les prestations BIC en BTP) règle l'IR en même temps que les cotisations. Il n'est intéressant que si votre foyer fiscal est dans la tranche à 30 % ou plus. Si vous êtes non imposable ou dans la tranche à 11 %, le barème progressif classique est plus avantageux car vous bénéficiez de l'abattement forfaitaire de 50 % sur le CA (régime micro-BIC services). À simuler chaque année selon les revenus globaux du foyer.",
+      "Non. En micro-entreprise, on ne déduit aucune charge réelle : ni matériaux, ni véhicule, ni sous-traitance. Un abattement forfaitaire est appliqué pour l'impôt, mais les cotisations portent sur tout le chiffre d'affaires. C'est le point faible du régime pour le BTP, gros consommateur de fournitures : au-delà d'un certain volume d'achats, la société au réel devient plus avantageuse.",
   },
   {
-    question: "Qu'est-ce qui n'est PAS inclus dans cette estimation ?",
+    question: 'Quelle est la contribution à la formation professionnelle d’un artisan ?',
     answer:
-      "Cette estimation ne couvre que les cotisations sociales obligatoires. Ne sont pas comptés : l'impôt sur le revenu (IR) ou l'IS, la TVA, la CFE (cotisation foncière des entreprises, 200 à 3 000 €/an), la RC pro et la décennale (1 500 à 4 000 €/an en BTP), la mutuelle obligatoire, la prévoyance, l'éventuelle complémentaire retraite Madelin. Comptez 5 000 à 8 000 € supplémentaires par an pour ces postes selon votre métier et votre couverture.",
-  },
-  {
-    question: 'Ces chiffres sont-ils exacts ?',
-    answer:
-      "Les chiffres affichés sont indicatifs et calculés sur la base du barème 2026 publié par l'URSSAF, la SSI et la CIPAV. Ils correspondent aux taux moyens constatés pour un artisan BTP standard. Votre situation réelle peut varier selon : zone géographique (ZRR, QPV), formation continue, complémentaire santé, prévoyance, options retraite, etc. Confirmez avec votre comptable avant toute décision juridique, fiscale ou de trésorerie. Cet outil est une aide à la réflexion, pas un avis comptable.",
+      "En micro-entreprise, la contribution à la formation professionnelle (CFP) de l'artisan est de 0,3 % du chiffre d'affaires, prélevée avec les cotisations sociales. Elle ouvre des droits à la formation professionnelle. Pour un TNS au réel, elle prend la forme d'un forfait annuel. Le calculateur l'intègre au total des charges.",
   },
 ];

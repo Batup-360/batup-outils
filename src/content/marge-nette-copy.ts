@@ -1,8 +1,8 @@
 export const margeNetteCopy = {
   seo: {
-    title: 'Calculateur de marge nette et coefficient BTP — gratuit | Batup',
+    title: "Calcul marge nette et coefficient BTP | Batup",
     description:
-      "Convertissez en 1 clic un coefficient multiplicateur en marge nette (ou l'inverse) et obtenez le prix de vente HT à appliquer. Outil gratuit pour artisans BTP, formules comptables.",
+      "Convertissez un coefficient en marge nette (et l'inverse) et trouvez le prix de vente correspondant. Calculateur BTP gratuit.",
     canonicalPath: '/calculateur-marge-nette-coefficient-btp',
   },
   webApplication: {

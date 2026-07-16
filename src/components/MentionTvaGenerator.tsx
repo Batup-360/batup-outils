@@ -87,9 +87,9 @@ const MENTION_BY_VERDICT: Record<Verdict, string> = {
   'tva-20':
     'Aucune mention spéciale requise — la facture affiche le taux normal de 20 % et le montant de TVA correspondant dans le tableau des totaux.',
   'tva-10':
-    '« Travaux d’amélioration, de transformation, d’aménagement ou d’entretien portant sur un logement achevé depuis plus de 2 ans — taux réduit applicable (article 279-0 bis du CGI) — attestation client jointe »',
+    '« Travaux d’amélioration, de transformation, d’aménagement ou d’entretien portant sur un logement achevé depuis plus de 2 ans — taux réduit de 10 % (article 279-0 bis du CGI). Mention de certification du client portée sur le devis/la facture. »',
   'tva-5-5':
-    '« Travaux d’amélioration de la qualité énergétique portant sur un logement achevé depuis plus de 2 ans (article 278-0 bis A du CGI) — attestation client jointe »',
+    '« Travaux d’amélioration de la qualité énergétique portant sur un logement achevé depuis plus de 2 ans — taux réduit de 5,5 % (article 278-0 bis A du CGI). Mention de certification du client portée sur le devis/la facture. »',
   autoliquidation:
     '« TVA due par le preneur — Autoliquidation, article 283-2 nonies du CGI »',
   franchise: '« TVA non applicable — article 293 B du CGI »',
@@ -498,12 +498,12 @@ function VerdictPanel({
 
       {style.needsAttestation && (
         <div className="rounded-lg border border-indigo-200 bg-indigo-50/60 p-3 text-xs leading-relaxed text-indigo-900">
-          <p className="font-semibold">Attestation TVA obligatoire</p>
+          <p className="font-semibold">Mention de certification du client (depuis mars 2025)</p>
           <p className="mt-1 opacity-90">
-            Le client particulier doit remplir et signer le formulaire CERFA n° 1300-SD (travaux
-            &lt; 300 € TTC) ou CERFA n° 1301-SD (au-delà) avant la facturation. À conserver 5 ans
-            avec la copie de la facture. Sans attestation, l’administration redresse l’entreprise
-            sur le différentiel de TVA en cas de contrôle.
+            Le formulaire CERFA d’attestation n’est plus exigé. Le client appose et signe, sur le
+            devis ou la facture, une mention certifiant que le logement a plus de 2 ans et la nature
+            des travaux. Non requise si les travaux d’entretien ou de réparation sont &lt; 1 000 €
+            TTC. À conserver 5 ans avec la facture (BOFiP BOI-TVA-LIQ-30-20-90-40, 22/10/2025).
           </p>
         </div>
       )}

@@ -1,8 +1,8 @@
 export const roiRgeCopy = {
   seo: {
-    title: "Calculateur ROI certification RGE — rentabilité Qualibat artisan BTP 2026 | Batup",
+    title: "Calculateur ROI certification RGE | Batup",
     description:
-      "Vaut-il le coup de prendre la certification RGE ? Calculez en 1 minute la rentabilité de votre qualification QualibatRGE ou Qualit'EnR selon les chantiers MaPrimeRénov espérés, le coût de formation FEEBat et votre marge nette. ROI année 1 et break-even instantanés.",
+      "La certification RGE est-elle rentable ? Comparez coût, formation et revenus MaPrimeRénov. Calculateur de ROI gratuit.",
     canonicalPath: '/calculateur-roi-certification-rge',
   },
   webApplication: {

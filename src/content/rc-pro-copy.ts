@@ -1,8 +1,8 @@
 export const rcProCopy = {
   seo: {
-    title: 'Simulateur RC Pro BTP — prix assurance responsabilité civile pro 2026 | Batup',
+    title: "Simulateur RC Pro BTP gratuit | Batup",
     description:
-      "Estimez en 1 minute le prix de votre assurance RC Pro BTP selon votre métier, votre chiffre d'affaires, votre effectif et votre sinistralité. Fourchette indicative gratuite pour artisans et entreprises du bâtiment, avec rabais package décennale.",
+      "Estimez votre cotisation RC Pro BTP, avec pack possible décennale. Simulateur gratuit et instantané, sans inscription.",
     canonicalPath: '/simulateur-rc-pro-btp',
   },
   webApplication: {

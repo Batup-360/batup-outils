@@ -1,8 +1,8 @@
 export const chargesSocialesCopy = {
   seo: {
-    title: 'Calculateur charges sociales artisan BTP 2026 — simulateur gratuit | Batup',
+    title: "Calcul charges sociales artisan BTP | Batup",
     description:
-      'Estimez en 1 minute vos cotisations sociales d’artisan BTP selon votre statut (micro, EI, EURL, SARL, SAS). Barème indicatif 2026, ACRE incluse, reste-à-vivre détaillé. Gratuit, sans inscription.',
+      "Estimez vos charges sociales d'artisan BTP selon votre statut (micro, EI, EURL, SARL, SAS). Barème à jour, calculateur gratuit.",
     canonicalPath: '/calculateur-charges-sociales-artisan-btp',
   },
   webApplication: {

@@ -1,9 +1,9 @@
 export const intemperiesCibtpCopy = {
   seo: {
     title:
-      "Calculateur jours d'intempéries indemnisés CIBTP — barème 2026 | Batup",
+      "Calcul jours d'intempéries CIBTP | Batup",
     description:
-      "Estimez en 30 secondes l'indemnité CIBTP d'un arrêt intempéries : 75 % du taux horaire, plafond 75 % × 120 % PHSS ≈ 26,10 €/h, carence d'1 heure, plafond 55 jours par campagne (1er nov. — 31 mars). Outil gratuit pour employeurs du bâtiment (réf. Code du travail L. 5424-6 à L. 5424-15, D. 5424-7).",
+      "Calculez l'indemnisation des jours d'intempéries CIBTP : 75% du salaire, carence, plafond annuel. Outil gratuit pour le BTP.",
     canonicalPath: '/calculateur-jours-intemperies-cibtp',
   },
   webApplication: {

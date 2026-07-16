@@ -189,6 +189,15 @@ export function QuotePriceCalculator() {
                 <Row label="Coût total estimé" value={fmtEuro(results.coutsDirectsReels)} />
               </div>
 
+              {results.prixEstime > 0 && (
+                <p className="rounded-lg border border-gray-200 bg-white p-3 text-xs leading-relaxed text-gray-500">
+                  <strong className="text-gray-700">Zone saine :</strong> marge nette 20 à 35 %. En
+                  dessous de 15 %, la rentabilité est fragile ; au-dessus de 40 %, vous risquez de
+                  perdre le marché. Ce calcul ignore vos frais généraux (15 à 25 %) : la marge réelle
+                  est plus basse.
+                </p>
+              )}
+
               <div className="space-y-2 pt-2">
                 <a href={ctaSignupHref}>
                   <Button className="h-11 w-full rounded-full">

@@ -2,48 +2,43 @@ import type { FAQItem } from '@/components/FAQAccordion';
 
 export const tauxHoraireFAQ: FAQItem[] = [
   {
-    question: 'Combien faut-il facturer l’heure quand on est artisan du BTP ?',
+    question: 'Comment calculer son taux horaire dans le BTP ?',
     answer:
-      "Il n'y a pas de taux unique : tout dépend de vos charges fixes annuelles, du nombre d'heures réellement facturables dans l'année et de la marge nette que vous visez. Pour un artisan seul avec 60 000 € de charges, 220 jours travaillés et une marge nette cible de 23 %, le taux à facturer ressort généralement entre 42 et 48 €/h HT. Utilisez le calculateur ci-dessus pour obtenir le taux adapté à votre situation.",
+      "Additionnez toutes vos charges annuelles (salaires chargés, local, véhicules, assurances, logiciels, marketing), divisez par le nombre d'heures réellement facturables dans l'année, puis appliquez votre marge cible. Exemple : 73 500 € de charges ÷ 1 200 h = 61 €/h de coût, soit environ 70 €/h avec 15 % de marge. Le calculateur ci-dessus fait ce calcul à partir de vos chiffres.",
   },
   {
-    question: "Qu'est-ce que le coût de revient horaire ?",
+    question: 'Combien d’heures facturables par an pour un artisan ?',
     answer:
-      "C'est le seuil minimum en dessous duquel chaque heure facturée vous fait perdre de l'argent. On l'obtient en divisant la totalité de vos charges fixes annuelles (salaires, local, véhicules, assurances, logiciels, etc.) par le nombre d'heures réellement facturables dans l'année. Tant que votre taux facturé est en dessous, vous payez de votre poche pour travailler.",
+      "Beaucoup moins qu'on ne le croit : autour de 1 100 à 1 300 heures, pas 2 000. Sur 1 607 h légales, il faut retirer les congés, la formation, les intempéries, puis les heures non facturables (trajets, devis, administratif, pauses). Compter 2 000 h fait sous-évaluer le taux horaire de 30 à 40 %. C'est l'erreur n°1 : partez d'un volume réaliste (~1 200 h).",
   },
   {
-    question: 'Quelle est la différence entre marge nette et coefficient ?',
+    question: 'Quel est le tarif horaire d’un maçon, plombier ou électricien en 2026 ?',
     answer:
-      "La marge nette est exprimée en pourcentage du prix de vente (méthode comptable correcte), le coefficient en pourcentage du coût. Une marge nette de 23,08 % équivaut à un coefficient de 1,30. Travailler en marge nette évite les erreurs classiques où l'on croit avoir 30 % de marge alors qu'on n'en a en réalité que 23 %.",
+      "En moyenne 45 à 70 €/h HT selon le métier et la région : maçon ~55 €/h, plombier ~55 €/h, électricien ~40-45 €/h, menuisier/charpentier ~50 €/h, peintre ~30-40 €/h. L'Île-de-France se situe 20 à 30 % au-dessus, les zones rurales en dessous. Ces moyennes sont indicatives : votre vrai taux dépend de vos charges, pas de celui du voisin.",
   },
   {
-    question: 'Combien de jours travaillés faut-il prendre dans le calcul ?',
+    question: 'Quel est le taux horaire minimum dans le bâtiment ?',
     answer:
-      "Sur 365 jours, retirez 104 jours de week-end, 11 jours fériés, 25 jours de congés payés et environ 15 jours combinés d'arrêts maladie et d'intempéries. On obtient autour de 210–220 jours réellement facturables. Pour une équipe expérimentée et un planning serré, 220 est une bonne base. En cas de chantiers très saisonniers (façades, toiture), descendre à 200 est plus prudent.",
+      "Il n'existe pas de taux horaire de vente minimum réglementaire — seul le SMIC encadre les salaires (environ 12 €/h brut). Votre taux minimum est votre seuil de rentabilité : le coût horaire en dessous duquel vous perdez de l'argent. Le calculateur le donne (coût de revient horaire) : facturer en dessous, c'est travailler à perte.",
   },
   {
-    question: 'Combien d’heures par jour faut-il compter ?',
+    question: 'Faut-il afficher son taux horaire en HT ou en TTC sur le devis ?',
     answer:
-      "Le standard légal en France est 7 ou 8 heures par jour. Attention à ne pas confondre les heures de présence et les heures réellement facturables au client : les temps de trajet, de chargement, de pause et d'administratif ne sont pas facturés. La plupart des artisans facturent en moyenne 6,5 à 7,5 heures par journée de présence.",
+      "En HT sur le devis destiné à un professionnel, et en HT et TTC pour un particulier (qui paie le prix TTC). Le taux horaire que vous calculez ici est un montant HT : ajoutez la TVA applicable (20 %, 10 % en rénovation d'un logement de plus de 2 ans, 5,5 % en rénovation énergétique) pour obtenir le TTC facturé au client.",
   },
   {
-    question: 'Pourquoi ma marge nette cible doit-elle être supérieure à 14,5 % ?',
+    question: 'Quelle marge appliquer sur son taux horaire pour être rentable ?',
     answer:
-      'En-dessous de 14,5 % de marge nette, un seul aléa (retard de paiement, SAV, oubli de poste, remise commerciale, intempérie) suffit à transformer le chantier en perte. 14,5 % est le seuil de sécurité que nous utilisons dans Batup ; au-dessus, vous avez du coussin pour absorber les imprévus.',
+      "Comptez 10 à 30 % de marge nette au-dessus de votre coût horaire, avec 15 à 20 % comme cible saine. Cette marge finance les imprévus (SAV, remises, retards de paiement), l'investissement et votre rémunération réelle. Sans marge, le moindre aléa fait basculer le chantier en perte : ne vous contentez pas de couvrir vos coûts.",
   },
   {
-    question: 'Le calcul tient-il compte de mon salaire de dirigeant ?',
+    question: 'Comment justifier un taux horaire élevé face à un client qui négocie ?',
     answer:
-      "Oui : intégrez votre rémunération brute annuelle dans les coûts salariaux totaux. C'est une erreur fréquente que de l'oublier : si votre taux horaire ne couvre pas votre propre rémunération, vous travaillez gratuitement et l'entreprise vit sur le crédit fournisseur.",
+      "Détaillez ce que couvre l'heure : main-d'œuvre qualifiée, charges sociales, assurance décennale, matériel, garantie et SAV — pas seulement le temps passé. Un taux plus élevé qu'un concurrent traduit souvent une vraie couverture d'assurance et une pérennité. Présentez un devis clair et chiffré : un prix argumenté se défend mieux qu'un prix bas non expliqué.",
   },
   {
-    question: 'Et la TVA ? Le taux calculé est-il HT ou TTC ?',
+    question: 'Comment ne plus perdre de temps à recalculer son taux horaire ?',
     answer:
-      "Le calculateur fonctionne intégralement en HT (hors taxes). Pour obtenir votre taux TTC, multipliez le résultat par 1,10 (TVA 10 %, rénovation logement) ou 1,20 (TVA 20 %, neuf). C'est le HT qui rentre dans votre poche, donc c'est sur lui qu'on raisonne pour la rentabilité.",
-  },
-  {
-    question: 'Mon taux calculé est très supérieur à ce que pratiquent mes concurrents.',
-    answer:
-      "C'est souvent le signe que vos concurrents sous-estiment leurs charges réelles ou ne se versent pas un vrai salaire. Plutôt que de baisser votre taux, augmentez la valeur perçue (qualité, délais, garanties, communication client). Le calculateur vous dit ce qu'il faut facturer pour vivre dignement de votre métier, pas pour casser les prix.",
+      "En le pilotant en continu plutôt qu'une fois par an sur Excel. Batup calcule automatiquement vos heures réellement facturées à partir des pointages chantier et suit vos charges en temps réel, pour garder un taux horaire juste et une marge maîtrisée sur chaque chantier. Essai gratuit, sans carte bancaire.",
   },
 ];

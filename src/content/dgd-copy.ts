@@ -1,8 +1,8 @@
 export const dgdCopy = {
   seo: {
-    title: 'Calculateur DGD bâtiment — décompte général définitif | Batup',
+    title: "Calculateur DGD décompte général définitif | Batup",
     description:
-      "Calculez en 1 minute le solde du DGD (décompte général définitif) de votre chantier BTP : marché initial, avenants, révisions de prix, pénalités, retenue de garantie et acomptes perçus. Outil gratuit conforme CCAG travaux.",
+      "Calculez le décompte général définitif (DGD) : marché, avenants, révisions, pénalités, retenue. Solde de fin de chantier gratuit.",
     canonicalPath: '/calculateur-dgd-decompte-general-definitif',
   },
   webApplication: {

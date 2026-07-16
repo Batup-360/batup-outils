@@ -2,48 +2,43 @@ import type { FAQItem } from '@/components/FAQAccordion';
 
 export const situationTravauxFAQ: FAQItem[] = [
   {
-    question: "Qu'est-ce qu'une situation de travaux dans le BTP ?",
+    question: 'Comment calculer le montant d’une situation de travaux ?',
     answer:
-      "Une situation de travaux est une facturation intermédiaire émise pendant l'exécution d'un chantier long, traduisant le pourcentage d'avancement atteint depuis la dernière situation. Elle s'oppose à la facturation en une seule fois en fin de chantier : sur un marché de plus de 3 mois, c'est la norme. Le rythme est mensuel dans la grande majorité des cas. La situation permet à l'entreprise de tirer une trésorerie régulière et au client de suivre l'avancement réel des travaux. Elle est obligatoire dans les marchés publics et fortement recommandée dans les marchés privés au-delà de 50 000 € HT.",
+      "Montant à facturer = montant du marché × avancement cumulé, moins les situations déjà facturées, moins la retenue de garantie. Exemple : un marché de 10 000 € à 60 % d'avancement, alors qu'on avait facturé 30 %, donne 10 000 × (60 % − 30 %) = 3 000 € HT ce mois. Le calculateur applique cette formule et déduit la retenue automatiquement.",
   },
   {
-    question: "Comment se calcule une situation : sur l'avancement ou sur les coûts engagés ?",
+    question: 'Quelle différence entre une situation de travaux et un acompte ?',
     answer:
-      "La méthode standard du BTP français est l'avancement physique : on mesure le pourcentage de travaux réalisés par rapport au total du marché, et on multiplie par le montant HT. Sur un marché de 100 000 € HT avec 30 % d'avancement, le cumul des travaux est de 30 000 € HT. La situation N s'obtient en déduisant le cumul des situations précédentes. Certains marchés (notamment dans le génie civil) appliquent la méthode du coût engagé (cost-to-cost) : on facture en proportion des coûts décaissés. Pour les marchés bâtiment classiques, restez sur l'avancement physique, plus transparent et plus aligné avec les attentes du maître d'œuvre.",
+      "L'acompte est un pourcentage fixe demandé avant ou en début de chantier, indépendant de l'avancement réel. La situation de travaux facture l'avancement réellement réalisé sur la période. La retenue de garantie s'applique aux situations, pas aux acomptes. Confondre les deux fausse la trésorerie et le suivi du marché.",
   },
   {
-    question: 'La retenue de garantie de 5 % s\'applique-t-elle sur le HT ou sur le TTC ?',
+    question: 'Comment calculer l’avancement d’un chantier en pourcentage ?',
     answer:
-      "Sur le TTC. La Loi n° 71-584 du 16 juillet 1971 autorise le maître d'ouvrage à prélever 5 % du montant TTC de chaque acompte ou situation, à condition de consigner ces sommes auprès d'un organisme de cautionnement agréé ou d'un compte bancaire dédié. L'ordre de calcul est donc : situation brute HT → ajout de la TVA → 5 % du TTC déduits du TTC → situation TTC à percevoir. Le plafond global reste 5 % du marché TTC, peu importe le nombre de situations. La retenue se libère 1 an après la réception sans réserves, ou après la levée écrite des réserves. Pour éviter d'immobiliser cette trésorerie, vous pouvez substituer une caution bancaire à la retenue : le client est légalement obligé d'accepter, et vous percevez 100 % de chaque situation.",
+      "L'avancement est le rapport entre les travaux réalisés et le total du marché, poste par poste. Pour un lot de 20 000 € dont 12 000 € sont exécutés, l'avancement est de 60 %. On additionne les avancements pondérés de chaque lot (DPGF) pour obtenir l'avancement global. On facture ensuite la différence avec l'avancement de la situation précédente.",
   },
   {
-    question: 'Quand peut-on émettre une situation ?',
+    question: 'Comment déduire les situations déjà facturées ?',
     answer:
-      "Le rythme est fixé par le CCAP (cahier des clauses administratives particulières) du marché. Le plus fréquent : situation mensuelle, à terme échu, avec date limite de remise au maître d'œuvre (souvent le 5 ou le 10 du mois suivant). Le maître d'œuvre vérifie l'avancement déclaré, peut le corriger, et émet un acompte (visa) que le maître d'ouvrage paie sous 30 à 45 jours. En marché public, l'article R. 2191-21 du Code de la commande publique fixe un délai global de paiement de 30 jours pour les pouvoirs adjudicateurs (50 jours pour les EPS). Au-delà, des intérêts moratoires sont dus de plein droit.",
+      "On raisonne en cumulé : on calcule le montant total dû au titre de l'avancement atteint, puis on retranche la somme de toutes les situations précédentes. C'est l'erreur la plus fréquente — oublier de déduire le déjà-facturé conduit à facturer deux fois. Le calculateur travaille en cumulé et n'affiche que le net à facturer pour la période.",
   },
   {
-    question: 'Que se passe-t-il si le client conteste l\'avancement déclaré ?',
+    question: 'Faut-il appliquer la TVA sur une situation de travaux ?',
     answer:
-      "Le maître d'œuvre est le tiers de confiance qui valide l'avancement. S'il considère que vous avez surestimé, il corrige à la baisse et n'accepte que le pourcentage qu'il juge réel. Vous percevez alors la situation corrigée, et la différence est réintégrée à la situation suivante si elle se confirme. En cas de désaccord persistant, il est possible de saisir le comité de règlement amiable des litiges (marchés publics) ou de recourir à un expert. Documentez systématiquement chaque visite de chantier avec photos et procès-verbaux pour défendre votre pourcentage d'avancement.",
+      "Oui, au taux applicable aux travaux (20 %, 10 % pour un logement de plus de 2 ans, 5,5 % en rénovation énergétique). En sous-traitance BTP, la situation est facturée en HT avec la mention « Autoliquidation » : c'est le donneur d'ordre qui déclare la TVA. La retenue de garantie de 5 % se calcule, elle, sur le montant TTC de chaque situation.",
   },
   {
-    question: 'Comment imputer les acomptes versés à la commande sur les situations ?',
+    question: 'Comment s’applique la retenue de garantie sur une situation ?',
     answer:
-      "L'acompte de démarrage (souvent 30 % en marché privé, 5 % en marché public — avance forfaitaire de l'article R. 2191-3 du Code de la commande publique) se rembourse au prorata de l'avancement. En marché public, l'avance se déduit progressivement à partir d'un seuil de 65 % d'avancement et doit être intégralement remboursée à 80 % d'avancement. En marché privé, la pratique courante est de déduire l'acompte par fraction proportionnelle à chaque situation, jusqu'à apurement total avant le DGD. Saisir le bon montant d'acompte déjà encaissé dans le calculateur évite toute mauvaise surprise sur le net à percevoir.",
+      "La retenue de garantie, plafonnée à 5 % (art. 1799-1 du Code civil en marché privé), est prélevée sur chaque situation et libérée un an après la réception, sauf réserves. Elle peut être remplacée par une caution bancaire, ce qui permet d'encaisser 100 % de chaque situation. Le calculateur déduit la retenue du net à facturer.",
   },
   {
-    question: "Faut-il faire une situation de travaux même si l'avancement est faible ?",
+    question: 'Quel est le délai de paiement d’une situation de travaux ?',
     answer:
-      "Oui, dès que le seuil de facturation prévu par le marché est atteint (souvent 2 ou 3 % d'avancement minimum par situation). Émettre des situations régulières, même modestes, sécurise votre trésorerie et signale au client que le chantier progresse. À l'inverse, accumuler 3 mois sans facturer sous prétexte d'avancement faible vous expose à des trous de trésorerie et fragilise votre position en cas de litige. La règle d'or : ne jamais laisser passer plus d'un mois sans situation, sauf accord écrit explicite avec le maître d'œuvre.",
+      "En marché privé entre professionnels, le délai est de 30 jours par défaut, plafonné contractuellement à 60 jours nets ou 45 jours fin de mois. Tout retard déclenche des pénalités et une indemnité forfaitaire de 40 € par facture. En marché public, l'acompte mensuel est mandaté sous un délai encadré par le CCAG-Travaux, avec un délai global de paiement de 30 jours.",
   },
   {
-    question: 'Comment gérer les avenants en cours de marché ?',
+    question: 'Comment appliquer une révision de prix sur une situation ?',
     answer:
-      "Un avenant modifie le montant total HT du marché : il faut donc l'intégrer au calcul d'avancement à partir de sa date d'effet. Si l'avenant porte sur 10 000 € HT supplémentaires sur un marché initial de 100 000 € HT, le nouveau marché de référence devient 110 000 € HT. L'avancement en pourcentage se recalcule sur cette nouvelle base. Les travaux supplémentaires non encore couverts par un avenant signé doivent être facturés séparément ou attendre la régularisation. Ne jamais inclure du hors marché dans une situation sans avenant signé : c'est la première cause de litige en fin de chantier.",
-  },
-  {
-    question: 'Comment Batup automatise-t-il les situations ?',
-    answer:
-      "Batup synchronise le planning de chantier (tâches réalisées vs. planifiées), calcule automatiquement le pourcentage d'avancement, génère la situation au format CERFA, applique la retenue de garantie, la TVA et déduit les acomptes déjà perçus. Vous validez d'un clic et envoyez la situation au maître d'œuvre. Les délais de paiement sont suivis en temps réel et les relances client se déclenchent automatiquement. Résultat : 4 heures gagnées en moyenne sur chaque fin de mois et un délai de paiement raccourci de 8 jours en moyenne sur les marchés actifs.",
+      "Si le marché prévoit une clause de révision, on actualise le montant avec l'index BT01 (INSEE), publié avec environ 3 mois de décalage : P = P₀ × BT01(m−3) / BT01(m₀). On applique d'abord un index provisoire, régularisé quand l'index définitif paraît. Utilisez le calculateur de révision de prix Index BT pour ce coefficient avant de l'intégrer à la situation.",
   },
 ];

@@ -8,11 +8,11 @@ Calculateurs et simulateurs gratuits pour les artisans, entreprises et chefs de 
 
 ### Ce qu'est ce site
 
-Un mini-site indépendant (séparé de l'application Batup) qui propose **19 outils gratuits** pour les professionnels du BTP. Chaque outil a une page dédiée, optimisée pour le référencement naturel (SEO), et se termine par un appel à l'action vers l'inscription sur **[app.batup.fr](https://app.batup.fr)**.
+Un mini-site indépendant (séparé de l'application Batup) qui propose **38 outils gratuits** pour les professionnels du BTP. Chaque outil a une page dédiée, optimisée pour le référencement naturel (SEO), et se termine par un appel à l'action vers l'inscription sur **[app.batup.fr](https://app.batup.fr)**.
 
 Ce sont des **lead magnets** : un artisan cherche "calculateur taux horaire BTP" sur Google, trouve notre outil, s'en sert, puis découvre Batup.
 
-### Liste des 19 outils (avec leur URL)
+### Liste des 38 outils (avec leur URL)
 
 | Outil | URL |
 |---|---|
@@ -35,6 +35,25 @@ Ce sont des **lead magnets** : un artisan cherche "calculateur taux horaire BTP"
 | Simulateur assurance décennale BTP | `/simulateur-decennale-btp` |
 | Simulateur RC Pro BTP | `/simulateur-rc-pro-btp` |
 | Calculateur ROI certification RGE | `/calculateur-roi-certification-rge` |
+| Calculateur de béton (volume + dosage) | `/calculateur-beton` |
+| Calculateur de TVA (HT ↔ TTC) | `/calculateur-tva` |
+| Calculateur de surface (m²) | `/calculateur-surface` |
+| Calculateur de volume (m³) | `/calculateur-volume` |
+| Calculateur d'escalier (Blondel) | `/calculateur-escalier` |
+| Calculateur de mortier (dosage) | `/calculateur-mortier` |
+| Calculateur de chape | `/calculateur-chape` |
+| Calculateur de pente de toiture | `/calculateur-pente-toiture` |
+| Calculateur de papier peint | `/calculateur-papier-peint` |
+| Générateur d'attestation TVA | `/generateur-attestation-tva` |
+| Calculateur de parpaings | `/calculateur-parpaings` |
+| Calculateur de briques | `/calculateur-briques` |
+| Calculateur de plaques de placo | `/calculateur-placo` |
+| Calculateur de carrelage | `/calculateur-carrelage` |
+| Calculateur de parquet | `/calculateur-parquet` |
+| Calculateur de terrasse | `/calculateur-terrasse` |
+| Calculateur d'isolant | `/calculateur-isolant` |
+| Calculateur de peinture | `/calculateur-peinture` |
+| Calculateur de consommation de matériaux | `/calculateur-consommation-materiaux` |
 
 ### Comment fonctionne un outil ?
 
@@ -73,7 +92,7 @@ Mini-site Vite + React + Tailwind, déployé sur **Cloudflare Pages**. Séparé 
 
 ```
 src/
-  pages/          — Un fichier par outil (19 calculateurs)
+  pages/          — Un fichier par outil (38 calculateurs)
   components/     — Composants partagés (layout, CTA signup, etc.)
   lib/            — Logique de calcul et utilitaires
     pricing.ts    — Formules mathématiques des calculateurs

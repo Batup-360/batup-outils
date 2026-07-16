@@ -79,9 +79,11 @@ export function MargeNetteCalculator() {
     }
 
     const margeEuros = prixVente - cout;
+    // Marge nette = marge / prix de vente (taux de marque). Taux de marge = marge / coût.
+    const tauxMarge = cout > 0 ? (margeEuros / cout) * 100 : 0;
     const verdict: VerdictKind = computeVerdict(margeNette, prixVente, cout);
 
-    return { prixVente, coefficient, margeNette, margeEuros, verdict };
+    return { prixVente, coefficient, margeNette, margeEuros, tauxMarge, verdict };
   }, [inputs]);
 
   const ctaSignupHref = useMemo(() => {
@@ -224,10 +226,17 @@ export function MargeNetteCalculator() {
 
               <div className="space-y-2 border-t border-gray-100 pt-4 text-sm">
                 <Row label="Coefficient" value={fmtCoef(results.coefficient)} />
-                <Row label="Marge nette" value={fmtPct(results.margeNette)} />
+                <Row label="Marge nette (/ prix de vente)" value={fmtPct(results.margeNette)} />
+                <Row label="Taux de marge (/ coût)" value={fmtPct(results.tauxMarge)} />
                 <Row label="Marge € (PV − coût)" value={fmtEuro(results.margeEuros)} />
                 <Row label="Coût d'achat HT" value={fmtEuro(inputs.coutAchat)} />
               </div>
+
+              <p className="rounded-lg border border-gray-200 bg-white p-3 text-xs leading-relaxed text-gray-500">
+                <strong className="text-gray-700">Ne confondez pas marge et marque :</strong> la
+                marge nette se calcule sur le prix de vente, le taux de marge sur le coût. Repère
+                bâtiment : coefficient moyen ≈ 1,30, marge nette saine 15 à 30 %.
+              </p>
 
               <div className="space-y-2 pt-2">
                 <a href={ctaSignupHref} data-testid="cta-signup">

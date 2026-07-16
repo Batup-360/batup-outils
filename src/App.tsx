@@ -1,10 +1,12 @@
-import { lazy, Suspense } from 'react';
-import { Route, Switch } from 'wouter';
+import { lazy, Suspense, useEffect } from 'react';
+import { Route, Switch, useLocation } from 'wouter';
 import { EmailGateProvider } from '@/lib/email-gate-context';
 import { EmailGate } from '@/components/EmailGate';
+import { initAnalytics, trackPageView } from '@/lib/analytics';
 
 const Home = lazy(() => import('./pages/home'));
 const NotFound = lazy(() => import('./pages/not-found'));
+const Embed = lazy(() => import('./pages/embed'));
 
 // Pricing & marge
 const CalculateurTauxHoraire = lazy(() => import('./pages/calculateur-taux-horaire'));
@@ -45,6 +47,38 @@ const SimulateurDecennale = lazy(() => import('./pages/simulateur-decennale'));
 const SimulateurRcPro = lazy(() => import('./pages/simulateur-rc-pro'));
 const CalculateurRoiRge = lazy(() => import('./pages/calculateur-roi-rge'));
 
+// Métré & quantités
+const CalculateurBeton = lazy(() => import('./pages/calculateur-beton'));
+const CalculateurTva = lazy(() => import('./pages/calculateur-tva'));
+const CalculateurSurface = lazy(() => import('./pages/calculateur-surface'));
+const CalculateurVolume = lazy(() => import('./pages/calculateur-volume'));
+const CalculateurEscalier = lazy(() => import('./pages/calculateur-escalier'));
+const CalculateurMortier = lazy(() => import('./pages/calculateur-mortier'));
+const CalculateurChape = lazy(() => import('./pages/calculateur-chape'));
+const CalculateurPenteToiture = lazy(() => import('./pages/calculateur-pente-toiture'));
+const CalculateurPapierPeint = lazy(() => import('./pages/calculateur-papier-peint'));
+const GenerateurAttestationTva = lazy(() => import('./pages/generateur-attestation-tva'));
+const CalculateurParpaings = lazy(() => import('./pages/calculateur-parpaings'));
+const CalculateurBriques = lazy(() => import('./pages/calculateur-briques'));
+const CalculateurPlaco = lazy(() => import('./pages/calculateur-placo'));
+const CalculateurCarrelage = lazy(() => import('./pages/calculateur-carrelage'));
+const CalculateurParquet = lazy(() => import('./pages/calculateur-parquet'));
+const CalculateurTerrasse = lazy(() => import('./pages/calculateur-terrasse'));
+const CalculateurIsolant = lazy(() => import('./pages/calculateur-isolant'));
+const CalculateurPeinture = lazy(() => import('./pages/calculateur-peinture'));
+const CalculateurConsommation = lazy(() => import('./pages/calculateur-consommation-materiaux'));
+
+function AnalyticsTracker() {
+  const [location] = useLocation();
+  useEffect(() => {
+    initAnalytics();
+  }, []);
+  useEffect(() => {
+    trackPageView(location);
+  }, [location]);
+  return null;
+}
+
 function LoadingFallback() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-white">
@@ -56,9 +90,11 @@ function LoadingFallback() {
 export default function App() {
   return (
     <EmailGateProvider>
+      <AnalyticsTracker />
       <Suspense fallback={<LoadingFallback />}>
         <Switch>
         <Route path="/" component={Home} />
+        <Route path="/embed/:slug" component={Embed} />
 
         {/* Pricing & marge */}
         <Route path="/calculateur-taux-horaire-btp" component={CalculateurTauxHoraire} />
@@ -113,6 +149,27 @@ export default function App() {
         <Route path="/simulateur-decennale-btp" component={SimulateurDecennale} />
         <Route path="/simulateur-rc-pro-btp" component={SimulateurRcPro} />
         <Route path="/calculateur-roi-certification-rge" component={CalculateurRoiRge} />
+
+        {/* Métré & quantités */}
+        <Route path="/calculateur-beton" component={CalculateurBeton} />
+        <Route path="/calculateur-tva" component={CalculateurTva} />
+        <Route path="/calculateur-surface" component={CalculateurSurface} />
+        <Route path="/calculateur-volume" component={CalculateurVolume} />
+        <Route path="/calculateur-escalier" component={CalculateurEscalier} />
+        <Route path="/calculateur-mortier" component={CalculateurMortier} />
+        <Route path="/calculateur-chape" component={CalculateurChape} />
+        <Route path="/calculateur-pente-toiture" component={CalculateurPenteToiture} />
+        <Route path="/calculateur-papier-peint" component={CalculateurPapierPeint} />
+        <Route path="/generateur-attestation-tva" component={GenerateurAttestationTva} />
+        <Route path="/calculateur-parpaings" component={CalculateurParpaings} />
+        <Route path="/calculateur-briques" component={CalculateurBriques} />
+        <Route path="/calculateur-placo" component={CalculateurPlaco} />
+        <Route path="/calculateur-carrelage" component={CalculateurCarrelage} />
+        <Route path="/calculateur-parquet" component={CalculateurParquet} />
+        <Route path="/calculateur-terrasse" component={CalculateurTerrasse} />
+        <Route path="/calculateur-isolant" component={CalculateurIsolant} />
+        <Route path="/calculateur-peinture" component={CalculateurPeinture} />
+        <Route path="/calculateur-consommation-materiaux" component={CalculateurConsommation} />
 
           <Route component={NotFound} />
         </Switch>

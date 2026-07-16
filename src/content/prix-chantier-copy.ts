@@ -1,8 +1,8 @@
 export const prixChantierCopy = {
   seo: {
-    title: 'Calculateur de prix de chantier BTP — devis rentable | Batup',
+    title: "Calculateur de prix de chantier BTP gratuit | Batup",
     description:
-      "Estimez en 1 minute le prix de vente HT d'un chantier BTP et vérifiez votre marge nette. Outil gratuit pour artisans : main d'œuvre, matériaux, sous-traitance, verdict rentabilité.",
+      "Calculez le prix de vente HT d'un chantier BTP pour une marge maîtrisée. Outil gratuit et instantané, sans inscription.",
     canonicalPath: '/calculateur-prix-chantier-btp',
   },
   webApplication: {

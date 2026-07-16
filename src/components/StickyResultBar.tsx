@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import { useEmbedded } from '@/lib/embed-context';
 
 interface StickyResultBarProps {
   /** Short tool-specific label, e.g. "Taux à facturer", "Prix HT". */
@@ -26,6 +27,8 @@ export function StickyResultBar({
   ctaHref,
   ctaLabel = 'Essayer Batup',
 }: StickyResultBarProps) {
+  const embedded = useEmbedded();
+  if (embedded) return null; // position:fixed breaks inside an iframe modal
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white shadow-[0_-2px_12px_rgba(0,0,0,0.08)] lg:hidden">
       <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-2.5">

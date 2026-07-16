@@ -1,9 +1,9 @@
 export const revisionPrixIndexBTCopy = {
   seo: {
     title:
-      'Calculateur de révision de prix BTP (Index BT) — gratuit | Batup',
+      "Calcul révision de prix BTP (Index BT) | Batup",
     description:
-      "Calculez en 30 secondes le prix révisé d'un marché de travaux avec la formule officielle Index BT (CCAG-Travaux art. 10.4). Outil gratuit pour entrepreneurs BTP : 18 index INSEE pris en charge, écart en € et %.",
+      "Vérifiez votre clause de révision de prix BTP avec la formule Index BT (CCAG-Travaux). Calculateur gratuit et instantané.",
     canonicalPath: '/calculateur-revision-prix-index-bt',
   },
   webApplication: {

@@ -2,48 +2,43 @@ import type { FAQItem } from '@/components/FAQAccordion';
 
 export const intemperiesCibtpFAQ: FAQItem[] = [
   {
-    question: "Qu'est-ce que l'indemnité d'intempéries CIBTP ?",
+    question: 'Quel est le montant de l’indemnité de chômage intempéries dans le BTP ?',
     answer:
-      "C'est une indemnité versée au salarié du bâtiment quand le chantier s'arrête à cause des conditions météo (gel, neige, pluie diluvienne, vent fort, températures extrêmes). Le mécanisme est prévu par les articles L. 5424-6 à L. 5424-15 et D. 5424-7 du Code du travail : l'employeur paie le salaire normal au salarié et se fait rembourser par la caisse Congés Intempéries BTP (CIBTP) de sa région. L'indemnité représente 75 % du salaire horaire brut, dans la limite de 120 % du plafond horaire de la sécurité sociale (PHSS), après une carence d'une heure et dans la limite de 55 jours par salarié et par campagne intempéries (1er novembre — 31 mars).",
+      "L'indemnité est égale à 75 % du salaire horaire de référence (celui de la veille de l'arrêt, hors majorations d'heures supplémentaires et primes de frais), dans la limite d'un plafond horaire d'environ 26 €/h en 2026. Ce n'est pas 100 % du salaire. Le calculateur applique le taux de 75 % et le plafond en vigueur.",
   },
   {
-    question: "Quels travaux ouvrent droit à l'indemnité intempéries ?",
+    question: 'Combien d’heures d’intempéries sont indemnisables ?',
     answer:
-      "Seuls les travaux exécutés en plein air ouvrent droit au régime intempéries : gros œuvre, couverture, charpente, étanchéité, terrassement, VRD, façade, démolition, échafaudage extérieur, travaux publics. Les travaux de second œuvre exécutés en bâtiment clos et couvert (plâtrerie, plomberie, électricité, peinture, menuiserie intérieure) en sont exclus, sauf si la météo rend la circulation matérielle impossible (route bloquée, accès chantier inondé). En cas de doute, le chef de chantier doit motiver l'arrêt sur le constat — la caisse vérifie au cas par cas.",
+      "Les heures d'arrêt réelles, moins une heure de carence sur le premier arrêt, dans la limite de 55 jours (ou l'équivalent en heures) par salarié et par année civile. Au-delà de ce plafond, l'arrêt n'est plus indemnisé. Le calculateur retranche la carence et s'arrête au plafond annuel.",
   },
   {
-    question: "Comment fonctionne la carence d'une heure ?",
+    question: 'L’indemnité intempéries est-elle payée à 100 % du salaire ?',
     answer:
-      "L'article L. 5424-12 dispose que la première heure d'inactivité de chaque arrêt n'est pas indemnisée. En pratique, les caisses CIBTP appliquent cette carence par jour calendaire : si plusieurs interruptions ont lieu le même jour (matin et après-midi), une seule carence d'1 heure s'applique, pas une par arrêt physique. L'outil suit la pratique CIBTP. Si l'arrêt couvre une journée entière de 7 heures, la caisse rembourse 6 heures. Si l'arrêt est de 3 heures (par exemple suite à une averse en milieu de matinée), elle en rembourse 2. Bonne pratique : sur le constat, indiquez clairement les horaires précis de début et de fin d'arrêt — la caisse vérifie au cas par cas.",
+      "Non. Elle correspond à 75 % du salaire horaire de référence, plafonnée. Le salarié subit donc une perte, mais faible sur le net : l'indemnité est exonérée de cotisations sociales et seule la CSG-CRDS (environ 6,70 %) s'applique. En net, l'écart réel avec un salaire travaillé reste limité.",
   },
   {
-    question: "Quel est le plafond de l'indemnité horaire en 2026 ?",
+    question: 'Qu’est-ce que la carence d’une heure sur les intempéries ?',
     answer:
-      "L'indemnité horaire est plafonnée à 75 % de 120 % du plafond horaire de la sécurité sociale (PHSS), pas du SMIC (art. D. 5424-7). En 2026, le PHSS est d'environ 29 €/h, ce qui donne un plafond salaire de référence de 34,80 €/h, soit une indemnité horaire plafonnée à 26,10 €/h (= 29 × 1,20 × 0,75). Concrètement : un salarié payé 13 €/h touche 75 % × 13 = 9,75 €/h indemnisé. Un ouvrier qualifié payé 22 €/h touche 16,50 €/h sans atteindre le plafond. Seuls les très hauts salaires (au-delà de 34,80 €/h brut) déclenchent le plafonnement, ce qui est rare en chantier. Le salarié lui-même reçoit son salaire normal pendant l'arrêt — le plafond ne joue que sur le remboursement perçu par l'employeur.",
+      "La première heure du premier arrêt n'est pas indemnisée : c'est la carence, fixée à 1 heure. Attention, beaucoup de sources parlent à tort d'une « carence de 10 jours » — c'est faux pour le régime intempéries du BTP. Le calculateur déduit automatiquement cette heure de carence du total indemnisable.",
   },
   {
-    question: "Que se passe-t-il au-delà des 55 jours par campagne ?",
+    question: 'La canicule est-elle indemnisée au titre des intempéries ?',
     answer:
-      "Au-delà de 55 jours d'arrêts intempéries indemnisés pour un même salarié sur une même campagne intempéries (1er novembre — 31 mars, art. L. 5424-15), la caisse CIBTP cesse de rembourser. L'employeur continue de payer le salaire pendant l'arrêt mais le reste à charge devient intégral. Au 1er novembre suivant, le compteur repart à zéro. Sur un hiver très rude, ce plafond se franchit vite, surtout sur les équipes couverture / charpente. Bonne pratique : suivre le cumul individuel jour par jour dès le 1er novembre, et basculer prioritairement les équipes proches du plafond sur des chantiers intérieurs ou sur du SAV quand la météo bloque les façades.",
+      "Oui, depuis le 1er janvier 2024, les fortes chaleurs (vigilance orange ou rouge de Météo-France) ouvrent droit au régime de chômage intempéries, au même titre que le gel, la neige ou les fortes pluies. L'arrêt doit rendre le travail dangereux ou impossible sur le chantier. Les mêmes règles de taux, de carence et de plafond s'appliquent.",
   },
   {
-    question: "Qui paie le salarié pendant un arrêt intempéries ?",
+    question: 'Quelles conditions pour bénéficier de l’indemnité intempéries ?',
     answer:
-      "L'employeur paie le salaire intégral du salarié pendant l'arrêt, exactement comme s'il avait travaillé. Le salarié ne voit pas la différence sur sa fiche de paie : pas de retenue, pas de complément, le brut habituel. C'est l'employeur qui, après coup, déclare les heures d'arrêt à sa caisse CIBTP régionale et perçoit le remboursement à 75 % du taux horaire (dans la limite du plafond et après carence). La déclaration se fait mensuellement, en même temps que la DSN.",
+      "Le salarié doit avoir travaillé au moins 200 heures dans le BTP au cours des deux mois précédents, être présent sur le chantier au moment de l'arrêt, et ne pas avoir dépassé le plafond de 55 jours indemnisés dans l'année. L'arrêt doit résulter d'intempéries rendant le travail dangereux ou impossible, sur décision de l'employeur.",
   },
   {
-    question: "Comment déclarer un arrêt intempéries à la CIBTP ?",
+    question: 'Comment déclarer un arrêt intempéries en 2026 ?',
     answer:
-      "Trois pièces sont nécessaires : (1) le constat d'arrêt signé par le chef de chantier le jour même, indiquant la cause météo, l'heure de début et de fin, et la liste des salariés concernés ; (2) le relevé Météo-France ou le bulletin du chantier le plus proche prouvant la condition météo invoquée ; (3) la déclaration mensuelle envoyée à la caisse CIBTP régionale via l'espace employeur en ligne, en parallèle de la DSN. Sans constat horodaté signé, la caisse refuse systématiquement le remboursement — même si la pluie était bien réelle.",
+      "Depuis le 1er janvier 2026, la déclaration se fait exclusivement en ligne, via l'espace sécurisé de votre caisse CIBTP ; les envois papier sont rejetés. L'employeur avance l'indemnité sur la paie, puis déclare l'arrêt et se fait rembourser. La déclaration doit être faite dans le mois suivant la reprise du travail, sous peine de forclusion.",
   },
   {
-    question: "Un arrêt partiel de quelques heures est-il indemnisable ?",
+    question: 'Quelle différence entre chômage intempéries et chômage partiel ?',
     answer:
-      "Oui, dès lors que l'arrêt empêche objectivement la poursuite du travail (averse violente, gel matinal, rafales). Il faut simplement déduire la carence d'1 heure. Exemple : la pluie démarre à 10 h, la journée reprend à 14 h : 4 heures d'arrêt → carence 1 h → 3 heures indemnisées. Le chef de chantier doit noter sur le constat les horaires précis de début et de fin d'arrêt, ainsi que les éventuels travaux de repli effectués (mise hors d'eau, bâchage, nettoyage) — ce temps de repli, lui, est du temps de travail normal et n'est pas indemnisé par la CIBTP.",
-  },
-  {
-    question: "Barème 2026 ou paramètres régionaux applicables ?",
-    answer:
-      "L'outil utilise le barème national 2026 : carence 1 h, taux 75 %, plafond horaire = 75 % × 120 % du PHSS ≈ 26,10 €/h, plafond 55 jours par campagne intempéries (1er nov. — 31 mars). Les taux et plafonds exacts sont fixés par le Code du travail (L. 5424-6 à L. 5424-15, D. 5424-7) et peuvent évoluer chaque année avec la revalorisation du PASS / PHSS (décret annuel). Les caisses CIBTP régionales appliquent toutes les mêmes paramètres, mais peuvent avoir des règles de déclaration ou des outils en ligne légèrement différents (CIBTP Île-de-France, Sud-Est, Grand Est, etc.). Vérifiez toujours auprès de votre caisse régionale pour le dossier réel.",
+      "Le chômage intempéries est propre au BTP, financé par les caisses CIBTP, et ne nécessite aucune autorisation administrative préalable : l'employeur décide l'arrêt puis se fait rembourser. L'activité partielle (chômage partiel) relève d'un dispositif général, soumis à autorisation de l'administration et à un autre mode d'indemnisation. Les deux ne se cumulent pas sur les mêmes heures.",
   },
 ];

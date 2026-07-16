@@ -1,8 +1,8 @@
 export const tvaAutoliquidationCopy = {
   seo: {
-    title: 'Calculateur TVA autoliquidation BTP — sous-traitance | Batup',
+    title: "TVA autoliquidation BTP : calcul et mention | Batup",
     description:
-      "Déterminez en 30 secondes si votre facture de sous-traitance BTP doit être en autoliquidation de TVA (art. 283-2 nonies CGI). Mention exacte à recopier, taux applicable, régime franchise. Outil gratuit pour artisans.",
+      "Êtes-vous en autoliquidation de TVA en sous-traitance BTP ? Quelle mention sur la facture ? Vérificateur gratuit (art. 283 CGI).",
     canonicalPath: '/calculateur-tva-autoliquidation-btp',
   },
   webApplication: {
