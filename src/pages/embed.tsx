@@ -62,6 +62,7 @@ const EMBEDS: Record<string, ComponentType> = {
   'calculateur-tuiles': lazyCalc(() => import('@/components/TuilesCalculator'), 'TuilesCalculator'),
   'calculateur-gravier-sable': lazyCalc(() => import('@/components/GravierSableCalculator'), 'GravierSableCalculator'),
   'calculateur-enduit-facade': lazyCalc(() => import('@/components/EnduitFacadeCalculator'), 'EnduitFacadeCalculator'),
+  'grille-salaires-minima-batiment': lazyCalc(() => import('@/components/GrilleSalairesCalculator'), 'GrilleSalairesCalculator'),
 };
 
 /** Report content height to the parent window so it can size the iframe. */

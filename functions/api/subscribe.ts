@@ -156,6 +156,7 @@ const TOOL_ASTUCE: Record<string, AstuceKey> = {
   'calculateur-cout-salarie-btp': 'paie',
   'calculateur-jours-intemperies-cibtp': 'paie',
   'calculateur-prime-anciennete-ccn-batiment': 'paie',
+  'grille-salaires-minima-batiment': 'paie',
   // Fiscal & légal
   'calculateur-tva': 'fiscal',
   'calculateur-tva-autoliquidation-btp': 'fiscal',

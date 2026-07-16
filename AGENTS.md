@@ -10,7 +10,7 @@ Standalone lead-magnet calculators for `outils.batup.fr`. Vite + React 18 SPA (c
 - **Tests**: `npm test` (vitest). Pure math lives in `src/lib/*-math.ts` with colocated `*.test.ts`.
 - **Prod deploy**: push to `main`. GA4 (`G-8NVKZYY1SE`) is baked in `src/lib/analytics.ts`, fires only on `*.batup.fr`, skipped in `/embed` iframes.
 
-## Tool catalog (41 tools)
+## Tool catalog (42 tools)
 
 What already exists — check here before building to avoid duplicates. Slug = URL path (minus leading `/`) and the identifier used everywhere (see invariant). `Q` = built on the shared `QuantiteCalculator` engine; `B` = bespoke component.
 
@@ -29,6 +29,7 @@ What already exists — check here before building to avoid duplicates. Slug = U
 | `calculateur-cout-salarie-btp` | B | Coût total employeur (brut + charges patronales, CIBTP) |
 | `calculateur-jours-intemperies-cibtp` | B | Indemnisation intempéries CIBTP (75 %, carence, plafond) |
 | `calculateur-prime-anciennete-ccn-batiment` | B | Prime d'ancienneté selon coefficient + ancienneté (CCN Bâtiment) |
+| `grille-salaires-minima-batiment` | B | Salaires minima conventionnels (ouvriers/ETAM/cadres). Données dans `src/lib/grille-salaires-btp.ts` |
 
 ### Fiscal & légal
 | slug | eng | what it does |

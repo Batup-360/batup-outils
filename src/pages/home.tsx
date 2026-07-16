@@ -432,6 +432,15 @@ const TOOLS: Tool[] = [
     theme: 'Métré & quantités',
     popularity: 5,
   },
+  {
+    href: '/grille-salaires-minima-batiment',
+    icon: <Coins className="h-6 w-6" />,
+    title: 'Grille des salaires minima BTP',
+    description: 'Salaires minima conventionnels 2026 : ouvriers, ETAM et cadres, par niveau et coefficient. Datés et sourcés.',
+    type: 'Calculateur',
+    theme: 'Paie & RH',
+    popularity: 8,
+  },
 ];
 
 const ALL_TYPES: ToolType[] = ['Calculateur', 'Simulateur', 'Générateur', 'Vérificateur', 'Comparateur'];

@@ -70,6 +70,7 @@ const CalculateurConsommation = lazy(() => import('./pages/calculateur-consommat
 const CalculateurTuiles = lazy(() => import('./pages/calculateur-tuiles'));
 const CalculateurGravierSable = lazy(() => import('./pages/calculateur-gravier-sable'));
 const CalculateurEnduitFacade = lazy(() => import('./pages/calculateur-enduit-facade'));
+const GrilleSalaires = lazy(() => import('./pages/grille-salaires-minima-batiment'));
 
 function AnalyticsTracker() {
   const [location] = useLocation();
@@ -176,6 +177,7 @@ export default function App() {
         <Route path="/calculateur-tuiles" component={CalculateurTuiles} />
         <Route path="/calculateur-gravier-sable" component={CalculateurGravierSable} />
         <Route path="/calculateur-enduit-facade" component={CalculateurEnduitFacade} />
+        <Route path="/grille-salaires-minima-batiment" component={GrilleSalaires} />
 
           <Route component={NotFound} />
         </Switch>

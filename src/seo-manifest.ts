@@ -99,6 +99,8 @@ import { gravierSableCopy } from '@/content/gravier-sable-copy';
 import { gravierSableFAQ } from '@/content/gravier-sable-faq';
 import { enduitFacadeCopy } from '@/content/enduit-facade-copy';
 import { enduitFacadeFAQ } from '@/content/enduit-facade-faq';
+import { grilleSalairesCopy } from '@/content/grille-salaires-copy';
+import { grilleSalairesFAQ } from '@/content/grille-salaires-faq';
 
 export interface SeoFaqItem {
   question: string;
@@ -223,6 +225,7 @@ export const SEO_ROUTES: SeoRoute[] = [
   toRoute(tuilesCopy, tuilesFAQ, 'Calculateur de tuiles'),
   toRoute(gravierSableCopy, gravierSableFAQ, 'Calculateur de gravier et sable'),
   toRoute(enduitFacadeCopy, enduitFacadeFAQ, "Calculateur d'enduit de façade"),
+  toRoute(grilleSalairesCopy, grilleSalairesFAQ, 'Grille des salaires minima du bâtiment'),
 ];
 
 /** Quick lookup by route path. */
