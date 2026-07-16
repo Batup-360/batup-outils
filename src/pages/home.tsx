@@ -405,6 +405,33 @@ const TOOLS: Tool[] = [
     theme: 'Métré & quantités',
     popularity: 3,
   },
+  {
+    href: '/calculateur-tuiles',
+    icon: <Layers className="h-6 w-6" />,
+    title: 'Calculateur de tuiles',
+    description: 'Combien de tuiles pour votre toiture selon le type (mécanique, plate, canal) et la surface des pans ?',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 6,
+  },
+  {
+    href: '/calculateur-gravier-sable',
+    icon: <Box className="h-6 w-6" />,
+    title: 'Gravier et sable (tonnage)',
+    description: 'Convertissez surface et épaisseur en volume (m³) puis en tonnes de gravier, sable ou tout-venant.',
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 6,
+  },
+  {
+    href: '/calculateur-enduit-facade',
+    icon: <RectangleVertical className="h-6 w-6" />,
+    title: "Calculateur d'enduit de façade",
+    description: "Quantité d'enduit (kg et sacs de 25 kg) selon la surface et le type : monocouche, gobetis, corps d'enduit.",
+    type: 'Calculateur',
+    theme: 'Métré & quantités',
+    popularity: 5,
+  },
 ];
 
 const ALL_TYPES: ToolType[] = ['Calculateur', 'Simulateur', 'Générateur', 'Vérificateur', 'Comparateur'];

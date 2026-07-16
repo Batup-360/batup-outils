@@ -59,6 +59,9 @@ const EMBEDS: Record<string, ComponentType> = {
   'calculateur-isolant': lazyCalc(() => import('@/components/IsolantCalculator'), 'IsolantCalculator'),
   'calculateur-peinture': lazyCalc(() => import('@/components/PeintureCalculator'), 'PeintureCalculator'),
   'calculateur-consommation-materiaux': lazyCalc(() => import('@/components/ConsommationCalculator'), 'ConsommationCalculator'),
+  'calculateur-tuiles': lazyCalc(() => import('@/components/TuilesCalculator'), 'TuilesCalculator'),
+  'calculateur-gravier-sable': lazyCalc(() => import('@/components/GravierSableCalculator'), 'GravierSableCalculator'),
+  'calculateur-enduit-facade': lazyCalc(() => import('@/components/EnduitFacadeCalculator'), 'EnduitFacadeCalculator'),
 };
 
 /** Report content height to the parent window so it can size the iframe. */

@@ -189,6 +189,9 @@ const TOOL_ASTUCE: Record<string, AstuceKey> = {
   'calculateur-isolant': 'metre',
   'calculateur-peinture': 'metre',
   'calculateur-consommation-materiaux': 'metre',
+  'calculateur-tuiles': 'metre',
+  'calculateur-gravier-sable': 'metre',
+  'calculateur-enduit-facade': 'metre',
 };
 
 function astuceFor(toolSlug: string): Astuce {

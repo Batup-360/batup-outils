@@ -67,6 +67,9 @@ const CalculateurTerrasse = lazy(() => import('./pages/calculateur-terrasse'));
 const CalculateurIsolant = lazy(() => import('./pages/calculateur-isolant'));
 const CalculateurPeinture = lazy(() => import('./pages/calculateur-peinture'));
 const CalculateurConsommation = lazy(() => import('./pages/calculateur-consommation-materiaux'));
+const CalculateurTuiles = lazy(() => import('./pages/calculateur-tuiles'));
+const CalculateurGravierSable = lazy(() => import('./pages/calculateur-gravier-sable'));
+const CalculateurEnduitFacade = lazy(() => import('./pages/calculateur-enduit-facade'));
 
 function AnalyticsTracker() {
   const [location] = useLocation();
@@ -170,6 +173,9 @@ export default function App() {
         <Route path="/calculateur-isolant" component={CalculateurIsolant} />
         <Route path="/calculateur-peinture" component={CalculateurPeinture} />
         <Route path="/calculateur-consommation-materiaux" component={CalculateurConsommation} />
+        <Route path="/calculateur-tuiles" component={CalculateurTuiles} />
+        <Route path="/calculateur-gravier-sable" component={CalculateurGravierSable} />
+        <Route path="/calculateur-enduit-facade" component={CalculateurEnduitFacade} />
 
           <Route component={NotFound} />
         </Switch>

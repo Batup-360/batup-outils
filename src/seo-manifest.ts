@@ -93,6 +93,12 @@ import { peintureCopy } from '@/content/peinture-copy';
 import { peintureFAQ } from '@/content/peinture-faq';
 import { consommationCopy } from '@/content/consommation-copy';
 import { consommationFAQ } from '@/content/consommation-faq';
+import { tuilesCopy } from '@/content/tuiles-copy';
+import { tuilesFAQ } from '@/content/tuiles-faq';
+import { gravierSableCopy } from '@/content/gravier-sable-copy';
+import { gravierSableFAQ } from '@/content/gravier-sable-faq';
+import { enduitFacadeCopy } from '@/content/enduit-facade-copy';
+import { enduitFacadeFAQ } from '@/content/enduit-facade-faq';
 
 export interface SeoFaqItem {
   question: string;
@@ -214,6 +220,9 @@ export const SEO_ROUTES: SeoRoute[] = [
   toRoute(isolantCopy, isolantFAQ, "Calculateur d'isolant"),
   toRoute(peintureCopy, peintureFAQ, 'Calculateur de peinture'),
   toRoute(consommationCopy, consommationFAQ, 'Calculateur de consommation de matériaux'),
+  toRoute(tuilesCopy, tuilesFAQ, 'Calculateur de tuiles'),
+  toRoute(gravierSableCopy, gravierSableFAQ, 'Calculateur de gravier et sable'),
+  toRoute(enduitFacadeCopy, enduitFacadeFAQ, "Calculateur d'enduit de façade"),
 ];
 
 /** Quick lookup by route path. */
