@@ -26,7 +26,7 @@ const SECTIONS: FooterSection[] = [
       { href: '/calculateur-tva-autoliquidation-btp', label: 'TVA autoliquidation' },
       { href: '/simulateur-decennale-btp', label: 'Garantie décennale' },
       { href: '/calculateur-situation-travaux', label: 'Situation de travaux' },
-      { href: '/', label: 'Voir les 19 outils' },
+      { href: '/', label: 'Voir les 42 outils' },
     ],
   },
   {
