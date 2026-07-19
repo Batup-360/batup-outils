@@ -3,6 +3,7 @@ import { Route, Switch, useLocation } from 'wouter';
 import { EmailGateProvider } from '@/lib/email-gate-context';
 import { EmailGate } from '@/components/EmailGate';
 import { initAnalytics, trackPageView } from '@/lib/analytics';
+import { METIERS } from '@/lib/salaires-metiers-btp';
 
 const Home = lazy(() => import('./pages/home'));
 const NotFound = lazy(() => import('./pages/not-found'));
@@ -71,6 +72,8 @@ const CalculateurTuiles = lazy(() => import('./pages/calculateur-tuiles'));
 const CalculateurGravierSable = lazy(() => import('./pages/calculateur-gravier-sable'));
 const CalculateurEnduitFacade = lazy(() => import('./pages/calculateur-enduit-facade'));
 const GrilleSalaires = lazy(() => import('./pages/grille-salaires-minima-batiment'));
+const SalairesMetiersHub = lazy(() => import('./pages/salaires-metiers-btp'));
+const SalaireMetier = lazy(() => import('./pages/salaire-metier'));
 
 function AnalyticsTracker() {
   const [location] = useLocation();
@@ -179,6 +182,12 @@ export default function App() {
         <Route path="/calculateur-enduit-facade" component={CalculateurEnduitFacade} />
         <Route path="/grille-salaires-minima-batiment" component={GrilleSalaires} />
         <Route path="/grille-salaires-minima-batiment/:region" component={GrilleSalaires} />
+        <Route path="/salaires-metiers-btp" component={SalairesMetiersHub} />
+        {METIERS.map((m) => (
+          <Route key={m.slug} path={`/salaire-${m.slug}`}>
+            {() => <SalaireMetier slug={m.slug} />}
+          </Route>
+        ))}
 
           <Route component={NotFound} />
         </Switch>

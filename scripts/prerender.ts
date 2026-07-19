@@ -20,6 +20,41 @@ import { REGIONS } from '../src/lib/grille-salaires-btp';
 import { grilleSalairesCopy } from '../src/content/grille-salaires-copy';
 import { grilleSalairesFAQ } from '../src/content/grille-salaires-faq';
 
+import { METIERS } from '../src/lib/salaires-metiers-btp';
+import { salairesMetiersCopy } from '../src/content/salaires-metiers-copy';
+import { salairesMetiersFAQ } from '../src/content/salaires-metiers-faq';
+
+/** Hub + pages programmatiques « salaire <métier> » : une par métier. */
+const METIER_ROUTES: SeoRoute[] = [
+  {
+    path: salairesMetiersCopy.hub.canonicalPath,
+    title: salairesMetiersCopy.hub.seoTitle,
+    description: salairesMetiersCopy.hub.seoDescription,
+    webApplicationName: 'Salaires par métier du BTP',
+    webApplicationDescription: salairesMetiersCopy.hub.seoDescription,
+    breadcrumbName: 'Salaires par métier BTP',
+    h1: salairesMetiersCopy.hub.h1,
+    lede: salairesMetiersCopy.hub.lede,
+    methodology: salairesMetiersCopy.methodology,
+    faq: salairesMetiersFAQ,
+  },
+  ...METIERS.map((m) => {
+    const lbl = m.label.toLowerCase();
+    return {
+      path: `/salaire-${m.slug}`,
+      title: `Salaire ${lbl} 2026 : combien gagne ${m.article} ${lbl} ? | Batup`,
+      description: `Combien gagne ${m.article} ${lbl} dans le BTP en 2026 ? Salaire net de début de carrière, brut estimé et niveau conventionnel du bâtiment. Gratuit.`,
+      webApplicationName: `Salaire ${lbl} 2026`,
+      webApplicationDescription: `Salaire ${m.article} ${lbl} dans le bâtiment en 2026.`,
+      breadcrumbName: `Salaire ${m.label}`,
+      h1: `Salaire ${lbl} en 2026`,
+      lede: `Combien gagne ${m.article} ${lbl} ? Salaire net de début de carrière, estimation du brut et niveau conventionnel dans le bâtiment. Gratuit, sans inscription.`,
+      methodology: salairesMetiersCopy.methodology,
+      faq: salairesMetiersFAQ,
+    };
+  }),
+];
+
 /** Pages programmatiques « grille salaires × région » : une par région. */
 const GRILLE_REGION_ROUTES: SeoRoute[] = REGIONS.map((r) => ({
   path: `/grille-salaires-minima-batiment/${r.key}`,
@@ -258,6 +293,17 @@ function main(): void {
     regionCount++;
   }
 
+  // Pages programmatiques « salaire <métier> » + hub.
+  for (const route of METIER_ROUTES) {
+    const url = SITE + route.path;
+    let html = setTitle(template, route.title);
+    html = injectHead(html, headMeta({ title: route.title, description: route.description, url }));
+    html = injectHead(html, routeJsonLd(route, url));
+    html = injectRoot(html, routeBodyContent(route));
+    writePage(route.path, html);
+    regionCount++;
+  }
+
   // Home page (dist/index.html) — regenerated last so it overwrites the template.
   {
     const url = SITE + '/';
@@ -292,7 +338,7 @@ function main(): void {
   }
 
   console.log(
-    `[prerender] wrote ${count} static pages (${SEO_ROUTES.length} tools + 1 home) + ${regionCount} region pages + 404.html`
+    `[prerender] wrote ${count} static pages (${SEO_ROUTES.length} tools + 1 home) + ${regionCount} programmatic pages (régions + métiers) + 404.html`
   );
 }
 

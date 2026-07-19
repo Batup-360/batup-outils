@@ -170,6 +170,10 @@ Add the slug to `TOOL_ASTUCE` with the right family (`metre | pricing | paie | f
 
 `/grille-salaires-minima-batiment/<region>` génère une page indexable par région (titre/H1/canonical avec le nom de région). Pour **ajouter une région** : ajouter une entrée à `REGIONS` dans `src/lib/grille-salaires-btp.ts` avec ses grilles `ouvriers`/`etam` réelles (datées + sourcées, jamais inventées) — les catégories sont optionnelles, une région sans donnée affiche « en cours d'intégration » sans page vide. La page statique est émise par `scripts/prerender.ts` (boucle `GRILLE_REGION_ROUTES`), la route dynamique est `/grille-salaires-minima-batiment/:region` dans `App.tsx`, le composant lit `regionKey`. Ajouter aussi l'URL au `sitemap.xml`. Les cadres (IDCC 2420) sont nationaux et partagés (`CADRES_NATIONAL`).
 
+## Programmatic SEO — salaires par métier
+
+`/salaires-metiers-btp` (hub) + `/salaire-<metier>` (une page par métier). Données dans `src/lib/salaires-metiers-btp.ts` (`METIERS[]`) : le SEUL chiffre affirmé est `debutantNet`, transcrit d'une source datée et citée (`METIER_SOURCE`) — jamais inventé ; le reste (brut, confirmé) est étiqueté « estimation ». **Ajouter un métier** = ajouter une entrée à `METIERS` avec un `debutantNet` sourcé. Les routes sont générées depuis `METIERS` dans `App.tsx` (routes explicites `/salaire-<slug>` via render-prop — wouter ne capture PAS un param en milieu de segment comme `/salaire-:x`). Le prerender émet une page par métier (boucle `METIER_ROUTES` dans `scripts/prerender.ts`). Ajouter aussi l'URL au `sitemap.xml` et le slug à `TOOL_ASTUCE` (`paie`) dans `functions/api/subscribe.ts`. Priorité mots-clés (Semrush FR) : le volume est sur le MÉTIER (grutier 2900, menuisier 1300, couvreur 880…), pas sur la région (≈ 0).
+
 ## Handled automatically (do NOT hand-edit)
 - Static SEO page + `/embed/<slug>` shell + JSON-LD → `scripts/prerender.ts` reads `SEO_ROUTES`.
 - Internal-link nav hub → also from `SEO_ROUTES`.

@@ -441,6 +441,15 @@ const TOOLS: Tool[] = [
     theme: 'Paie & RH',
     popularity: 8,
   },
+  {
+    href: '/salaires-metiers-btp',
+    icon: <Users className="h-6 w-6" />,
+    title: 'Salaires par métier du BTP',
+    description: 'Combien gagne un maçon, grutier, couvreur, menuisier… ? Salaire net, brut estimé et niveau conventionnel.',
+    type: 'Calculateur',
+    theme: 'Paie & RH',
+    popularity: 8,
+  },
 ];
 
 const ALL_TYPES: ToolType[] = ['Calculateur', 'Simulateur', 'Générateur', 'Vérificateur', 'Comparateur'];
