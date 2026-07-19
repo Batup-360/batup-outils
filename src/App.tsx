@@ -178,6 +178,7 @@ export default function App() {
         <Route path="/calculateur-gravier-sable" component={CalculateurGravierSable} />
         <Route path="/calculateur-enduit-facade" component={CalculateurEnduitFacade} />
         <Route path="/grille-salaires-minima-batiment" component={GrilleSalaires} />
+        <Route path="/grille-salaires-minima-batiment/:region" component={GrilleSalaires} />
 
           <Route component={NotFound} />
         </Switch>

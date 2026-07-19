@@ -29,7 +29,7 @@ What already exists — check here before building to avoid duplicates. Slug = U
 | `calculateur-cout-salarie-btp` | B | Coût total employeur (brut + charges patronales, CIBTP) |
 | `calculateur-jours-intemperies-cibtp` | B | Indemnisation intempéries CIBTP (75 %, carence, plafond) |
 | `calculateur-prime-anciennete-ccn-batiment` | B | Prime d'ancienneté selon coefficient + ancienneté (CCN Bâtiment) |
-| `grille-salaires-minima-batiment` | B | Salaires minima conventionnels (ouvriers/ETAM/cadres). Données dans `src/lib/grille-salaires-btp.ts` |
+| `grille-salaires-minima-batiment` | B | Salaires minima conventionnels (ouvriers/ETAM/cadres). Données dans `src/lib/grille-salaires-btp.ts`. **SEO programmatique** : une page par région à `/grille-salaires-minima-batiment/<region>` |
 
 ### Fiscal & légal
 | slug | eng | what it does |
@@ -165,6 +165,10 @@ Add the slug to `TOOL_ASTUCE` with the right family (`metre | pricing | paie | f
 ```ts
 'calculateur-foo': 'metre',
 ```
+
+## Programmatic SEO — grille salaires par région (query × région)
+
+`/grille-salaires-minima-batiment/<region>` génère une page indexable par région (titre/H1/canonical avec le nom de région). Pour **ajouter une région** : ajouter une entrée à `REGIONS` dans `src/lib/grille-salaires-btp.ts` avec ses grilles `ouvriers`/`etam` réelles (datées + sourcées, jamais inventées) — les catégories sont optionnelles, une région sans donnée affiche « en cours d'intégration » sans page vide. La page statique est émise par `scripts/prerender.ts` (boucle `GRILLE_REGION_ROUTES`), la route dynamique est `/grille-salaires-minima-batiment/:region` dans `App.tsx`, le composant lit `regionKey`. Ajouter aussi l'URL au `sitemap.xml`. Les cadres (IDCC 2420) sont nationaux et partagés (`CADRES_NATIONAL`).
 
 ## Handled automatically (do NOT hand-edit)
 - Static SEO page + `/embed/<slug>` shell + JSON-LD → `scripts/prerender.ts` reads `SEO_ROUTES`.

@@ -16,6 +16,23 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SEO_ROUTES, type SeoRoute } from '../src/seo-manifest';
+import { REGIONS } from '../src/lib/grille-salaires-btp';
+import { grilleSalairesCopy } from '../src/content/grille-salaires-copy';
+import { grilleSalairesFAQ } from '../src/content/grille-salaires-faq';
+
+/** Pages programmatiques « grille salaires × région » : une par région. */
+const GRILLE_REGION_ROUTES: SeoRoute[] = REGIONS.map((r) => ({
+  path: `/grille-salaires-minima-batiment/${r.key}`,
+  title: `Grille des salaires minima du bâtiment en ${r.label} 2026 | Batup`,
+  description: `Salaires minima conventionnels du bâtiment en ${r.label} 2026 : ouvriers, ETAM et cadres, par niveau et coefficient. Grille datée et sourcée, gratuit.`,
+  webApplicationName: grilleSalairesCopy.webApplication.name,
+  webApplicationDescription: grilleSalairesCopy.webApplication.description,
+  breadcrumbName: `Grille salaires bâtiment ${r.label}`,
+  h1: `Grille des salaires minima du bâtiment en ${r.label} 2026`,
+  lede: `Salaires minima conventionnels des ouvriers, ETAM et cadres du bâtiment en ${r.label}. Choisissez la catégorie et le poste pour obtenir le minimum brut mensuel, annuel et le taux horaire. Grille datée et sourcée, gratuit.`,
+  methodology: grilleSalairesCopy.methodology,
+  faq: grilleSalairesFAQ,
+}));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -229,6 +246,18 @@ function main(): void {
     count++;
   }
 
+  // Pages programmatiques « grille salaires × région ».
+  let regionCount = 0;
+  for (const route of GRILLE_REGION_ROUTES) {
+    const url = SITE + route.path;
+    let html = setTitle(template, route.title);
+    html = injectHead(html, headMeta({ title: route.title, description: route.description, url }));
+    html = injectHead(html, routeJsonLd(route, url));
+    html = injectRoot(html, routeBodyContent(route));
+    writePage(route.path, html);
+    regionCount++;
+  }
+
   // Home page (dist/index.html) — regenerated last so it overwrites the template.
   {
     const url = SITE + '/';
@@ -263,7 +292,7 @@ function main(): void {
   }
 
   console.log(
-    `[prerender] wrote ${count} static pages (${SEO_ROUTES.length} tools + 1 home) + 404.html`
+    `[prerender] wrote ${count} static pages (${SEO_ROUTES.length} tools + 1 home) + ${regionCount} region pages + 404.html`
   );
 }
 
