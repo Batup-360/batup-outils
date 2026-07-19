@@ -1,18 +1,18 @@
 export const grilleSalairesCopy = {
   seo: {
-    title: 'Grille des salaires minima du bâtiment 2026 | Batup',
+    title: 'Grille des salaires BTP 2026 : minima du bâtiment | Batup',
     description:
-      'Consultez les salaires minima conventionnels du bâtiment 2026 : ouvriers, ETAM et cadres, par niveau et coefficient. Grilles datées et sourcées, gratuit.',
+      'Grille des salaires BTP 2026 : minima conventionnels du bâtiment (ouvriers, ETAM, cadres) par niveau et coefficient. Brut mensuel, annuel, taux horaire. Daté et sourcé, gratuit.',
     canonicalPath: '/grille-salaires-minima-batiment',
   },
   webApplication: {
-    name: 'Grille des salaires minima du bâtiment',
+    name: 'Grille des salaires BTP 2026 (bâtiment)',
     description:
       "Outil gratuit qui affiche les salaires minima conventionnels du bâtiment (ouvriers IDCC 1596/1597, ETAM IDCC 2609, cadres IDCC 2420) par niveau et coefficient, avec le brut mensuel, le brut annuel et le taux horaire, à partir des accords en vigueur.",
   },
   hero: {
-    h1: 'Grille des salaires minima du bâtiment 2026',
-    lede: "Quel est le salaire minimum conventionnel d'un ouvrier, ETAM ou cadre du bâtiment ? Choisissez la catégorie et le poste : obtenez le minimum brut mensuel, annuel et le taux horaire. Grilles datées et sourcées, gratuit.",
+    h1: 'Grille des salaires BTP 2026',
+    lede: "Quel est le salaire minimum conventionnel dans le BTP ? Ouvriers, ETAM et cadres du bâtiment : choisissez la catégorie et le poste pour obtenir le minimum brut mensuel, annuel et le taux horaire. Grille datée et sourcée, gratuit. (Conventions du bâtiment ; les travaux publics relèvent d'accords distincts.)",
   },
   ctaBanner: {
     title: 'Gérez la paie de vos équipes BTP avec Batup',
