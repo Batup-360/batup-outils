@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useLocation } from 'wouter';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Download } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Label, Button } from './ui';
 import { StickyResultBar } from './StickyResultBar';
@@ -48,6 +48,31 @@ export function GrilleSalairesCalculator({ regionKey }: { regionKey?: string }) 
   };
 
   const ctaSignupHref = `${APP_BASE}/signup?source=${TOOL_SLUG}`;
+
+  const printPdf = () => {
+    if (!grille) return;
+    const catLabel = CATEGORIES.find((c) => c.key === categorie)!.label;
+    const regionLabel = categorie === 'cadres' ? 'France entière' : region.label;
+    const hasCoeff = grille.lignes.some((l) => l.coefficient);
+    const rows = grille.lignes
+      .map((l) => {
+        const m = minimumApplicable(grille, l);
+        return `<tr><td>${l.label}</td>${hasCoeff ? `<td>${l.coefficient ?? '—'}</td>` : ''}<td style="text-align:right">${fmtEuro(m.montant)}${m.smicApplique ? ' (SMIC)' : ''}</td></tr>`;
+      })
+      .join('');
+    const html =
+      `<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Grille salaires BTP 2026 — ${catLabel} — ${regionLabel}</title>` +
+      `<style>body{font-family:Arial,Helvetica,sans-serif;padding:32px;color:#1a1a2e}h1{font-size:18px;margin:0 0 4px}table{width:100%;border-collapse:collapse;margin-top:16px}th,td{border-bottom:1px solid #e5e7eb;padding:8px 6px;text-align:left;font-size:13px}th:last-child,td:last-child{text-align:right}small{color:#6b7280;line-height:1.5;display:block;margin-top:16px}</style></head>` +
+      `<body onload="window.print()">` +
+      `<h1>Grille des salaires BTP 2026 — ${catLabel} — ${regionLabel}</h1>` +
+      `<small style="margin:0">En vigueur au ${grille.dateEffet} · ${grille.accord}</small>` +
+      `<table><thead><tr><th>Poste</th>${hasCoeff ? '<th>Coeff.</th>' : ''}<th>Minimum brut/mois</th></tr></thead><tbody>${rows}</tbody></table>` +
+      `<small>Base ${grille.baseLabel}. ${grille.note ?? ''} Source : ${grille.sourceLabel}. Si un minimum conventionnel est inférieur au SMIC, c'est le SMIC qui s'applique. Grille générée sur outils.batup.fr — vérifiez l'accord régional applicable.</small>` +
+      `</body></html>`;
+    const url = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+    window.open(url, '_blank');
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+  };
 
   return (
     <div className="grid gap-6 pb-20 lg:grid-cols-5 lg:pb-0">
@@ -133,6 +158,16 @@ export function GrilleSalairesCalculator({ regionKey }: { regionKey?: string }) 
                 </CardTitle>
               </CardHeader>
               <CardContent>
+                <div className="mb-3 flex justify-end">
+                  <button
+                    type="button"
+                    onClick={printPdf}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2 text-xs font-medium text-gray-700 transition hover:border-brand-500 hover:text-brand-500"
+                  >
+                    <Download className="h-4 w-4" />
+                    Télécharger en PDF
+                  </button>
+                </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>

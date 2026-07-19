@@ -41,4 +41,19 @@ export const grilleSalairesFAQ: FAQItem[] = [
     answer:
       "En général une fois par an, par accord paritaire (NAO), mais à des dates différentes selon la région et la catégorie. Une grille peut donc être à jour dans une région et pas dans une autre. Vérifiez toujours la date d'entrée en vigueur affichée et l'accord de référence avant de l'appliquer à une paie.",
   },
+  {
+    question: 'Comment télécharger la grille des salaires BTP 2026 en PDF ?',
+    answer:
+      "Cliquez sur « Télécharger en PDF » en haut de l'outil : la grille de la catégorie (ouvriers, ETAM ou cadres) et de la région sélectionnées s'ouvre dans une vue imprimable que vous pouvez enregistrer en PDF ou imprimer. Le document reprend les coefficients, les minima bruts, la date d'entrée en vigueur et l'accord de référence.",
+  },
+  {
+    question: 'Que signifie le coefficient N3P2 (ou 230) ?',
+    answer:
+      "N3P2 désigne le niveau III position 2 de la classification des ouvriers du bâtiment, associé au coefficient 230 : un compagnon professionnel très qualifié. La classification va de N1P1 (coeff. 150, ouvrier d'exécution) à N4P2 (coeff. 270, maître ouvrier / chef d'équipe). Le coefficient détermine le minimum conventionnel du poste.",
+  },
+  {
+    question: 'Quelle différence entre la grille des salaires BTP 2025 et 2026 ?',
+    answer:
+      "La grille est renégociée chaque année par accord paritaire (NAO), avec une revalorisation des minima (souvent +2 à +4 %). La grille 2026 remplace la grille 2025 à sa date d'entrée en vigueur, qui varie selon la région et la catégorie. Appliquez toujours la grille en vigueur à la date de la paie, pas celle de l'année précédente.",
+  },
 ];

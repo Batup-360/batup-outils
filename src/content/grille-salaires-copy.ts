@@ -36,6 +36,14 @@ export const grilleSalairesCopy = {
         heading: '3. Le SMIC comme plancher',
         body: "Quand un minimum conventionnel passe sous le SMIC (fréquent pour les premiers coefficients), c'est le SMIC qui s'applique légalement. Les grilles ouvriers et ETAM sont en base 35 h (151,67 h/mois) ; la grille cadres est en base 39 h (169 h/mois) : attention en comparant les montants.",
       },
+      {
+        heading: '4. Coefficients, IDCC et qualifications',
+        body: "Chaque poste correspond à un coefficient : de 150 (niveau I position 1, N1P1) à 270 (niveau IV position 2, N4P2) pour les ouvriers, des niveaux A à H pour les ETAM, et des coefficients 60 à 162 pour les cadres. Les conventions collectives concernées : IDCC 1596 (ouvriers d'entreprises jusqu'à 10 salariés), IDCC 1597 (ouvriers de plus de 10 salariés), IDCC 2609 (ETAM) et IDCC 2420 (cadres). La grille est revalorisée chaque année : comparez toujours la grille 2026 en vigueur avec la grille 2025 précédente.",
+      },
+      {
+        heading: '5. Télécharger la grille en PDF',
+        body: "Vous pouvez télécharger ou imprimer la grille des salaires BTP 2026 en PDF depuis l'outil (bouton « Télécharger en PDF »), pour la catégorie et la région choisies. Pratique pour l'afficher en entreprise, la joindre à un contrat ou vérifier une paie.",
+      },
     ],
   },
 };
