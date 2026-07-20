@@ -10,7 +10,7 @@ Standalone lead-magnet calculators for `outils.batup.fr`. Vite + React 18 SPA (c
 - **Tests**: `npm test` (vitest). Pure math lives in `src/lib/*-math.ts` with colocated `*.test.ts`.
 - **Prod deploy**: push to `main`. GA4 (`G-8NVKZYY1SE`) is baked in `src/lib/analytics.ts`, fires only on `*.batup.fr`, skipped in `/embed` iframes.
 
-## Tool catalog (42 tools)
+## Tool catalog (43 tools + 28 fiches métier + 9 grilles régionales)
 
 What already exists — check here before building to avoid duplicates. Slug = URL path (minus leading `/`) and the identifier used everywhere (see invariant). `Q` = built on the shared `QuantiteCalculator` engine; `B` = bespoke component.
 
@@ -289,4 +289,3 @@ Base : `https://outils.batup.fr` — 81 URLs. Régénéré à chaque build (`dis
 - [/salaire-plombier](https://outils.batup.fr/salaire-plombier)
 - [/salaire-soudeur](https://outils.batup.fr/salaire-soudeur)
 - [/salaire-tailleur-de-pierre](https://outils.batup.fr/salaire-tailleur-de-pierre)
-
