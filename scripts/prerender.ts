@@ -20,7 +20,7 @@ import { REGIONS, CADRES_NATIONAL, minimumApplicable, getRegion, type Region, ty
 import { grilleSalairesCopy } from '../src/content/grille-salaires-copy';
 import { grilleSalairesFAQ } from '../src/content/grille-salaires-faq';
 
-import { METIERS } from '../src/lib/salaires-metiers-btp';
+import { METIERS, metierAtomicFaq } from '../src/lib/salaires-metiers-btp';
 import { salairesMetiersCopy } from '../src/content/salaires-metiers-copy';
 import { salairesMetiersFAQ } from '../src/content/salaires-metiers-faq';
 
@@ -50,7 +50,7 @@ const METIER_ROUTES: SeoRoute[] = [
       h1: `Salaire ${lbl} en 2026`,
       lede: `${m.article.charAt(0).toUpperCase() + m.article.slice(1)} ${lbl} débutant gagne environ ${m.debutantNet} € net/mois (~${Math.round(m.debutantNet / 0.78)} € brut), classé ${m.niveauConventionnel}. Combien gagne ${m.article} ${lbl} en 2026 : salaire net, brut estimé et minimum conventionnel du bâtiment.`,
       methodology: salairesMetiersCopy.methodology,
-      faq: salairesMetiersFAQ,
+      faq: [metierAtomicFaq(m), ...salairesMetiersFAQ],
     };
   }),
 ];

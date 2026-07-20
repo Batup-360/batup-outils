@@ -296,3 +296,16 @@ export const METIERS: MetierSalaire[] = [
 export function getMetier(slug: string | undefined): MetierSalaire | undefined {
   return METIERS.find((m) => m.slug === slug);
 }
+
+/** FAQ unique par métier (chiffres) — dé-duplique les pages + nourrit le schema
+ *  FAQPage et les moteurs de réponse IA avec une « selection seed » propre. */
+export function metierAtomicFaq(m: MetierSalaire): { question: string; answer: string } {
+  const brut = Math.round((m.debutantNet / 0.78) / 10) * 10;
+  const confirme = Math.round((m.debutantNet * CONFIRME_FACTEUR) / 10) * 10;
+  const art = m.article.charAt(0).toUpperCase() + m.article.slice(1);
+  const lbl = m.label.toLowerCase();
+  return {
+    question: `Combien gagne ${m.article} ${lbl} en 2026 ?`,
+    answer: `${art} ${lbl} débutant gagne environ ${m.debutantNet} € net par mois (~${brut} € brut). Avec l'expérience (profil confirmé, 5 à 10 ans), comptez autour de ${confirme} € net. Classement conventionnel typique : ${m.niveauConventionnel}. Ce qui fait varier la rémunération : ${m.facteurs}`,
+  };
+}
