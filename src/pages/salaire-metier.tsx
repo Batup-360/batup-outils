@@ -26,7 +26,7 @@ export default function SalaireMetier({ slug: slugProp }: { slug?: string }) {
     : salairesMetiersCopy.hub.seoDescription;
   const h1 = metier ? `Salaire ${lbl} en 2026` : 'Salaire métier BTP';
   const lede = metier
-    ? `Combien gagne ${art} ${lbl} ? Salaire net de début de carrière, estimation du brut et niveau conventionnel dans le bâtiment. Gratuit, sans inscription.`
+    ? `${art.charAt(0).toUpperCase() + art.slice(1)} ${lbl} débutant gagne environ ${metier.debutantNet} € net/mois (~${Math.round(metier.debutantNet / 0.78)} € brut), classé ${metier.niveauConventionnel}. Salaire net, brut estimé et minimum conventionnel du bâtiment.`
     : salairesMetiersCopy.hub.lede;
 
   return (

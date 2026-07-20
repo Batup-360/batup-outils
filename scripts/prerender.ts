@@ -16,7 +16,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SEO_ROUTES, type SeoRoute } from '../src/seo-manifest';
-import { REGIONS } from '../src/lib/grille-salaires-btp';
+import { REGIONS, CADRES_NATIONAL, minimumApplicable, getRegion, type Region, type CategorieGrille } from '../src/lib/grille-salaires-btp';
 import { grilleSalairesCopy } from '../src/content/grille-salaires-copy';
 import { grilleSalairesFAQ } from '../src/content/grille-salaires-faq';
 
@@ -48,12 +48,32 @@ const METIER_ROUTES: SeoRoute[] = [
       webApplicationDescription: `Salaire ${m.article} ${lbl} dans le bâtiment en 2026.`,
       breadcrumbName: `Salaire ${m.label}`,
       h1: `Salaire ${lbl} en 2026`,
-      lede: `Combien gagne ${m.article} ${lbl} ? Salaire net de début de carrière, estimation du brut et niveau conventionnel dans le bâtiment. Gratuit, sans inscription.`,
+      lede: `${m.article.charAt(0).toUpperCase() + m.article.slice(1)} ${lbl} débutant gagne environ ${m.debutantNet} € net/mois (~${Math.round(m.debutantNet / 0.78)} € brut), classé ${m.niveauConventionnel}. Combien gagne ${m.article} ${lbl} en 2026 : salaire net, brut estimé et minimum conventionnel du bâtiment.`,
       methodology: salairesMetiersCopy.methodology,
       faq: salairesMetiersFAQ,
     };
   }),
 ];
+
+/** Tableau HTML statique d'une grille (crawlable + citable par les moteurs IA). */
+function grilleTable(title: string, grille: CategorieGrille): string {
+  const hasCoeff = grille.lignes.some((l) => l.coefficient);
+  const rows = grille.lignes
+    .map((l) => {
+      const m = minimumApplicable(grille, l);
+      return `<tr><td>${escapeHtml(l.label)}</td>${hasCoeff ? `<td>${l.coefficient ?? '—'}</td>` : ''}<td>${Math.round(m.montant)} €${m.smicApplique ? ' (SMIC)' : ''}</td></tr>`;
+    })
+    .join('');
+  return `<h3>${escapeHtml(title)}</h3><p>En vigueur au ${escapeHtml(grille.dateEffet)} — ${escapeHtml(grille.accord)}. Base ${escapeHtml(grille.baseLabel)}.</p><table><thead><tr><th>Poste</th>${hasCoeff ? '<th>Coefficient</th>' : ''}<th>Minimum brut mensuel</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+function grilleTablesHtml(region: Region): string {
+  const parts: string[] = [];
+  if (region.ouvriers) parts.push(grilleTable(`Ouvriers du bâtiment — ${region.label}`, region.ouvriers));
+  if (region.etam) parts.push(grilleTable(`ETAM du bâtiment — ${region.label}`, region.etam));
+  parts.push(grilleTable('Cadres du bâtiment — grille nationale', CADRES_NATIONAL));
+  return `<section>${parts.join('')}</section>`;
+}
 
 /** Pages programmatiques « grille salaires × région » : une par région. */
 const GRILLE_REGION_ROUTES: SeoRoute[] = REGIONS.map((r) => ({
@@ -265,7 +285,13 @@ function main(): void {
     let html = setTitle(template, route.title);
     html = injectHead(html, headMeta({ title: route.title, description: route.description, url }));
     html = injectHead(html, routeJsonLd(route, url));
-    html = injectRoot(html, routeBodyContent(route));
+    // La page grille de base affiche la grille par défaut (Île-de-France) en
+    // HTML statique — sinon les tableaux ne seraient rendus qu'en JS.
+    const body =
+      route.path === '/grille-salaires-minima-batiment'
+        ? routeBodyContent(route) + grilleTablesHtml(getRegion(undefined))
+        : routeBodyContent(route);
+    html = injectRoot(html, body);
     writePage(route.path, html);
     count++;
   }
@@ -283,15 +309,15 @@ function main(): void {
 
   // Pages programmatiques « grille salaires × région ».
   let regionCount = 0;
-  for (const route of GRILLE_REGION_ROUTES) {
+  GRILLE_REGION_ROUTES.forEach((route, i) => {
     const url = SITE + route.path;
     let html = setTitle(template, route.title);
     html = injectHead(html, headMeta({ title: route.title, description: route.description, url }));
     html = injectHead(html, routeJsonLd(route, url));
-    html = injectRoot(html, routeBodyContent(route));
+    html = injectRoot(html, routeBodyContent(route) + grilleTablesHtml(REGIONS[i]));
     writePage(route.path, html);
     regionCount++;
-  }
+  });
 
   // Pages programmatiques « salaire <métier> » + hub.
   for (const route of METIER_ROUTES) {
