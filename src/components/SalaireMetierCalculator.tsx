@@ -8,6 +8,7 @@ import { GatedReveal } from './GatedReveal';
 import { useEmailGate } from '@/lib/email-gate-context';
 import {
   getMetier,
+  METIERS,
   METIER_SOURCE,
   NET_TO_BRUT,
   CONFIRME_FACTEUR,
@@ -94,6 +95,25 @@ function MetierView({ metier }: { metier: MetierSalaire }) {
           ({METIER_SOURCE.annee}). Le salaire « confirmé », le brut et l'annuel sont des <strong>estimations</strong>{' '}
           (brut ≈ net / 0,78 ; profil confirmé ≈ +30 %). Le salaire réel dépend de la région, des primes (paniers,
           trajets), des heures supplémentaires et de l'entreprise.
+        </div>
+
+        <div className="rounded-lg border border-gray-100 bg-white px-4 py-4 text-sm">
+          <p className="mb-2 font-semibold text-gray-900">Autres métiers du BTP</p>
+          <div className="flex flex-wrap gap-x-3 gap-y-1.5">
+            {METIERS.filter((m) => m.slug !== metier.slug && m.famille === metier.famille)
+              .slice(0, 6)
+              .map((m) => (
+                <Link key={m.slug} href={`/salaire-${m.slug}`} className="text-sm text-gray-600 hover:text-brand-600 hover:underline">
+                  Salaire {m.label.toLowerCase()}
+                </Link>
+              ))}
+          </div>
+          <p className="mt-3 border-t border-gray-100 pt-3 text-xs text-gray-500">
+            Voir aussi :{' '}
+            <Link href="/salaires-metiers-btp" className="text-brand-600 underline">tous les métiers</Link>{' · '}
+            <Link href="/grille-salaires-minima-batiment" className="text-brand-600 underline">grille des salaires BTP</Link>{' · '}
+            <Link href="/calculateur-cout-salarie-btp" className="text-brand-600 underline">coût salarié employeur</Link>
+          </p>
         </div>
       </div>
 

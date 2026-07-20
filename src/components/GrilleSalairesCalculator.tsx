@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useLocation } from 'wouter';
+import { useLocation, Link } from 'wouter';
 import { ArrowRight, Download } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Label, Button } from './ui';
@@ -235,6 +235,27 @@ export function GrilleSalairesCalculator({ regionKey }: { regionKey?: string }) 
             </CardContent>
           </Card>
         )}
+
+        <div className="rounded-lg border border-gray-100 bg-white px-4 py-4 text-sm">
+          <p className="mb-2 font-semibold text-gray-900">Grille des salaires BTP par région</p>
+          <div className="flex flex-wrap gap-x-3 gap-y-1.5">
+            {REGIONS.map((r) => (
+              <Link
+                key={r.key}
+                href={`${BASE_PATH}/${r.key}`}
+                className={`text-sm ${r.key === region.key ? 'font-semibold text-brand-600' : 'text-gray-600 hover:text-brand-600 hover:underline'}`}
+              >
+                {r.label}
+              </Link>
+            ))}
+          </div>
+          <p className="mt-3 border-t border-gray-100 pt-3 text-xs text-gray-500">
+            Voir aussi :{' '}
+            <Link href="/salaires-metiers-btp" className="text-brand-600 underline">salaires par métier</Link>{' · '}
+            <Link href="/calculateur-cout-salarie-btp" className="text-brand-600 underline">coût salarié employeur</Link>{' · '}
+            <Link href="/calculateur-taux-horaire-btp" className="text-brand-600 underline">taux horaire</Link>
+          </p>
+        </div>
       </div>
 
       <div className="lg:col-span-2">

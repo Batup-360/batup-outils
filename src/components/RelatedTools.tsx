@@ -33,6 +33,7 @@ const RELATED: Record<string, string[]> = {
     '/calculateur-prime-anciennete-ccn-batiment',
   ],
   '/calculateur-cout-salarie-btp': [
+    '/grille-salaires-minima-batiment',
     '/calculateur-heures-supplementaires-btp',
     '/calculateur-prime-anciennete-ccn-batiment',
     '/calculateur-taux-horaire-btp',
@@ -43,6 +44,7 @@ const RELATED: Record<string, string[]> = {
     '/calculateur-prime-anciennete-ccn-batiment',
   ],
   '/calculateur-prime-anciennete-ccn-batiment': [
+    '/grille-salaires-minima-batiment',
     '/calculateur-cout-salarie-btp',
     '/calculateur-heures-supplementaires-btp',
     '/calculateur-jours-intemperies-cibtp',
@@ -60,7 +62,7 @@ const RELATED: Record<string, string[]> = {
   '/calculateur-charges-sociales-artisan-btp': [
     '/comparateur-statut-juridique-artisan-btp',
     '/calculateur-cout-salarie-btp',
-    '/calculateur-taux-horaire-btp',
+    '/grille-salaires-minima-batiment',
   ],
   '/comparateur-statut-juridique-artisan-btp': [
     '/calculateur-charges-sociales-artisan-btp',
