@@ -406,18 +406,19 @@ export function RcProSimulator() {
                 </div>
               ) : null}
 
-              <div className="space-y-2 pt-2">
+              <div className="pt-2">
                 <a href={ctaBrokerHref} target="_blank" rel="sponsored noopener noreferrer" data-testid="cta-broker">
                   <Button className="h-11 w-full rounded-full">
-                    Comparez 3 devis RC Pro BTP gratuits
+                    Comparez 3 devis RC Pro gratuits
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </a>
-                <a href={ctaSignupHref} data-testid="cta-signup">
-                  <Button variant="outline" className="h-11 w-full rounded-full">
-                    Ou centralisez tous vos contrats d'assurance dans Batup
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
+                <a
+                  href={ctaSignupHref}
+                  data-testid="cta-signup"
+                  className="mt-3 block text-center text-xs font-medium text-gray-500 transition-colors hover:text-brand-600"
+                >
+                  Ou centralisez vos contrats dans Batup →
                 </a>
               </div>
 
