@@ -120,6 +120,75 @@ const ETAM_ARA: CategorieGrille = {
   ],
 };
 
+// ─── Pays de la Loire ────────────────────────────────────────────────────────
+const ETAM_PDL: CategorieGrille = {
+  idcc: ['2609'],
+  baseHeuresMois: 151.67,
+  baseLabel: '35 h/semaine (151,67 h/mois)',
+  dateEffet: '1er janvier 2026',
+  accord: 'Accord régional Pays de la Loire du 7 novembre 2025 (+ 2 %)',
+  sourceLabel: 'Légifrance — ETAM bâtiment Pays de la Loire (IDCC 2609)',
+  sourceUrl: 'https://www.legifrance.gouv.fr/',
+  smicPlancher: true,
+  note: 'Loire-Atlantique, Maine-et-Loire, Mayenne, Sarthe, Vendée.',
+  lignes: [
+    { label: 'Niveau A', brutMensuel: 1831.08 },
+    { label: 'Niveau B', brutMensuel: 1902.43 },
+    { label: 'Niveau C', brutMensuel: 2050.28 },
+    { label: 'Niveau D', brutMensuel: 2223.23 },
+    { label: 'Niveau E', brutMensuel: 2393.48 },
+    { label: 'Niveau F', brutMensuel: 2646.81 },
+    { label: 'Niveau G', brutMensuel: 2942.55 },
+    { label: 'Niveau H', brutMensuel: 3328.49 },
+  ],
+};
+
+// ─── Bretagne ────────────────────────────────────────────────────────────────
+const ETAM_BRETAGNE: CategorieGrille = {
+  idcc: ['2609'],
+  baseHeuresMois: 151.67,
+  baseLabel: '35 h/semaine (151,67 h/mois)',
+  dateEffet: '1er janvier 2026',
+  accord: 'Accord régional Bretagne du 27 novembre 2025 (+ 1 %)',
+  sourceLabel: 'Légifrance — ETAM bâtiment Bretagne (IDCC 2609)',
+  sourceUrl: 'https://www.legifrance.gouv.fr/',
+  smicPlancher: true,
+  note: "Côtes-d'Armor, Finistère, Ille-et-Vilaine, Morbihan.",
+  lignes: [
+    { label: 'Niveau A', brutMensuel: 1857 },
+    { label: 'Niveau B', brutMensuel: 1943 },
+    { label: 'Niveau C', brutMensuel: 2055 },
+    { label: 'Niveau D', brutMensuel: 2191 },
+    { label: 'Niveau E', brutMensuel: 2368 },
+    { label: 'Niveau F', brutMensuel: 2699 },
+    { label: 'Niveau G', brutMensuel: 3010 },
+    { label: 'Niveau H', brutMensuel: 3354 },
+  ],
+};
+
+// ─── Nouvelle-Aquitaine ──────────────────────────────────────────────────────
+const ETAM_NA: CategorieGrille = {
+  idcc: ['2609'],
+  baseHeuresMois: 151.67,
+  baseLabel: '35 h/semaine (151,67 h/mois)',
+  dateEffet: '1er janvier 2026',
+  accord: 'Accord régional Nouvelle-Aquitaine du 22 octobre 2025 (+ 3,95 %)',
+  sourceLabel: 'Légifrance — ETAM bâtiment Nouvelle-Aquitaine (IDCC 2609)',
+  sourceUrl: 'https://www.legifrance.gouv.fr/',
+  smicPlancher: true,
+  note: 'Grille régionale (13 départements dont Gironde, Charente, Dordogne…).',
+  lignes: [
+    { label: 'Niveau A', brutMensuel: 1838.24 },
+    { label: 'Niveau B', brutMensuel: 1882.98 },
+    { label: 'Niveau C', brutMensuel: 1986.16 },
+    { label: 'Niveau D', brutMensuel: 2115.49 },
+    { label: 'Niveau E', brutMensuel: 2368.73 },
+    { label: 'Niveau F', brutMensuel: 2699.39 },
+    { label: 'Niveau G', brutMensuel: 3039.3 },
+    { label: 'Niveau H', brutMensuel: 3423.86 },
+  ],
+};
+
 // ─── Cadres — grille NATIONALE (partagée) ────────────────────────────────────
 export const CADRES_NATIONAL: CategorieGrille = {
   idcc: ['2420'],
@@ -150,6 +219,9 @@ export const CADRES_NATIONAL: CategorieGrille = {
 
 export const REGIONS: Region[] = [
   { key: 'ile-de-france', label: 'Île-de-France', ouvriers: OUVRIERS_IDF, etam: ETAM_IDF },
+  { key: 'pays-de-la-loire', label: 'Pays de la Loire', etam: ETAM_PDL },
+  { key: 'bretagne', label: 'Bretagne', etam: ETAM_BRETAGNE },
+  { key: 'nouvelle-aquitaine', label: 'Nouvelle-Aquitaine', etam: ETAM_NA },
   { key: 'auvergne-rhone-alpes', label: 'Auvergne-Rhône-Alpes', etam: ETAM_ARA },
 ];
 

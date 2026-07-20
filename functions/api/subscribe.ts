@@ -157,16 +157,7 @@ const TOOL_ASTUCE: Record<string, AstuceKey> = {
   'calculateur-jours-intemperies-cibtp': 'paie',
   'calculateur-prime-anciennete-ccn-batiment': 'paie',
   'grille-salaires-minima-batiment': 'paie',
-  'salaire-macon': 'paie',
-  'salaire-grutier': 'paie',
-  'salaire-coffreur-bancheur': 'paie',
-  'salaire-charpentier': 'paie',
-  'salaire-couvreur': 'paie',
-  'salaire-menuisier': 'paie',
-  'salaire-carreleur': 'paie',
-  'salaire-peintre-en-batiment': 'paie',
-  'salaire-electricien': 'paie',
-  'salaire-soudeur': 'paie',
+  // Les pages « salaire-<métier> » sont mappées par préfixe dans astuceFor().
   // Fiscal & légal
   'calculateur-tva': 'fiscal',
   'calculateur-tva-autoliquidation-btp': 'fiscal',
@@ -207,7 +198,10 @@ const TOOL_ASTUCE: Record<string, AstuceKey> = {
 
 function astuceFor(toolSlug: string): Astuce {
   const key = TOOL_ASTUCE[toolSlug];
-  return key ? ASTUCES[key] : DEFAULT_ASTUCE;
+  if (key) return ASTUCES[key];
+  // Cluster « salaire par métier » : toutes ces pages relèvent de la paie.
+  if (toolSlug.startsWith('salaire-')) return ASTUCES.paie;
+  return DEFAULT_ASTUCE;
 }
 
 function buildEmailHtml({ prenom, toolLabel, toolSlug, result }: EmailParams): string {

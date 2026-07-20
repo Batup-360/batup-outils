@@ -18,13 +18,13 @@ export default function GrilleSalairesMinimaBatiment() {
 
   const canonicalUrl = region ? `${base}${BASE_PATH}/${region.key}` : `${base}${BASE_PATH}`;
   const title = region
-    ? `Grille des salaires minima du bâtiment en ${region.label} 2026 | Batup`
+    ? `Grille des salaires BTP ${region.label} 2026 | Batup`
     : grilleSalairesCopy.seo.title;
   const description = region
-    ? `Salaires minima conventionnels du bâtiment en ${region.label} 2026 : ouvriers, ETAM et cadres, par niveau et coefficient. Grille datée et sourcée, gratuit.`
+    ? `Grille des salaires BTP en ${region.label} 2026 : minima conventionnels du bâtiment (ouvriers, ETAM, cadres) par niveau et coefficient. Daté et sourcé, gratuit.`
     : grilleSalairesCopy.seo.description;
   const h1 = region
-    ? `Grille des salaires minima du bâtiment en ${region.label} 2026`
+    ? `Grille des salaires BTP en ${region.label} 2026`
     : grilleSalairesCopy.hero.h1;
   const lede = region
     ? `Salaires minima conventionnels des ouvriers, ETAM et cadres du bâtiment en ${region.label}. Choisissez la catégorie et le poste : minimum brut mensuel, annuel et taux horaire. Grille datée et sourcée, gratuit.`

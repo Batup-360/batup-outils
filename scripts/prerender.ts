@@ -58,12 +58,12 @@ const METIER_ROUTES: SeoRoute[] = [
 /** Pages programmatiques « grille salaires × région » : une par région. */
 const GRILLE_REGION_ROUTES: SeoRoute[] = REGIONS.map((r) => ({
   path: `/grille-salaires-minima-batiment/${r.key}`,
-  title: `Grille des salaires minima du bâtiment en ${r.label} 2026 | Batup`,
-  description: `Salaires minima conventionnels du bâtiment en ${r.label} 2026 : ouvriers, ETAM et cadres, par niveau et coefficient. Grille datée et sourcée, gratuit.`,
+  title: `Grille des salaires BTP ${r.label} 2026 | Batup`,
+  description: `Grille des salaires BTP en ${r.label} 2026 : minima conventionnels du bâtiment (ouvriers, ETAM, cadres) par niveau et coefficient. Daté et sourcé, gratuit.`,
   webApplicationName: grilleSalairesCopy.webApplication.name,
   webApplicationDescription: grilleSalairesCopy.webApplication.description,
-  breadcrumbName: `Grille salaires bâtiment ${r.label}`,
-  h1: `Grille des salaires minima du bâtiment en ${r.label} 2026`,
+  breadcrumbName: `Grille salaires BTP ${r.label}`,
+  h1: `Grille des salaires BTP en ${r.label} 2026`,
   lede: `Salaires minima conventionnels des ouvriers, ETAM et cadres du bâtiment en ${r.label}. Choisissez la catégorie et le poste pour obtenir le minimum brut mensuel, annuel et le taux horaire. Grille datée et sourcée, gratuit.`,
   methodology: grilleSalairesCopy.methodology,
   faq: grilleSalairesFAQ,
@@ -337,8 +337,27 @@ function main(): void {
     fs.writeFileSync(path.join(DIST, '404.html'), html, 'utf8');
   }
 
+  // Sitemap généré depuis les routes (source unique = les tableaux de données ;
+  // ajouter un outil/métier/région met le sitemap à jour automatiquement).
+  const sitemapUrls = [
+    { loc: '/', priority: '0.8' },
+    ...SEO_ROUTES.map((r) => ({ loc: r.path, priority: '0.9' })),
+    ...METIER_ROUTES.map((r) => ({ loc: r.path, priority: '0.8' })),
+    ...GRILLE_REGION_ROUTES.map((r) => ({ loc: r.path, priority: '0.8' })),
+  ];
+  const sitemap =
+    '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+    sitemapUrls
+      .map(
+        (u) =>
+          `  <url><loc>${SITE}${u.loc === '/' ? '/' : u.loc}</loc><changefreq>monthly</changefreq><priority>${u.priority}</priority></url>`,
+      )
+      .join('\n') +
+    '\n</urlset>\n';
+  fs.writeFileSync(path.join(DIST, 'sitemap.xml'), sitemap, 'utf8');
+
   console.log(
-    `[prerender] wrote ${count} static pages (${SEO_ROUTES.length} tools + 1 home) + ${regionCount} programmatic pages (régions + métiers) + 404.html`
+    `[prerender] wrote ${count} static pages (${SEO_ROUTES.length} tools + 1 home) + ${regionCount} programmatic pages (régions + métiers) + 404.html + sitemap.xml (${sitemapUrls.length} URLs)`
   );
 }
 

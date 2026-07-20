@@ -28,7 +28,7 @@ export interface MetierSalaire {
 
 /** Source des salaires nets de début de carrière. À revérifier périodiquement. */
 export const METIER_SOURCE = {
-  label: 'Baromètre Costructor — Salaire BTP 2026 (net, 1ère embauche)',
+  label: 'Baromètres salaires BTP 2026 (Costructor, Batiactu Emploi)',
   url: 'https://costructor.co/blog/salaire-btp/',
   annee: '2026',
 };
@@ -128,6 +128,42 @@ export const METIERS: MetierSalaire[] = [
     debutantNet: 1695,
     niveauConventionnel: 'Niveau III (coeff. 210)',
     facteurs: 'Procédés et licences de soudure, contrôle qualité, secteur.',
+  },
+  {
+    slug: 'plombier',
+    label: 'Plombier',
+    article: 'un',
+    famille: 'Second œuvre',
+    debutantNet: 1500,
+    niveauConventionnel: 'Niveau II à III (coeff. 185 à 210)',
+    facteurs: 'Sanitaire/chauffage, dépannage vs neuf, habilitations, mise à son compte.',
+  },
+  {
+    slug: 'chef-de-chantier',
+    label: 'Chef de chantier',
+    article: 'un',
+    famille: 'Encadrement & études',
+    debutantNet: 2000,
+    niveauConventionnel: 'ETAM (niveaux E à G)',
+    facteurs: "Taille des chantiers encadrés, corps d'état, ancienneté, région.",
+  },
+  {
+    slug: 'conducteur-de-travaux',
+    label: 'Conducteur de travaux',
+    article: 'un',
+    famille: 'Encadrement & études',
+    debutantNet: 2200,
+    niveauConventionnel: 'ETAM supérieur à cadre selon expérience',
+    facteurs: "Nombre de chantiers pilotés, budget géré, diplôme, secteur (bâtiment/TP).",
+  },
+  {
+    slug: 'dessinateur-projeteur',
+    label: 'Dessinateur-projeteur',
+    article: 'un',
+    famille: 'Encadrement & études',
+    debutantNet: 1600,
+    niveauConventionnel: 'ETAM (bureau d\'études)',
+    facteurs: 'Logiciels (AutoCAD, Revit/BIM), spécialité (structure, fluides), autonomie.',
   },
 ];
 
