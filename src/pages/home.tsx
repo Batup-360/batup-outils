@@ -65,7 +65,57 @@ interface Tool {
   type: ToolType;
   theme: Theme;
   popularity: number;
+  /** Synonymes / vocabulaire réel cachés, pris en compte par la recherche. */
+  keywords?: string;
 }
+
+// Mots-clés cachés par outil (vocabulaire métier, abréviations, sigles) pour
+// améliorer le rappel de la recherche sans alourdir les descriptions visibles.
+const KEYWORDS: Record<string, string> = {
+  '/calculateur-taux-horaire-btp': 'tjm taux journalier deboursé débours déboursé sec coût horaire facturé prix de revient heure main d\'oeuvre',
+  '/calculateur-prix-chantier-btp': 'devis chiffrage estimation prix de vente ht déboursé budget chantier',
+  '/calculateur-marge-nette-coefficient-btp': 'coefficient marge brute k coeff multiplicateur taux de marge markup',
+  '/calculateur-revision-prix-index-bt': 'bt01 index insee actualisation révision ccag marché public formule',
+  '/calculateur-heures-supplementaires-btp': 'hsup heures sup majoration 25 50 panier trajet grand déplacement',
+  '/calculateur-cout-salarie-btp': 'coût employeur charges patronales salaire chargé cibtp brut net coût main d\'oeuvre',
+  '/calculateur-jours-intemperies-cibtp': 'intempéries chômage intempéries caisse congés arrêt météo gel',
+  '/calculateur-prime-anciennete-ccn-batiment': 'ancienneté prime ccn ouvrier etam barème années fidélité',
+  '/calculateur-tva-autoliquidation-btp': 'autoliquidation sous-traitance 283 nonies preneur donneur ordre mention',
+  '/generateur-mention-tva-facture-btp': 'mention tva taux réduit 10 5.5 20 franchise facture',
+  '/calculateur-charges-sociales-artisan-btp': 'urssaf cotisations tns micro auto-entrepreneur acre indépendant csg',
+  '/comparateur-statut-juridique-artisan-btp': 'micro ei eurl sarl sasu forme juridique création statut',
+  '/verificateur-mentions-obligatoires-facture-devis-btp': 'mentions légales facture devis conformité siret médiateur pénalités',
+  '/calculateur-situation-travaux': 'acompte avancement facturation situation mensuelle décompte marché',
+  '/calculateur-dgd-decompte-general-definitif': 'décompte général définitif solde marché réception dgd',
+  '/calculateur-retenue-de-garantie': 'retenue garantie 5% caution bancaire libération loi 1799',
+  '/simulateur-decennale-btp': 'assurance décennale responsabilité garantie prix tarif décennale',
+  '/simulateur-rc-pro-btp': 'responsabilité civile professionnelle assurance rc pro tarif',
+  '/calculateur-roi-certification-rge': 'rge reconnu garant environnement qualibat certification aides maprimerénov',
+  '/calculateur-beton': 'béton dosage sacs ciment dalle fondation semelle poteau volume m3 gâchée',
+  '/calculateur-tva': 'tva ht ttc conversion taux calcul',
+  '/calculateur-surface': 'surface m2 carrez boutin superficie pièce plan',
+  '/calculateur-volume': 'volume m3 cubage contenance litres',
+  '/calculateur-escalier': 'escalier marches giron hauteur blondel limon nez de marche',
+  '/calculateur-mortier': 'mortier ciment sable dosage gâchée joints maçonnerie',
+  '/calculateur-chape': 'chape mortier sacs épaisseur ragréage liquide',
+  '/calculateur-pente-toiture': 'pente toiture degré pourcentage inclinaison rampant toit',
+  '/calculateur-papier-peint': 'papier peint rouleaux lés tapisserie tapissier',
+  '/generateur-attestation-tva': 'attestation tva taux réduit cerfa mention certification bofip',
+  '/calculateur-parpaings': 'parpaing bloc béton agglo aggloméré mur maçonnerie',
+  '/calculateur-briques': 'brique creuse pleine monomur parement mur',
+  '/calculateur-placo': 'placo ba13 plaque plâtre cloison doublage rails montants ba18',
+  '/calculateur-carrelage': 'carrelage carreaux colle joint faïence m2 grès',
+  '/calculateur-parquet': 'parquet lames stratifié contrecollé massif sous-couche sol lvt',
+  '/calculateur-terrasse': 'terrasse lames bois composite lambourdes plots vis',
+  '/calculateur-isolant': 'isolant isolation laine de verre rouleaux résistance thermique r combles ite',
+  '/calculateur-peinture': 'peinture litres pots couches rendement m2 murs',
+  '/calculateur-consommation-materiaux': 'consommation matériaux kg m2 colle enduit primaire ragréage',
+  '/calculateur-tuiles': 'tuiles toiture couverture mécanique plate canal m2 liteaux',
+  '/calculateur-gravier-sable': 'gravier sable tout-venant granulats tonnes tonnage m3 big bag remblai',
+  '/calculateur-enduit-facade': 'enduit façade ravalement crépi monocouche gobetis kg sacs',
+  '/grille-salaires-minima-batiment': 'grille salaire minima convention collective coefficient idcc 1596 1597 2609 2420 ouvrier etam cadre smic rémunération',
+  '/salaires-metiers-btp': 'salaire métier combien gagne rémunération fiche paie net brut',
+};
 
 const TOOLS: Tool[] = [
   {
@@ -468,6 +518,7 @@ const FICHES: Tool[] = [
     type: 'Fiche',
     theme: 'Paie & RH',
     popularity: 0,
+    keywords: 'salaire net brut rémunération paie combien gagne fiche métier débutant confirmé',
   })),
   ...REGIONS.map((r): Tool => ({
     href: `/grille-salaires-minima-batiment/${r.key}`,
@@ -477,6 +528,7 @@ const FICHES: Tool[] = [
     type: 'Fiche',
     theme: 'Paie & RH',
     popularity: 0,
+    keywords: 'grille salaire minima convention collective coefficient idcc ouvrier etam cadre région',
   })),
 ];
 
@@ -514,7 +566,7 @@ export default function Home() {
     let list = base.filter((t) => {
       if (activeTheme !== 'Tous' && t.theme !== activeTheme) return false;
       if (activeType !== 'Tous' && t.type !== activeType) return false;
-      if (q && !deburr(`${t.title} ${t.description} ${t.type} ${t.theme}`).includes(q)) return false;
+      if (q && !deburr(`${t.title} ${t.description} ${t.type} ${t.theme} ${KEYWORDS[t.href] ?? ''} ${t.keywords ?? ''}`).includes(q)) return false;
       return true;
     });
     if (sort === 'popular') list = list.slice().sort((a, b) => b.popularity - a.popularity);
