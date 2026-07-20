@@ -95,6 +95,8 @@ interface Tool {
   description: string;
   type: ToolType;
   theme: Theme;
+  /** Catégorie secondaire : l'outil apparaît aussi sous ce thème (filtre + compteur). */
+  theme2?: Theme;
   popularity: number;
   /** Synonymes / vocabulaire réel cachés, pris en compte par la recherche. */
   keywords?: string;
@@ -183,6 +185,7 @@ const TOOLS: Tool[] = [
     description: "Formule CCAG-Travaux. Vérifiez votre clause de révision de prix en 30 secondes.",
     type: 'Calculateur',
     theme: 'Pricing & marge',
+    theme2: 'Trésorerie & marchés',
     popularity: 5,
   },
   {
@@ -586,7 +589,7 @@ export default function Home() {
 
   const themeCounts = useMemo(() => {
     const counts: Record<string, number> = { Tous: TOOLS.length };
-    for (const t of ALL_THEMES) counts[t] = TOOLS.filter((x) => x.theme === t).length;
+    for (const t of ALL_THEMES) counts[t] = TOOLS.filter((x) => x.theme === t || x.theme2 === t).length;
     return counts;
   }, []);
 
@@ -595,7 +598,7 @@ export default function Home() {
     // Les fiches salaires n'entrent dans l'index que sur une recherche active.
     const base = q ? [...TOOLS, ...FICHES] : TOOLS;
     let list = base.filter((t) => {
-      if (activeTheme !== 'Tous' && t.theme !== activeTheme) return false;
+      if (activeTheme !== 'Tous' && t.theme !== activeTheme && t.theme2 !== activeTheme) return false;
       if (activeType !== 'Tous' && t.type !== activeType) return false;
       if (q && !searchMatch(deburr(`${t.title} ${t.description} ${t.type} ${t.theme} ${KEYWORDS[t.href] ?? ''} ${t.keywords ?? ''}`), q)) return false;
       return true;
