@@ -71,7 +71,9 @@ export function GrilleSalairesCalculator({ regionKey }: { regionKey?: string }) 
     setLigneIndex(0);
   };
 
-  const ctaSignupHref = `${APP_BASE}/signup?source=${TOOL_SLUG}`;
+  // Slug de suivi = page réellement consultée (région → email + signup ciblés).
+  const toolSlug = regionKey ? `${TOOL_SLUG}/${regionKey}` : TOOL_SLUG;
+  const ctaSignupHref = `${APP_BASE}/signup?source=${toolSlug}`;
 
   const printPdf = () => {
     if (!grille) return;
@@ -297,7 +299,7 @@ export function GrilleSalairesCalculator({ regionKey }: { regionKey?: string }) 
 
       <div className="lg:col-span-2">
         <div className="sticky top-20 space-y-4">
-          {grille && <ResultCard grille={grille} ligneIndex={ligneIndex} categorie={categorie} ctaSignupHref={ctaSignupHref} region={region.label} />}
+          {grille && <ResultCard grille={grille} ligneIndex={ligneIndex} categorie={categorie} ctaSignupHref={ctaSignupHref} toolSlug={toolSlug} region={region.label} />}
         </div>
       </div>
 
@@ -317,12 +319,14 @@ function ResultCard({
   ligneIndex,
   categorie,
   ctaSignupHref,
+  toolSlug,
   region,
 }: {
   grille: import('@/lib/grille-salaires-btp').CategorieGrille;
   ligneIndex: number;
   categorie: CategorieKey;
   ctaSignupHref: string;
+  toolSlug: string;
   region: string;
 }) {
   const ligne = grille.lignes[Math.min(ligneIndex, grille.lignes.length - 1)];
@@ -333,7 +337,7 @@ function ResultCard({
 
   return (
     <GatedReveal
-      toolSlug={TOOL_SLUG}
+      toolSlug={toolSlug}
       toolLabel={TOOL_LABEL}
       resultPreview={`${ligne.label} (${categorie === 'cadres' ? 'national' : region}) — minimum ${fmtEuro(montant)} brut/mois`}
     >

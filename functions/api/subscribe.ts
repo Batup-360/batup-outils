@@ -199,8 +199,10 @@ const TOOL_ASTUCE: Record<string, AstuceKey> = {
 function astuceFor(toolSlug: string): Astuce {
   const key = TOOL_ASTUCE[toolSlug];
   if (key) return ASTUCES[key];
-  // Cluster « salaire par métier » : toutes ces pages relèvent de la paie.
-  if (toolSlug.startsWith('salaire-')) return ASTUCES.paie;
+  // Clusters paie : « salaire-<métier> » et « grille-salaires…/<région> ».
+  if (toolSlug.startsWith('salaire-') || toolSlug.startsWith('grille-salaires-minima-batiment')) {
+    return ASTUCES.paie;
+  }
   return DEFAULT_ASTUCE;
 }
 
