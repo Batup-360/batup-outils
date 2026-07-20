@@ -17,68 +17,68 @@ What already exists — check here before building to avoid duplicates. Slug = U
 ### Pricing & marge
 | slug | eng | what it does |
 |---|:-:|---|
-| `calculateur-taux-horaire-btp` | B | Taux horaire à facturer pour couvrir charges + dégager une marge |
-| `calculateur-prix-chantier-btp` | B | Prix de vente d'un chantier : déboursé sec + frais généraux + marge |
-| `calculateur-marge-nette-coefficient-btp` | B | Conversion coefficient ↔ marge nette + prix de vente correspondant |
-| `calculateur-revision-prix-index-bt` | B | Coefficient de révision CCAG-Travaux via les index BT (INSEE) |
+| [`calculateur-taux-horaire-btp`](https://outils.batup.fr/calculateur-taux-horaire-btp) | B | Taux horaire à facturer pour couvrir charges + dégager une marge |
+| [`calculateur-prix-chantier-btp`](https://outils.batup.fr/calculateur-prix-chantier-btp) | B | Prix de vente d'un chantier : déboursé sec + frais généraux + marge |
+| [`calculateur-marge-nette-coefficient-btp`](https://outils.batup.fr/calculateur-marge-nette-coefficient-btp) | B | Conversion coefficient ↔ marge nette + prix de vente correspondant |
+| [`calculateur-revision-prix-index-bt`](https://outils.batup.fr/calculateur-revision-prix-index-bt) | B | Coefficient de révision CCAG-Travaux via les index BT (INSEE) |
 
 ### Paie & RH
 | slug | eng | what it does |
 |---|:-:|---|
-| `calculateur-heures-supplementaires-btp` | B | Majorations d'heures sup + paniers/trajets BTP |
-| `calculateur-cout-salarie-btp` | B | Coût total employeur (brut + charges patronales, CIBTP) |
-| `calculateur-jours-intemperies-cibtp` | B | Indemnisation intempéries CIBTP (75 %, carence, plafond) |
-| `calculateur-prime-anciennete-ccn-batiment` | B | Prime d'ancienneté selon coefficient + ancienneté (CCN Bâtiment) |
-| `grille-salaires-minima-batiment` | B | Salaires minima conventionnels (ouvriers/ETAM/cadres). Données dans `src/lib/grille-salaires-btp.ts`. **SEO programmatique** : une page par région à `/grille-salaires-minima-batiment/<region>` |
+| [`calculateur-heures-supplementaires-btp`](https://outils.batup.fr/calculateur-heures-supplementaires-btp) | B | Majorations d'heures sup + paniers/trajets BTP |
+| [`calculateur-cout-salarie-btp`](https://outils.batup.fr/calculateur-cout-salarie-btp) | B | Coût total employeur (brut + charges patronales, CIBTP) |
+| [`calculateur-jours-intemperies-cibtp`](https://outils.batup.fr/calculateur-jours-intemperies-cibtp) | B | Indemnisation intempéries CIBTP (75 %, carence, plafond) |
+| [`calculateur-prime-anciennete-ccn-batiment`](https://outils.batup.fr/calculateur-prime-anciennete-ccn-batiment) | B | Prime d'ancienneté selon coefficient + ancienneté (CCN Bâtiment) |
+| [`grille-salaires-minima-batiment`](https://outils.batup.fr/grille-salaires-minima-batiment) | B | Salaires minima conventionnels (ouvriers/ETAM/cadres). Données dans `src/lib/grille-salaires-btp.ts`. **SEO programmatique** : une page par région à `/grille-salaires-minima-batiment/<region>` |
 
 ### Fiscal & légal
 | slug | eng | what it does |
 |---|:-:|---|
-| `calculateur-tva` | B | Conversion TVA HT ↔ TTC, multi-taux |
-| `calculateur-tva-autoliquidation-btp` | B | Montant HT sous-traitance + mention autoliquidation |
-| `generateur-mention-tva-facture-btp` | B | Génère la mention légale de taux réduit (5,5 / 10 / 20 %) |
-| `generateur-attestation-tva` | B | Mention de certification taux réduit (formulation BOFiP 2025) |
-| `calculateur-charges-sociales-artisan-btp` | B | Cotisations selon statut (micro / EURL…), option ACRE |
-| `comparateur-statut-juridique-artisan-btp` | B | Compare micro-entreprise / EI / EURL / SASU pour un artisan |
-| `verificateur-mentions-obligatoires-facture-devis-btp` | B | Checklist conformité facture + devis BTP |
+| [`calculateur-tva`](https://outils.batup.fr/calculateur-tva) | B | Conversion TVA HT ↔ TTC, multi-taux |
+| [`calculateur-tva-autoliquidation-btp`](https://outils.batup.fr/calculateur-tva-autoliquidation-btp) | B | Montant HT sous-traitance + mention autoliquidation |
+| [`generateur-mention-tva-facture-btp`](https://outils.batup.fr/generateur-mention-tva-facture-btp) | B | Génère la mention légale de taux réduit (5,5 / 10 / 20 %) |
+| [`generateur-attestation-tva`](https://outils.batup.fr/generateur-attestation-tva) | B | Mention de certification taux réduit (formulation BOFiP 2025) |
+| [`calculateur-charges-sociales-artisan-btp`](https://outils.batup.fr/calculateur-charges-sociales-artisan-btp) | B | Cotisations selon statut (micro / EURL…), option ACRE |
+| [`comparateur-statut-juridique-artisan-btp`](https://outils.batup.fr/comparateur-statut-juridique-artisan-btp) | B | Compare micro-entreprise / EI / EURL / SASU pour un artisan |
+| [`verificateur-mentions-obligatoires-facture-devis-btp`](https://outils.batup.fr/verificateur-mentions-obligatoires-facture-devis-btp) | B | Checklist conformité facture + devis BTP |
 
 ### Trésorerie & marchés
 | slug | eng | what it does |
 |---|:-:|---|
-| `calculateur-situation-travaux` | B | Montant à facturer = avancement − déjà facturé − retenue |
-| `calculateur-dgd-decompte-general-definitif` | B | Solde final d'un marché (décompte général définitif) |
-| `calculateur-retenue-de-garantie` | B | Retenue de garantie 5 % + alternative caution bancaire |
+| [`calculateur-situation-travaux`](https://outils.batup.fr/calculateur-situation-travaux) | B | Montant à facturer = avancement − déjà facturé − retenue |
+| [`calculateur-dgd-decompte-general-definitif`](https://outils.batup.fr/calculateur-dgd-decompte-general-definitif) | B | Solde final d'un marché (décompte général définitif) |
+| [`calculateur-retenue-de-garantie`](https://outils.batup.fr/calculateur-retenue-de-garantie) | B | Retenue de garantie 5 % + alternative caution bancaire |
 
 ### Assurances & aides
 | slug | eng | what it does |
 |---|:-:|---|
-| `simulateur-decennale-btp` | B | Fourchette de prix garantie décennale par métier |
-| `simulateur-rc-pro-btp` | B | Fourchette de prix RC Pro BTP |
-| `calculateur-roi-certification-rge` | B | Rentabilité (ROI) de la certification RGE |
+| [`simulateur-decennale-btp`](https://outils.batup.fr/simulateur-decennale-btp) | B | Fourchette de prix garantie décennale par métier |
+| [`simulateur-rc-pro-btp`](https://outils.batup.fr/simulateur-rc-pro-btp) | B | Fourchette de prix RC Pro BTP |
+| [`calculateur-roi-certification-rge`](https://outils.batup.fr/calculateur-roi-certification-rge) | B | Rentabilité (ROI) de la certification RGE |
 
 ### Métré & quantités
 | slug | eng | what it does |
 |---|:-:|---|
-| `calculateur-beton` | B | Volume de béton + sacs (dalle, semelle, poteau) |
-| `calculateur-surface` | B | Surface multi-zones en m² (loi Carrez / Boutin) |
-| `calculateur-volume` | B | Volume en m³ |
-| `calculateur-escalier` | B | Nombre de marches, hauteur/giron (loi de Blondel) |
-| `calculateur-mortier` | B | Dosage ciment / sable / eau du mortier |
-| `calculateur-chape` | B | Volume de chape + sacs |
-| `calculateur-pente-toiture` | B | Conversion % ↔ degrés ↔ longueur de rampant |
-| `calculateur-papier-peint` | B | Nombre de rouleaux / lés |
-| `calculateur-parpaings` | Q | Blocs au m² + mortier |
-| `calculateur-briques` | Q | Briques au m² selon le format |
-| `calculateur-placo` | Q | Plaques BA13 + vis + rails + bande/enduit à joint |
-| `calculateur-carrelage` | Q | Carreaux + colle + joint |
-| `calculateur-parquet` | Q | Paquets + sous-couche |
-| `calculateur-terrasse` | Q | Lames + lambourdes + vis + plots |
-| `calculateur-isolant` | Q | Rouleaux + épaisseur conseillée (e = λ × R) |
-| `calculateur-peinture` | Q | Litres selon surface + nombre de couches |
-| `calculateur-consommation-materiaux` | Q | Consommation au m² (colle, enduit, primaire, ragréage) |
-| `calculateur-tuiles` | Q | Nombre de tuiles selon type (mécanique/plate/canal) + surface des pans |
-| `calculateur-gravier-sable` | Q | Volume (m³) → tonnage de gravier / sable / tout-venant |
-| `calculateur-enduit-facade` | Q | Enduit de façade en kg + sacs de 25 kg (monocouche, gobetis…) |
+| [`calculateur-beton`](https://outils.batup.fr/calculateur-beton) | B | Volume de béton + sacs (dalle, semelle, poteau) |
+| [`calculateur-surface`](https://outils.batup.fr/calculateur-surface) | B | Surface multi-zones en m² (loi Carrez / Boutin) |
+| [`calculateur-volume`](https://outils.batup.fr/calculateur-volume) | B | Volume en m³ |
+| [`calculateur-escalier`](https://outils.batup.fr/calculateur-escalier) | B | Nombre de marches, hauteur/giron (loi de Blondel) |
+| [`calculateur-mortier`](https://outils.batup.fr/calculateur-mortier) | B | Dosage ciment / sable / eau du mortier |
+| [`calculateur-chape`](https://outils.batup.fr/calculateur-chape) | B | Volume de chape + sacs |
+| [`calculateur-pente-toiture`](https://outils.batup.fr/calculateur-pente-toiture) | B | Conversion % ↔ degrés ↔ longueur de rampant |
+| [`calculateur-papier-peint`](https://outils.batup.fr/calculateur-papier-peint) | B | Nombre de rouleaux / lés |
+| [`calculateur-parpaings`](https://outils.batup.fr/calculateur-parpaings) | Q | Blocs au m² + mortier |
+| [`calculateur-briques`](https://outils.batup.fr/calculateur-briques) | Q | Briques au m² selon le format |
+| [`calculateur-placo`](https://outils.batup.fr/calculateur-placo) | Q | Plaques BA13 + vis + rails + bande/enduit à joint |
+| [`calculateur-carrelage`](https://outils.batup.fr/calculateur-carrelage) | Q | Carreaux + colle + joint |
+| [`calculateur-parquet`](https://outils.batup.fr/calculateur-parquet) | Q | Paquets + sous-couche |
+| [`calculateur-terrasse`](https://outils.batup.fr/calculateur-terrasse) | Q | Lames + lambourdes + vis + plots |
+| [`calculateur-isolant`](https://outils.batup.fr/calculateur-isolant) | Q | Rouleaux + épaisseur conseillée (e = λ × R) |
+| [`calculateur-peinture`](https://outils.batup.fr/calculateur-peinture) | Q | Litres selon surface + nombre de couches |
+| [`calculateur-consommation-materiaux`](https://outils.batup.fr/calculateur-consommation-materiaux) | Q | Consommation au m² (colle, enduit, primaire, ragréage) |
+| [`calculateur-tuiles`](https://outils.batup.fr/calculateur-tuiles) | Q | Nombre de tuiles selon type (mécanique/plate/canal) + surface des pans |
+| [`calculateur-gravier-sable`](https://outils.batup.fr/calculateur-gravier-sable) | Q | Volume (m³) → tonnage de gravier / sable / tout-venant |
+| [`calculateur-enduit-facade`](https://outils.batup.fr/calculateur-enduit-facade) | Q | Enduit de façade en kg + sacs de 25 kg (monocouche, gobetis…) |
 
 ## The one invariant
 
@@ -194,3 +194,99 @@ S=calculateur-foo; grep -l "$S" src/App.tsx src/pages/embed.tsx public/sitemap.x
 - Page renders client-side only; `prerender.ts` is pure HTML string rewriting, not React SSR. Guard any `window` access.
 - Secrets are env-only: `BREVO_API_KEY`, `BREVO_LIST_ID` (Cloudflare Pages → Variables). Never commit keys. GA Measurement ID is public and intentionally committed.
 - `.env*` is gitignored; `npm audit` must stay at 0 (esbuild pinned via `overrides`).
+
+## Toutes les URLs live (généré depuis le sitemap)
+
+Base : `https://outils.batup.fr` — 81 URLs. Régénéré à chaque build (`dist/sitemap.xml`).
+
+### Accueil (1)
+- [/ (accueil)](https://outils.batup.fr/)
+
+### Outils (41)
+- [/calculateur-beton](https://outils.batup.fr/calculateur-beton)
+- [/calculateur-briques](https://outils.batup.fr/calculateur-briques)
+- [/calculateur-carrelage](https://outils.batup.fr/calculateur-carrelage)
+- [/calculateur-chape](https://outils.batup.fr/calculateur-chape)
+- [/calculateur-charges-sociales-artisan-btp](https://outils.batup.fr/calculateur-charges-sociales-artisan-btp)
+- [/calculateur-consommation-materiaux](https://outils.batup.fr/calculateur-consommation-materiaux)
+- [/calculateur-cout-salarie-btp](https://outils.batup.fr/calculateur-cout-salarie-btp)
+- [/calculateur-dgd-decompte-general-definitif](https://outils.batup.fr/calculateur-dgd-decompte-general-definitif)
+- [/calculateur-enduit-facade](https://outils.batup.fr/calculateur-enduit-facade)
+- [/calculateur-escalier](https://outils.batup.fr/calculateur-escalier)
+- [/calculateur-gravier-sable](https://outils.batup.fr/calculateur-gravier-sable)
+- [/calculateur-heures-supplementaires-btp](https://outils.batup.fr/calculateur-heures-supplementaires-btp)
+- [/calculateur-isolant](https://outils.batup.fr/calculateur-isolant)
+- [/calculateur-jours-intemperies-cibtp](https://outils.batup.fr/calculateur-jours-intemperies-cibtp)
+- [/calculateur-marge-nette-coefficient-btp](https://outils.batup.fr/calculateur-marge-nette-coefficient-btp)
+- [/calculateur-mortier](https://outils.batup.fr/calculateur-mortier)
+- [/calculateur-papier-peint](https://outils.batup.fr/calculateur-papier-peint)
+- [/calculateur-parpaings](https://outils.batup.fr/calculateur-parpaings)
+- [/calculateur-parquet](https://outils.batup.fr/calculateur-parquet)
+- [/calculateur-peinture](https://outils.batup.fr/calculateur-peinture)
+- [/calculateur-pente-toiture](https://outils.batup.fr/calculateur-pente-toiture)
+- [/calculateur-placo](https://outils.batup.fr/calculateur-placo)
+- [/calculateur-prime-anciennete-ccn-batiment](https://outils.batup.fr/calculateur-prime-anciennete-ccn-batiment)
+- [/calculateur-prix-chantier-btp](https://outils.batup.fr/calculateur-prix-chantier-btp)
+- [/calculateur-retenue-de-garantie](https://outils.batup.fr/calculateur-retenue-de-garantie)
+- [/calculateur-revision-prix-index-bt](https://outils.batup.fr/calculateur-revision-prix-index-bt)
+- [/calculateur-roi-certification-rge](https://outils.batup.fr/calculateur-roi-certification-rge)
+- [/calculateur-situation-travaux](https://outils.batup.fr/calculateur-situation-travaux)
+- [/calculateur-surface](https://outils.batup.fr/calculateur-surface)
+- [/calculateur-taux-horaire-btp](https://outils.batup.fr/calculateur-taux-horaire-btp)
+- [/calculateur-terrasse](https://outils.batup.fr/calculateur-terrasse)
+- [/calculateur-tuiles](https://outils.batup.fr/calculateur-tuiles)
+- [/calculateur-tva](https://outils.batup.fr/calculateur-tva)
+- [/calculateur-tva-autoliquidation-btp](https://outils.batup.fr/calculateur-tva-autoliquidation-btp)
+- [/calculateur-volume](https://outils.batup.fr/calculateur-volume)
+- [/comparateur-statut-juridique-artisan-btp](https://outils.batup.fr/comparateur-statut-juridique-artisan-btp)
+- [/generateur-attestation-tva](https://outils.batup.fr/generateur-attestation-tva)
+- [/generateur-mention-tva-facture-btp](https://outils.batup.fr/generateur-mention-tva-facture-btp)
+- [/simulateur-decennale-btp](https://outils.batup.fr/simulateur-decennale-btp)
+- [/simulateur-rc-pro-btp](https://outils.batup.fr/simulateur-rc-pro-btp)
+- [/verificateur-mentions-obligatoires-facture-devis-btp](https://outils.batup.fr/verificateur-mentions-obligatoires-facture-devis-btp)
+
+### Hubs (2)
+- [/grille-salaires-minima-batiment](https://outils.batup.fr/grille-salaires-minima-batiment)
+- [/salaires-metiers-btp](https://outils.batup.fr/salaires-metiers-btp)
+
+### Grille salaires — régions (9)
+- [/grille-salaires-minima-batiment/auvergne-rhone-alpes](https://outils.batup.fr/grille-salaires-minima-batiment/auvergne-rhone-alpes)
+- [/grille-salaires-minima-batiment/bretagne](https://outils.batup.fr/grille-salaires-minima-batiment/bretagne)
+- [/grille-salaires-minima-batiment/centre-val-de-loire](https://outils.batup.fr/grille-salaires-minima-batiment/centre-val-de-loire)
+- [/grille-salaires-minima-batiment/hauts-de-france](https://outils.batup.fr/grille-salaires-minima-batiment/hauts-de-france)
+- [/grille-salaires-minima-batiment/ile-de-france](https://outils.batup.fr/grille-salaires-minima-batiment/ile-de-france)
+- [/grille-salaires-minima-batiment/normandie](https://outils.batup.fr/grille-salaires-minima-batiment/normandie)
+- [/grille-salaires-minima-batiment/nouvelle-aquitaine](https://outils.batup.fr/grille-salaires-minima-batiment/nouvelle-aquitaine)
+- [/grille-salaires-minima-batiment/occitanie](https://outils.batup.fr/grille-salaires-minima-batiment/occitanie)
+- [/grille-salaires-minima-batiment/pays-de-la-loire](https://outils.batup.fr/grille-salaires-minima-batiment/pays-de-la-loire)
+
+### Fiches métier (salaire) (28)
+- [/salaire-canalisateur](https://outils.batup.fr/salaire-canalisateur)
+- [/salaire-carreleur](https://outils.batup.fr/salaire-carreleur)
+- [/salaire-charpentier](https://outils.batup.fr/salaire-charpentier)
+- [/salaire-chauffagiste](https://outils.batup.fr/salaire-chauffagiste)
+- [/salaire-chef-de-chantier](https://outils.batup.fr/salaire-chef-de-chantier)
+- [/salaire-coffreur-bancheur](https://outils.batup.fr/salaire-coffreur-bancheur)
+- [/salaire-conducteur-de-travaux](https://outils.batup.fr/salaire-conducteur-de-travaux)
+- [/salaire-cordiste](https://outils.batup.fr/salaire-cordiste)
+- [/salaire-couvreur](https://outils.batup.fr/salaire-couvreur)
+- [/salaire-couvreur-zingueur](https://outils.batup.fr/salaire-couvreur-zingueur)
+- [/salaire-desamianteur](https://outils.batup.fr/salaire-desamianteur)
+- [/salaire-dessinateur-projeteur](https://outils.batup.fr/salaire-dessinateur-projeteur)
+- [/salaire-directeur-de-travaux](https://outils.batup.fr/salaire-directeur-de-travaux)
+- [/salaire-economiste-de-la-construction](https://outils.batup.fr/salaire-economiste-de-la-construction)
+- [/salaire-electricien](https://outils.batup.fr/salaire-electricien)
+- [/salaire-etancheur](https://outils.batup.fr/salaire-etancheur)
+- [/salaire-frigoriste](https://outils.batup.fr/salaire-frigoriste)
+- [/salaire-geometre-topographe](https://outils.batup.fr/salaire-geometre-topographe)
+- [/salaire-grutier](https://outils.batup.fr/salaire-grutier)
+- [/salaire-ingenieur-genie-civil](https://outils.batup.fr/salaire-ingenieur-genie-civil)
+- [/salaire-macon](https://outils.batup.fr/salaire-macon)
+- [/salaire-menuisier](https://outils.batup.fr/salaire-menuisier)
+- [/salaire-metreur](https://outils.batup.fr/salaire-metreur)
+- [/salaire-peintre-en-batiment](https://outils.batup.fr/salaire-peintre-en-batiment)
+- [/salaire-plaquiste](https://outils.batup.fr/salaire-plaquiste)
+- [/salaire-plombier](https://outils.batup.fr/salaire-plombier)
+- [/salaire-soudeur](https://outils.batup.fr/salaire-soudeur)
+- [/salaire-tailleur-de-pierre](https://outils.batup.fr/salaire-tailleur-de-pierre)
+
