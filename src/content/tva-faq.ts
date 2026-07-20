@@ -2,6 +2,11 @@ import type { FAQItem } from '@/components/FAQAccordion';
 
 export const tvaFAQ: FAQItem[] = [
   {
+    question: 'Comment convertir un prix HT en TTC ?',
+    answer:
+      "Multipliez le montant HT par (1 + taux/100). À 20 %, TTC = HT × 1,20 ; à 10 %, × 1,10 ; à 5,5 %, × 1,055. Exemple : 1 000 € HT à 20 % donne 1 200 € TTC (200 € de TVA). C'est la conversion la plus fréquente pour établir un devis à partir de vos prix hors taxes. Le calculateur fait aussi l'inverse (TTC → HT).",
+  },
+  {
     question: 'Comment enlever la TVA d’un montant TTC ?',
     answer:
       "On divise le montant TTC par 1 + le taux, on ne soustrait pas le taux. À 20 %, HT = TTC ÷ 1,20. Erreur classique : retirer 20 % du TTC. Sur 120 € TTC, soustraire 20 % donne 96 € (faux) ; le vrai HT est 120 ÷ 1,20 = 100 €. Sur 10 000 €, l'écart atteint 1 666 €. Le calculateur le fait correctement.",

@@ -1,18 +1,18 @@
 export const tvaCopy = {
   seo: {
-    title: "Calculateur de TVA : HT en TTC et TTC en HT | Batup",
+    title: 'Calcul TVA : calculatrice HT en TTC et TTC en HT | Batup',
     description:
-      "Convertissez HT en TTC et TTC en HT avec les taux du bâtiment (20, 10, 5,5%). Calculateur de TVA gratuit et instantané.",
+      "Calculez la TVA et convertissez un prix HT en TTC (ou TTC en HT) : taux 20, 10, 5,5 %. Calculatrice de TVA gratuite et instantanée pour le bâtiment.",
     canonicalPath: '/calculateur-tva',
   },
   webApplication: {
-    name: 'Calculateur de TVA (HT ↔ TTC)',
+    name: 'Calcul TVA — calculatrice HT ↔ TTC',
     description:
-      "Calculateur de TVA gratuit qui convertit un montant hors taxes en toutes taxes comprises et inversement, pour n'importe quel taux (20 %, 10 %, 5,5 %, 2,1 % ou taux personnalisé), et affiche le montant de TVA correspondant.",
+      "Calculatrice de TVA gratuite qui convertit un montant hors taxes en toutes taxes comprises et inversement, pour n'importe quel taux (20 %, 10 %, 5,5 %, 2,1 % ou taux personnalisé), et affiche le montant de TVA correspondant.",
   },
   hero: {
-    h1: 'Calculateur de TVA : HT ↔ TTC',
-    lede: "Passez d'un montant HT à TTC ou d'un TTC à HT instantanément, avec les taux de TVA du bâtiment. Le montant de TVA s'affiche à part. Gratuit, sans inscription.",
+    h1: 'Calcul TVA : calculatrice HT ↔ TTC',
+    lede: "Calculez la TVA et passez d'un montant HT à TTC ou d'un TTC à HT instantanément, avec les taux du bâtiment (20, 10, 5,5 %). Le montant de TVA s'affiche à part. Gratuit, sans inscription.",
   },
   ctaBanner: {
     title: 'Vos devis et factures BTP, TVA calculée automatiquement',
