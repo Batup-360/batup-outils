@@ -502,8 +502,8 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col" style={{ backgroundColor: '#f5f5ff' }}>
       <SEOHead
-        title="38 outils BTP gratuits — calculateurs taux horaire, marge, TVA, béton, carrelage, peinture, paie, décennale | Batup"
-        description="38 calculateurs et simulateurs gratuits pour artisans et PME du BTP : taux horaire, marge, TVA, béton, mortier, carrelage, placo, peinture, parpaings, surface, volume, escalier, pente de toiture, paie, charges sociales, DGD, décennale, RC Pro, RGE. Sans inscription."
+        title="Outils BTP gratuits 2026 : 42 calculateurs | Batup"
+        description="42 calculateurs gratuits pour artisans et PME du BTP : devis, taux horaire, marge, TVA, béton, métré, paie, charges, salaires, décennale. Sans inscription."
         canonicalUrl={`${base}/`}
       />
       <TopBanner />
