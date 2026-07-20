@@ -75,6 +75,24 @@ function grilleTablesHtml(region: Region): string {
   return `<section>${parts.join('')}</section>`;
 }
 
+/** Liens internes crawlables (rendus en statique, pas seulement en JS). */
+function regionLinksHtml(): string {
+  const links = REGIONS.map(
+    (r) => `<a href="/grille-salaires-minima-batiment/${r.key}">Grille salaires BTP ${escapeHtml(r.label)}</a>`,
+  ).join(' · ');
+  return `<nav aria-label="Grille des salaires BTP par région"><a href="/grille-salaires-minima-batiment">Grille nationale</a> · ${links} · <a href="/salaires-metiers-btp">Salaires par métier</a></nav>`;
+}
+
+function metierLinksHtml(): string {
+  const links = METIERS.map(
+    (m) => `<a href="/salaire-${m.slug}">Salaire ${escapeHtml(m.label.toLowerCase())}</a>`,
+  ).join(' · ');
+  return `<nav aria-label="Salaires par métier du BTP">${links} · <a href="/grille-salaires-minima-batiment">Grille des salaires BTP</a></nav>`;
+}
+
+const METIER_ALSO_HTML =
+  '<nav aria-label="Voir aussi"><a href="/salaires-metiers-btp">Tous les salaires par métier</a> · <a href="/grille-salaires-minima-batiment">Grille des salaires BTP</a> · <a href="/calculateur-cout-salarie-btp">Coût salarié employeur</a></nav>';
+
 /** Pages programmatiques « grille salaires × région » : une par région. */
 const GRILLE_REGION_ROUTES: SeoRoute[] = REGIONS.map((r) => ({
   path: `/grille-salaires-minima-batiment/${r.key}`,
@@ -289,7 +307,7 @@ function main(): void {
     // HTML statique — sinon les tableaux ne seraient rendus qu'en JS.
     const body =
       route.path === '/grille-salaires-minima-batiment'
-        ? routeBodyContent(route) + grilleTablesHtml(getRegion(undefined))
+        ? routeBodyContent(route) + grilleTablesHtml(getRegion(undefined)) + regionLinksHtml()
         : routeBodyContent(route);
     html = injectRoot(html, body);
     writePage(route.path, html);
@@ -314,7 +332,7 @@ function main(): void {
     let html = setTitle(template, route.title);
     html = injectHead(html, headMeta({ title: route.title, description: route.description, url }));
     html = injectHead(html, routeJsonLd(route, url));
-    html = injectRoot(html, routeBodyContent(route) + grilleTablesHtml(REGIONS[i]));
+    html = injectRoot(html, routeBodyContent(route) + grilleTablesHtml(REGIONS[i]) + regionLinksHtml());
     writePage(route.path, html);
     regionCount++;
   });
@@ -325,7 +343,11 @@ function main(): void {
     let html = setTitle(template, route.title);
     html = injectHead(html, headMeta({ title: route.title, description: route.description, url }));
     html = injectHead(html, routeJsonLd(route, url));
-    html = injectRoot(html, routeBodyContent(route));
+    const metierBody =
+      route.path === salairesMetiersCopy.hub.canonicalPath
+        ? routeBodyContent(route) + metierLinksHtml()
+        : routeBodyContent(route) + METIER_ALSO_HTML;
+    html = injectRoot(html, metierBody);
     writePage(route.path, html);
     regionCount++;
   }
