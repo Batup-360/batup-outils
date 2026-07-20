@@ -189,6 +189,97 @@ const ETAM_NA: CategorieGrille = {
   ],
 };
 
+// ─── Occitanie ───────────────────────────────────────────────────────────────
+const ETAM_OCCITANIE: CategorieGrille = {
+  idcc: ['2609'],
+  baseHeuresMois: 151.67,
+  baseLabel: '35 h/semaine (151,67 h/mois)',
+  dateEffet: '1er mai 2026',
+  accord: 'Accord régional Occitanie du 13 février 2026 (+ 4,47 %)',
+  sourceLabel: 'Légifrance — ETAM bâtiment Occitanie (IDCC 2609)',
+  sourceUrl: 'https://www.legifrance.gouv.fr/',
+  smicPlancher: true,
+  note: 'Grille régionale (13 départements dont Haute-Garonne, Hérault, Gard…).',
+  lignes: [
+    { label: 'Niveau A', brutMensuel: 1847.16 },
+    { label: 'Niveau B', brutMensuel: 1936.54 },
+    { label: 'Niveau C', brutMensuel: 2061.72 },
+    { label: 'Niveau D', brutMensuel: 2256.45 },
+    { label: 'Niveau E', brutMensuel: 2462.01 },
+    { label: 'Niveau F', brutMensuel: 2902.48 },
+    { label: 'Niveau G', brutMensuel: 3176.04 },
+    { label: 'Niveau H', brutMensuel: 3497.5 },
+  ],
+};
+
+// ─── Hauts-de-France ─────────────────────────────────────────────────────────
+const ETAM_HDF: CategorieGrille = {
+  idcc: ['2609'],
+  baseHeuresMois: 151.67,
+  baseLabel: '35 h/semaine (151,67 h/mois)',
+  dateEffet: '1er janvier 2026',
+  accord: 'Accord régional Hauts-de-France du 20 novembre 2025 (+ 1 %)',
+  sourceLabel: 'Légifrance — ETAM bâtiment Hauts-de-France (IDCC 2609)',
+  sourceUrl: 'https://www.legifrance.gouv.fr/',
+  smicPlancher: true,
+  lignes: [
+    { label: 'Niveau A', brutMensuel: 1838 },
+    { label: 'Niveau B', brutMensuel: 1938 },
+    { label: 'Niveau C', brutMensuel: 2091 },
+    { label: 'Niveau D', brutMensuel: 2256 },
+    { label: 'Niveau E', brutMensuel: 2451 },
+    { label: 'Niveau F', brutMensuel: 2818 },
+    { label: 'Niveau G', brutMensuel: 3149 },
+    { label: 'Niveau H', brutMensuel: 3365 },
+  ],
+};
+
+// ─── Normandie ───────────────────────────────────────────────────────────────
+const ETAM_NORMANDIE: CategorieGrille = {
+  idcc: ['2609'],
+  baseHeuresMois: 151.67,
+  baseLabel: '35 h/semaine (151,67 h/mois)',
+  dateEffet: '1er avril 2026',
+  accord: 'Accord régional Normandie du 10 février 2026 (+ 1,2 %)',
+  sourceLabel: 'Légifrance — ETAM bâtiment Normandie (IDCC 2609)',
+  sourceUrl: 'https://www.legifrance.gouv.fr/',
+  smicPlancher: true,
+  note: 'Eure, Seine-Maritime, Calvados, Manche, Orne.',
+  lignes: [
+    { label: 'Niveau A', brutMensuel: 1833.19 },
+    { label: 'Niveau B', brutMensuel: 1937.51 },
+    { label: 'Niveau C', brutMensuel: 2104.47 },
+    { label: 'Niveau D', brutMensuel: 2324.55 },
+    { label: 'Niveau E', brutMensuel: 2493.65 },
+    { label: 'Niveau F', brutMensuel: 2763.06 },
+    { label: 'Niveau G', brutMensuel: 3082.36 },
+    { label: 'Niveau H', brutMensuel: 3386.15 },
+  ],
+};
+
+// ─── Centre-Val de Loire ─────────────────────────────────────────────────────
+const ETAM_CVL: CategorieGrille = {
+  idcc: ['2609'],
+  baseHeuresMois: 151.67,
+  baseLabel: '35 h/semaine (151,67 h/mois)',
+  dateEffet: '1er mai 2026',
+  accord: 'Accord régional Centre-Val de Loire du 10 avril 2026 (+ 1,2 %)',
+  sourceLabel: 'Légifrance — ETAM bâtiment Centre-Val de Loire (IDCC 2609)',
+  sourceUrl: 'https://www.legifrance.gouv.fr/',
+  smicPlancher: true,
+  note: 'Cher, Eure-et-Loir, Indre, Indre-et-Loire, Loir-et-Cher, Loiret.',
+  lignes: [
+    { label: 'Niveau A', brutMensuel: 1830 },
+    { label: 'Niveau B', brutMensuel: 1930 },
+    { label: 'Niveau C', brutMensuel: 2074 },
+    { label: 'Niveau D', brutMensuel: 2211 },
+    { label: 'Niveau E', brutMensuel: 2448 },
+    { label: 'Niveau F', brutMensuel: 2810 },
+    { label: 'Niveau G', brutMensuel: 3079 },
+    { label: 'Niveau H', brutMensuel: 3351 },
+  ],
+};
+
 // ─── Cadres — grille NATIONALE (partagée) ────────────────────────────────────
 export const CADRES_NATIONAL: CategorieGrille = {
   idcc: ['2420'],
@@ -223,6 +314,10 @@ export const REGIONS: Region[] = [
   { key: 'bretagne', label: 'Bretagne', etam: ETAM_BRETAGNE },
   { key: 'nouvelle-aquitaine', label: 'Nouvelle-Aquitaine', etam: ETAM_NA },
   { key: 'auvergne-rhone-alpes', label: 'Auvergne-Rhône-Alpes', etam: ETAM_ARA },
+  { key: 'occitanie', label: 'Occitanie', etam: ETAM_OCCITANIE },
+  { key: 'hauts-de-france', label: 'Hauts-de-France', etam: ETAM_HDF },
+  { key: 'normandie', label: 'Normandie', etam: ETAM_NORMANDIE },
+  { key: 'centre-val-de-loire', label: 'Centre-Val de Loire', etam: ETAM_CVL },
 ];
 
 export const DEFAULT_REGION_KEY = 'ile-de-france';
