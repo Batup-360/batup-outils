@@ -33,6 +33,30 @@ const CATEGORIES: { key: CategorieKey; label: string; hint: string }[] = [
 
 const NET_RATIO: Record<CategorieKey, number> = { ouvriers: 0.78, etam: 0.78, cadres: 0.75 };
 
+// Métiers typiques par catégorie → maillage contextuel grille ↔ pages métier.
+const METIERS_PAR_CAT: Record<CategorieKey, { slug: string; label: string }[]> = {
+  ouvriers: [
+    { slug: 'macon', label: 'maçon' },
+    { slug: 'coffreur-bancheur', label: 'coffreur-bancheur' },
+    { slug: 'carreleur', label: 'carreleur' },
+    { slug: 'plaquiste', label: 'plaquiste' },
+    { slug: 'couvreur', label: 'couvreur' },
+    { slug: 'charpentier', label: 'charpentier' },
+  ],
+  etam: [
+    { slug: 'chef-de-chantier', label: 'chef de chantier' },
+    { slug: 'dessinateur-projeteur', label: 'dessinateur-projeteur' },
+    { slug: 'metreur', label: 'métreur' },
+    { slug: 'geometre-topographe', label: 'géomètre-topographe' },
+  ],
+  cadres: [
+    { slug: 'conducteur-de-travaux', label: 'conducteur de travaux' },
+    { slug: 'ingenieur-genie-civil', label: 'ingénieur génie civil' },
+    { slug: 'economiste-de-la-construction', label: 'économiste de la construction' },
+    { slug: 'directeur-de-travaux', label: 'directeur de travaux' },
+  ],
+};
+
 export function GrilleSalairesCalculator({ regionKey }: { regionKey?: string }) {
   const { unlocked } = useEmailGate();
   const [, setLocation] = useLocation();
@@ -249,9 +273,22 @@ export function GrilleSalairesCalculator({ regionKey }: { regionKey?: string }) 
               </Link>
             ))}
           </div>
-          <p className="mt-3 border-t border-gray-100 pt-3 text-xs text-gray-500">
+          <p className="mt-3 border-t border-gray-100 pt-3 text-xs text-gray-600">
+            <span className="font-medium text-gray-900">
+              Salaires des métiers {CATEGORIES.find((c) => c.key === categorie)!.label.toLowerCase()} :
+            </span>{' '}
+            {METIERS_PAR_CAT[categorie].map((m, i) => (
+              <span key={m.slug}>
+                {i > 0 && ' · '}
+                <Link href={`/salaire-${m.slug}`} className="text-brand-600 underline">
+                  salaire {m.label}
+                </Link>
+              </span>
+            ))}
+          </p>
+          <p className="mt-2 text-xs text-gray-500">
             Voir aussi :{' '}
-            <Link href="/salaires-metiers-btp" className="text-brand-600 underline">salaires par métier</Link>{' · '}
+            <Link href="/salaires-metiers-btp" className="text-brand-600 underline">tous les métiers</Link>{' · '}
             <Link href="/calculateur-cout-salarie-btp" className="text-brand-600 underline">coût salarié employeur</Link>{' · '}
             <Link href="/calculateur-taux-horaire-btp" className="text-brand-600 underline">taux horaire</Link>
           </p>
