@@ -55,6 +55,37 @@ type ToolType = 'Calculateur' | 'Simulateur' | 'Générateur' | 'Vérificateur' 
 
 /** Insensible aux accents + à la casse (les artisans tapent « beton », « macon »). */
 const deburr = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+/** Distance d'\u00e9dition born\u00e9e (petites cha\u00eenes) pour la tol\u00e9rance aux fautes. */
+function lev(a: string, b: string): number {
+  const m = a.length;
+  const n = b.length;
+  if (Math.abs(m - n) > 2) return 3;
+  const dp = Array.from({ length: m + 1 }, (_, i) => i);
+  for (let j = 1; j <= n; j++) {
+    let prev = dp[0];
+    dp[0] = j;
+    for (let i = 1; i <= m; i++) {
+      const tmp = dp[i];
+      dp[i] = Math.min(dp[i] + 1, dp[i - 1] + 1, prev + (a[i - 1] === b[j - 1] ? 0 : 1));
+      prev = tmp;
+    }
+  }
+  return dp[m];
+}
+
+/** Recherche : substring d'abord (rapide), puis fuzzy par mot (\u00ab betton \u00bb\u2192b\u00e9ton). */
+function searchMatch(hay: string, q: string): boolean {
+  if (hay.includes(q)) return true;
+  const words = hay.split(/[^a-z0-9]+/).filter(Boolean);
+  const tokens = q.split(/[^a-z0-9]+/).filter(Boolean);
+  if (!tokens.length) return false;
+  return tokens.every((tok) => {
+    if (tok.length < 4) return words.some((w) => w.includes(tok));
+    const max = tok.length >= 7 ? 2 : 1;
+    return words.some((w) => w.includes(tok) || lev(tok, w) <= max);
+  });
+}
 type Theme = 'Pricing & marge' | 'Paie & RH' | 'Fiscal & légal' | 'Trésorerie & marchés' | 'Assurances & aides' | 'Métré & quantités';
 
 interface Tool {
@@ -566,7 +597,7 @@ export default function Home() {
     let list = base.filter((t) => {
       if (activeTheme !== 'Tous' && t.theme !== activeTheme) return false;
       if (activeType !== 'Tous' && t.type !== activeType) return false;
-      if (q && !deburr(`${t.title} ${t.description} ${t.type} ${t.theme} ${KEYWORDS[t.href] ?? ''} ${t.keywords ?? ''}`).includes(q)) return false;
+      if (q && !searchMatch(deburr(`${t.title} ${t.description} ${t.type} ${t.theme} ${KEYWORDS[t.href] ?? ''} ${t.keywords ?? ''}`), q)) return false;
       return true;
     });
     if (sort === 'popular') list = list.slice().sort((a, b) => b.popularity - a.popularity);
