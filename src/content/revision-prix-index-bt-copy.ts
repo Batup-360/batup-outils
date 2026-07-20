@@ -1,7 +1,7 @@
 export const revisionPrixIndexBTCopy = {
   seo: {
     title:
-      "Calcul révision de prix BTP (Index BT) | Batup",
+      "Calcul révision de prix BTP : Index BT01 | Batup",
     description:
       "Vérifiez votre clause de révision de prix BTP avec la formule Index BT (CCAG-Travaux). Calculateur gratuit et instantané.",
     canonicalPath: '/calculateur-revision-prix-index-bt',

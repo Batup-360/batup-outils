@@ -1,6 +1,6 @@
 export const terrasseCopy = {
   seo: {
-    title: "Calculateur de terrasse : lames et m² | Batup",
+    title: "Calculateur de terrasse bois et composite | Batup",
     description:
       "Calculez le nombre de lames de terrasse (bois ou composite) et la surface à acheter. Calculateur gratuit.",
     canonicalPath: '/calculateur-terrasse',

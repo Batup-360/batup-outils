@@ -1,6 +1,6 @@
 export const briquesCopy = {
   seo: {
-    title: "Calculateur de briques pour un mur | Batup",
+    title: "Calculateur de briques : nombre au m² | Batup",
     description:
       "Calculez le nombre de briques pour un mur ou un parement selon le type de brique. Calculateur gratuit et instantané.",
     canonicalPath: '/calculateur-briques',

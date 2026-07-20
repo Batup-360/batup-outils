@@ -2,7 +2,7 @@ export const chargesSocialesCopy = {
   seo: {
     title: "Calcul charges sociales artisan BTP | Batup",
     description:
-      "Estimez vos charges sociales d'artisan BTP selon votre statut (micro, EI, EURL, SARL, SAS). Barème à jour, calculateur gratuit.",
+      "Estimez vos charges sociales d'artisan BTP selon votre statut (micro / auto-entrepreneur, EI, EURL, SARL, SAS). Barème à jour, calculateur gratuit.",
     canonicalPath: '/calculateur-charges-sociales-artisan-btp',
   },
   webApplication: {

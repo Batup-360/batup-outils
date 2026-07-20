@@ -2,7 +2,7 @@ export const consommationCopy = {
   seo: {
     title: "Calcul consommation de matériaux au m² | Batup",
     description:
-      "Estimez la quantité de matériau (colle, enduit, primaire) selon la surface et la consommation au m². Outil gratuit.",
+      "Estimez la quantité de matériau (colle, enduit, primaire, ragréage) selon la surface et la consommation au m². Outil gratuit.",
     canonicalPath: '/calculateur-consommation-materiaux',
   },
   webApplication: {
