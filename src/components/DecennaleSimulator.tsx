@@ -216,7 +216,10 @@ export function DecennaleSimulator() {
     };
   }, [inputs]);
 
-  const ctaBrokerHref = '#';
+  // Comparateur Coover (décennale). UTM pour l'attribution ; à remplacer par un
+  // lien d'affiliation tracké quand le partenariat est signé.
+  const ctaBrokerHref =
+    'https://app.coover.fr/assurance-decennale?utm_source=outils.batup.fr&utm_medium=cta&utm_campaign=decennale';
 
   const ctaSignupHref = useMemo(() => {
     const params = new URLSearchParams({
@@ -396,7 +399,7 @@ export function DecennaleSimulator() {
               ) : null}
 
               <div className="space-y-2 pt-2">
-                <a href={ctaBrokerHref} data-testid="cta-broker">
+                <a href={ctaBrokerHref} target="_blank" rel="sponsored noopener noreferrer" data-testid="cta-broker">
                   <Button className="h-11 w-full rounded-full">
                     Comparez avec 3 courtiers BTP partenaires en 2 min
                     <ArrowRight className="ml-2 h-4 w-4" />

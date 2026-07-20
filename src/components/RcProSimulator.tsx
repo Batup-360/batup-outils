@@ -221,7 +221,10 @@ export function RcProSimulator() {
     };
   }, [inputs]);
 
-  const ctaBrokerHref = '#';
+  // Comparateur Coover (RC Pro). UTM pour l'attribution ; à remplacer par un
+  // lien d'affiliation tracké quand le partenariat est signé.
+  const ctaBrokerHref =
+    'https://www.coover.fr/responsabilite-civile-pro?utm_source=outils.batup.fr&utm_medium=cta&utm_campaign=rc-pro';
 
   const ctaSignupHref = useMemo(() => {
     const params = new URLSearchParams({
@@ -404,7 +407,7 @@ export function RcProSimulator() {
               ) : null}
 
               <div className="space-y-2 pt-2">
-                <a href={ctaBrokerHref} data-testid="cta-broker">
+                <a href={ctaBrokerHref} target="_blank" rel="sponsored noopener noreferrer" data-testid="cta-broker">
                   <Button className="h-11 w-full rounded-full">
                     Comparez 3 devis RC Pro BTP gratuits
                     <ArrowRight className="ml-2 h-4 w-4" />
