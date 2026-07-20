@@ -335,7 +335,7 @@ const TOOLS: Tool[] = [
     title: 'Calculateur de TVA (HT ↔ TTC)',
     description: 'Convertissez HT en TTC et TTC en HT en un clic, avec les taux du bâtiment : 20 %, 10 %, 5,5 %, 2,1 %.',
     type: 'Calculateur',
-    theme: 'Métré & quantités',
+    theme: 'Fiscal & légal',
     popularity: 8,
   },
   {

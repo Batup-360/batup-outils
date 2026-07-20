@@ -2,13 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import { MARKETING_BASE } from '@/lib/urls';
 
 /**
- * TopBanner — rotator qui cycle entre 3 messages toutes les 5 secondes.
+ * TopBanner — rotator qui cycle entre 2 messages toutes les 5 secondes.
  * Synchronisé avec batup.fr/src/components/TopBanner.astro.
  *
  * Messages :
- * 1. Offre de lancement -50% les 3 premiers mois -> /tarifs-logiciel-btp
- * 2. Sans engagement · Essai gratuit 14 jours · Sans carte bancaire
- * 3. Facture électronique obligatoire au 1er septembre 2026 -> /facturation-electronique-btp
+ * 1. Sans engagement · Essai gratuit 14 jours · Sans carte bancaire
+ * 2. Facture électronique obligatoire au 1er septembre 2026 -> /facturation-electronique-btp
  */
 
 interface Message {
@@ -19,12 +18,6 @@ interface Message {
 }
 
 const MESSAGES: Message[] = [
-  {
-    text: 'Offre de lancement',
-    highlight: '−50 % les 3 premiers mois',
-    cta: { label: 'Voir les tarifs', href: `${MARKETING_BASE}/tarifs-logiciel-btp` },
-    tone: 'green',
-  },
   {
     text: 'Sans engagement',
     highlight: 'Essai gratuit 14 jours · Sans carte bancaire',
