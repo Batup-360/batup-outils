@@ -48,8 +48,13 @@ import { TopBanner } from '@/components/TopBanner';
 import { PublicFooter } from '@/components/PublicFooter';
 import { SEOHead } from '@/lib/seo-head';
 import { siteOrigin } from '@/lib/urls';
+import { METIERS } from '@/lib/salaires-metiers-btp';
+import { REGIONS } from '@/lib/grille-salaires-btp';
 
-type ToolType = 'Calculateur' | 'Simulateur' | 'Générateur' | 'Vérificateur' | 'Comparateur';
+type ToolType = 'Calculateur' | 'Simulateur' | 'Générateur' | 'Vérificateur' | 'Comparateur' | 'Fiche';
+
+/** Insensible aux accents + à la casse (les artisans tapent « beton », « macon »). */
+const deburr = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 type Theme = 'Pricing & marge' | 'Paie & RH' | 'Fiscal & légal' | 'Trésorerie & marchés' | 'Assurances & aides' | 'Métré & quantités';
 
 interface Tool {
@@ -452,6 +457,29 @@ const TOOLS: Tool[] = [
   },
 ];
 
+// Fiches salaires (métiers + régions) : cherchables mais hors grille par défaut
+// (n'apparaissent que sur une recherche, pour ne pas noyer les 42 outils).
+const FICHES: Tool[] = [
+  ...METIERS.map((m): Tool => ({
+    href: `/salaire-${m.slug}`,
+    icon: <HardHat className="h-6 w-6" />,
+    title: `Salaire ${m.label.toLowerCase()}`,
+    description: `Salaire net débutant, brut estimé et niveau conventionnel — ${m.label.toLowerCase()} dans le BTP.`,
+    type: 'Fiche',
+    theme: 'Paie & RH',
+    popularity: 0,
+  })),
+  ...REGIONS.map((r): Tool => ({
+    href: `/grille-salaires-minima-batiment/${r.key}`,
+    icon: <Coins className="h-6 w-6" />,
+    title: `Grille salaires BTP ${r.label}`,
+    description: `Minima conventionnels ouvriers, ETAM et cadres du bâtiment en ${r.label}.`,
+    type: 'Fiche',
+    theme: 'Paie & RH',
+    popularity: 0,
+  })),
+];
+
 const ALL_TYPES: ToolType[] = ['Calculateur', 'Simulateur', 'Générateur', 'Vérificateur', 'Comparateur'];
 const ALL_THEMES: Theme[] = ['Pricing & marge', 'Paie & RH', 'Fiscal & légal', 'Trésorerie & marchés', 'Assurances & aides', 'Métré & quantités'];
 
@@ -461,6 +489,7 @@ const TYPE_STYLES: Record<ToolType, { bg: string; text: string }> = {
   Générateur: { bg: 'bg-emerald-50', text: 'text-emerald-700' },
   Vérificateur: { bg: 'bg-amber-50', text: 'text-amber-700' },
   Comparateur: { bg: 'bg-rose-50', text: 'text-rose-700' },
+  Fiche: { bg: 'bg-violet-50', text: 'text-violet-700' },
 };
 
 type SortKey = 'popular' | 'alpha';
@@ -479,11 +508,13 @@ export default function Home() {
   }, []);
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    let list = TOOLS.filter((t) => {
+    const q = deburr(query.trim());
+    // Les fiches salaires n'entrent dans l'index que sur une recherche active.
+    const base = q ? [...TOOLS, ...FICHES] : TOOLS;
+    let list = base.filter((t) => {
       if (activeTheme !== 'Tous' && t.theme !== activeTheme) return false;
       if (activeType !== 'Tous' && t.type !== activeType) return false;
-      if (q && !`${t.title} ${t.description} ${t.type} ${t.theme}`.toLowerCase().includes(q)) return false;
+      if (q && !deburr(`${t.title} ${t.description} ${t.type} ${t.theme}`).includes(q)) return false;
       return true;
     });
     if (sort === 'popular') list = list.slice().sort((a, b) => b.popularity - a.popularity);
