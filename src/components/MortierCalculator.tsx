@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react';
-import { ArrowRight } from 'lucide-react';
 import { volumeMortier, dosageMortier } from '@/lib/mortier-math';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
+import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
 
 const TOOL_SLUG = 'calculateur-mortier';
@@ -120,14 +120,7 @@ export function MortierCalculator() {
                   <Row label="Sable" value={fmtKg(results.sableKg)} />
                   <Row label="Eau de gâchage" value={fmtL(results.eauL)} />
                 </div>
-                <div className="space-y-2 pt-2">
-                  <a href={ctaSignupHref}>
-                    <Button className="h-11 w-full rounded-full">
-                      Essayer Batup gratuitement
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </a>
-                </div>
+                <ToolCta href={ctaSignupHref} />
               </CardContent>
             </Card>
           </GatedReveal>

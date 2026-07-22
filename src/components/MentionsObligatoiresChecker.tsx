@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react';
-import { AlertCircle, ArrowRight, CheckCircle, XCircle } from 'lucide-react';
+import { AlertCircle, CheckCircle, XCircle } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Button } from './ui';
+import { Card, CardContent, CardHeader, CardTitle } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
+import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
 
 const TOOL_SLUG = 'verificateur-mentions-obligatoires-facture-devis-btp';
@@ -527,17 +528,11 @@ export function MentionsObligatoiresChecker() {
                 totalCount={items.length}
               />
 
-              <div className="space-y-2 pt-2">
-                <a href={ctaSignupHref} data-testid="cta-signup">
-                  <Button className="h-11 w-full rounded-full">
-                    Essayer Batup gratuitement
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </a>
+              <ToolCta href={ctaSignupHref}>
                 <p className="text-center text-xs text-gray-500">
                   Mentions légales pré-remplies sur chaque devis et facture.
                 </p>
-              </div>
+              </ToolCta>
             </CardContent>
           </Card>
           </GatedReveal>

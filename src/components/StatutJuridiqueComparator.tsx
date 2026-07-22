@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react';
-import { ArrowRight, Check, Minus } from 'lucide-react';
+import { Check, Minus } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Label, Button } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
+import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
 
 const TOOL_SLUG = 'comparateur-statut-juridique-artisan-btp';
@@ -434,17 +435,11 @@ export function StatutJuridiqueComparator() {
                   </>
                 )}
 
-                <div className="space-y-2 pt-2">
-                  <a href={ctaSignupHref} data-testid="cta-signup">
-                    <Button className="h-11 w-full rounded-full">
-                      Essayer Batup gratuitement
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </a>
+                <ToolCta href={ctaSignupHref}>
                   <p className="text-center text-xs text-gray-500">
                     Devis conformes, marges, pointage — gratuit 30 jours, sans carte.
                   </p>
-                </div>
+                </ToolCta>
               </CardContent>
             </Card>
             </GatedReveal>

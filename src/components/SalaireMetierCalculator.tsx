@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
-import { ArrowRight } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Button } from './ui';
+import { Card, CardContent, CardHeader, CardTitle } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
+import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
 import {
   getMetier,
@@ -143,17 +143,11 @@ function MetierView({ metier }: { metier: MetierSalaire }) {
                   <Row label="Brut annuel estimé" value={`≈ ${fmtEuro(brutAnnuel)}`} />
                   <Row label="Niveau conventionnel" value={metier.niveauConventionnel} />
                 </div>
-                <div className="space-y-2 pt-2">
-                  <a href={ctaSignupHref}>
-                    <Button className="h-11 w-full rounded-full">
-                      Essayer Batup gratuitement
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </a>
+                <ToolCta href={ctaSignupHref}>
                   <p className="text-center text-xs text-gray-500">
                     Gérez paie, pointages et primes de chantier dans un seul outil BTP.
                   </p>
-                </div>
+                </ToolCta>
               </CardContent>
             </Card>
           </GatedReveal>

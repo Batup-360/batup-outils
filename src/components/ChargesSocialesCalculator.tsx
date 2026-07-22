@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react';
-import { ArrowRight, HelpCircle } from 'lucide-react';
+import { HelpCircle } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
+import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
 
 const TOOL_SLUG = 'calculateur-charges-sociales-artisan-btp';
@@ -379,17 +380,11 @@ export function ChargesSocialesCalculator() {
                 </p>
               )}
 
-              <div className="space-y-2 pt-2">
-                <a href={ctaSignupHref} data-testid="cta-signup">
-                  <Button className="h-11 w-full rounded-full">
-                    Essayer Batup gratuitement
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </a>
+              <ToolCta href={ctaSignupHref}>
                 <p className="text-center text-xs text-gray-500">
                   Vos charges réelles, chantier par chantier — pas juste la marge brute.
                 </p>
-              </div>
+              </ToolCta>
             </CardContent>
           </Card>
           </GatedReveal>

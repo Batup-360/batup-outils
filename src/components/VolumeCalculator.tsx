@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react';
-import { ArrowRight } from 'lucide-react';
 import { volumeForme, LITRES_PAR_M3, type FormeVolume } from '@/lib/volume-math';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
+import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
 
 const TOOL_SLUG = 'calculateur-volume';
@@ -123,14 +123,7 @@ export function VolumeCalculator() {
                   <p className="mt-1 text-4xl font-bold text-brand-500 sm:text-5xl">{fmtM3(volume)}</p>
                   <p className="mt-1 text-xs text-gray-500">soit {fmtL(volume * LITRES_PAR_M3)}</p>
                 </div>
-                <div className="space-y-2 pt-1">
-                  <a href={ctaSignupHref}>
-                    <Button className="h-11 w-full rounded-full">
-                      Essayer Batup gratuitement
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </a>
-                </div>
+                <ToolCta href={ctaSignupHref} className="space-y-2 pt-1" />
               </CardContent>
             </Card>
           </GatedReveal>

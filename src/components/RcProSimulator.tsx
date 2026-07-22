@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from '
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { useEmailGate } from '@/lib/email-gate-context';
+import { useEmbedded } from '@/lib/embed-context';
 
 const TOOL_SLUG = 'simulateur-rc-pro-btp';
 const TOOL_LABEL = 'Simulateur RC Pro BTP';
@@ -182,6 +183,7 @@ function computeFactors(inputs: Inputs): FactorImpact[] {
 export function RcProSimulator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
   const { unlocked } = useEmailGate();
+  const embedded = useEmbedded();
 
   const update = <K extends keyof Inputs>(key: K, value: Inputs[K]) => {
     setInputs((prev) => ({ ...prev, [key]: value }));
@@ -413,13 +415,15 @@ export function RcProSimulator() {
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </a>
-                <a
-                  href={ctaSignupHref}
-                  data-testid="cta-signup"
-                  className="mt-3 block text-center text-xs font-medium text-gray-500 transition-colors hover:text-brand-600"
-                >
-                  Ou centralisez vos contrats dans Batup →
-                </a>
+                {!embedded && (
+                  <a
+                    href={ctaSignupHref}
+                    data-testid="cta-signup"
+                    className="mt-3 block text-center text-xs font-medium text-gray-500 transition-colors hover:text-brand-600"
+                  >
+                    Ou centralisez vos contrats dans Batup →
+                  </a>
+                )}
               </div>
 
               <p className="border-t border-gray-100 pt-4 text-xs leading-relaxed text-gray-500">

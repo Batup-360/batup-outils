@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react';
-import { ArrowRight, CheckCircle2, AlertTriangle, HelpCircle } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, HelpCircle } from 'lucide-react';
 import { calculeEscalier, BLONDEL_MIN, BLONDEL_MAX } from '@/lib/escalier-math';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
+import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
 
 const TOOL_SLUG = 'calculateur-escalier';
@@ -139,14 +140,7 @@ export function EscalierCalculator() {
                   />
                 </div>
 
-                <div className="space-y-2 pt-1">
-                  <a href={ctaSignupHref}>
-                    <Button className="h-11 w-full rounded-full">
-                      Essayer Batup gratuitement
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </a>
-                </div>
+                <ToolCta href={ctaSignupHref} className="space-y-2 pt-1" />
               </CardContent>
             </Card>
           </GatedReveal>

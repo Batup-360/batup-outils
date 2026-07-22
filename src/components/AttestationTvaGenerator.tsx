@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react';
-import { ArrowRight, Check, Clipboard } from 'lucide-react';
+import { Check, Clipboard } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
+import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
 
 const TOOL_SLUG = 'generateur-attestation-tva';
@@ -171,14 +172,7 @@ export function AttestationTvaGenerator() {
                     </>
                   )}
                 </button>
-                <div className="space-y-2 pt-1">
-                  <a href={ctaSignupHref}>
-                    <Button className="h-11 w-full rounded-full">
-                      Essayer Batup gratuitement
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </a>
-                </div>
+                <ToolCta href={ctaSignupHref} className="space-y-2 pt-1" />
               </CardContent>
             </Card>
           </GatedReveal>
