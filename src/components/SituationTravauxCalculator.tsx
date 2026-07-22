@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react';
-import { AlertTriangle, ArrowRight, HelpCircle } from 'lucide-react';
+import { AlertTriangle, HelpCircle } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
+import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
 import { retenueGarantieFromTTC } from '@/lib/retenue-garantie-math';
 
@@ -282,14 +283,7 @@ export function SituationTravauxCalculator() {
                 />
               </div>
 
-              <div className="space-y-2 pt-2">
-                <a href={ctaSignupHref} data-testid="cta-signup">
-                  <Button className="h-11 w-full rounded-full">
-                    Essayer Batup gratuitement
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </a>
-              </div>
+              <ToolCta href={ctaSignupHref} />
             </CardContent>
           </Card>
           </GatedReveal>

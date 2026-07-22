@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react';
 import { useLocation, Link } from 'wouter';
-import { ArrowRight, Download } from 'lucide-react';
+import { Download } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Label, Button } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
+import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
 import {
   REGIONS,
@@ -368,17 +369,11 @@ function ResultCard({
             de la mutuelle, de la prévoyance et du prélèvement à la source.
           </p>
 
-          <div className="space-y-2 pt-2">
-            <a href={ctaSignupHref}>
-              <Button className="h-11 w-full rounded-full">
-                Essayer Batup gratuitement
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </a>
+          <ToolCta href={ctaSignupHref}>
             <p className="text-center text-xs text-gray-500">
               Gérez paie, pointages et minima conventionnels dans un seul outil BTP.
             </p>
-          </div>
+          </ToolCta>
         </CardContent>
       </Card>
     </GatedReveal>

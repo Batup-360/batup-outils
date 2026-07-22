@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react';
-import { ArrowRight, Check, CheckCircle, Clipboard, FileSignature, Info, TrendingDown } from 'lucide-react';
+import { Check, CheckCircle, Clipboard, FileSignature, Info, TrendingDown } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Button, Label } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
+import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
 
 const TOOL_SLUG = 'generateur-mention-tva-facture-btp';
@@ -275,14 +276,7 @@ export function MentionTvaGenerator() {
                 bail commercial mixte, SCI, etc.).
               </p>
 
-              <div className="space-y-2 pt-2">
-                <a href={ctaSignupHref} data-testid="cta-signup">
-                  <Button className="h-11 w-full rounded-full">
-                    Essayer Batup gratuitement
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </a>
-              </div>
+              <ToolCta href={ctaSignupHref} />
             </CardContent>
           </Card>
           </GatedReveal>

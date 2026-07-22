@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from '
 import { ResultVerdict } from './ResultVerdict';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
+import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
 
 const TOOL_SLUG = 'calculateur-prix-chantier-btp';
@@ -198,20 +199,14 @@ export function QuotePriceCalculator() {
                 </p>
               )}
 
-              <div className="space-y-2 pt-2">
-                <a href={ctaSignupHref}>
-                  <Button className="h-11 w-full rounded-full">
-                    Essayer Batup gratuitement
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </a>
+              <ToolCta href={ctaSignupHref}>
                 <Link href="/calculateur-taux-horaire-btp">
                   <Button variant="outline" className="h-11 w-full rounded-full">
                     Recalculer mon taux horaire
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
-              </div>
+              </ToolCta>
             </CardContent>
           </Card>
           </GatedReveal>

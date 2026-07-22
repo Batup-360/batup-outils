@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import { ArrowRight } from 'lucide-react';
 import {
   pentePourcent,
   angleDegres,
@@ -8,9 +7,10 @@ import {
   degresVersPourcent,
 } from '@/lib/pente-math';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
+import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
 
 const TOOL_SLUG = 'calculateur-pente-toiture';
@@ -177,14 +177,7 @@ export function PenteToitureCalculator() {
                   <Row label="Équivalent" value={results.pourcent > 0 ? `${N1.format(results.pourcent)} cm/m` : '—'} />
                   {results.hasRampant && <Row label="Longueur du rampant" value={fmtM(results.rampant)} />}
                 </div>
-                <div className="space-y-2 pt-2">
-                  <a href={ctaSignupHref}>
-                    <Button className="h-11 w-full rounded-full">
-                      Essayer Batup gratuitement
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </a>
-                </div>
+                <ToolCta href={ctaSignupHref} />
               </CardContent>
             </Card>
           </GatedReveal>

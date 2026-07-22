@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from '
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { useEmailGate } from '@/lib/email-gate-context';
+import { useEmbedded } from '@/lib/embed-context';
 
 const TOOL_SLUG = 'calculateur-roi-certification-rge';
 const TOOL_LABEL = 'Calculateur ROI certification RGE';
@@ -75,6 +76,7 @@ const VERDICT_CONFIG: Record<
 export function RoiRgeCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
   const { unlocked } = useEmailGate();
+  const embedded = useEmbedded();
 
   const updateNumber = (key: keyof Inputs, value: string) => {
     const num = parseFloat(value.replace(',', '.')) || 0;
@@ -379,18 +381,20 @@ export function RoiRgeCalculator() {
                 </div>
               )}
 
-              <div className="pt-2">
-                <a href={ctaSignupHref} data-testid="cta-signup">
-                  <Button className="h-11 w-full rounded-full">
-                    Automatiser le suivi de mes chantiers RGE
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </a>
-                <p className="mt-2 text-xs leading-relaxed text-gray-500">
-                  Le label RGE seul ne suffit pas — il faut aussi tracker les chantiers éligibles
-                  MaPrimeRénov et générer les attestations. Batup automatise ça en quelques clics.
-                </p>
-              </div>
+              {!embedded && (
+                <div className="pt-2">
+                  <a href={ctaSignupHref} data-testid="cta-signup">
+                    <Button className="h-11 w-full rounded-full">
+                      Automatiser le suivi de mes chantiers RGE
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </a>
+                  <p className="mt-2 text-xs leading-relaxed text-gray-500">
+                    Le label RGE seul ne suffit pas — il faut aussi tracker les chantiers éligibles
+                    MaPrimeRénov et générer les attestations. Batup automatise ça en quelques clics.
+                  </p>
+                </div>
+              )}
 
               <p className="border-t border-gray-100 pt-4 text-xs leading-relaxed text-gray-500">
                 Barème indicatif — confirmez les coûts avec votre organisme de qualification

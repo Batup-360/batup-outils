@@ -1,9 +1,10 @@
 import { useMemo, useState, type ReactNode } from 'react';
-import { AlertTriangle, ArrowRight, HelpCircle } from 'lucide-react';
+import { AlertTriangle, HelpCircle } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
+import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
 
 const TOOL_SLUG = 'calculateur-jours-intemperies-cibtp';
@@ -274,17 +275,11 @@ export function IntemperiesCibtpCalculator() {
                 Cette indemnité est <span className="font-semibold">remboursée par la caisse CIBTP</span> de votre région à l'employeur. Le salarié, lui, perçoit son salaire normal sur la fiche de paie.
               </div>
 
-              <div className="space-y-2 pt-2">
-                <a href={ctaSignupHref} data-testid="cta-signup">
-                  <Button className="h-11 w-full rounded-full">
-                    Essayer Batup gratuitement
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </a>
+              <ToolCta href={ctaSignupHref}>
                 <p className="text-xs text-center text-gray-500">
                   Vous payez le salaire, la CIBTP vous rembourse — Batup détecte les arrêts depuis les pointages et prépare le dossier automatiquement.
                 </p>
-              </div>
+              </ToolCta>
             </CardContent>
           </Card>
           </GatedReveal>

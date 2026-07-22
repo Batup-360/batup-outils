@@ -1,9 +1,10 @@
 import { useMemo, useState, type ReactNode } from 'react';
-import { ArrowRight, HelpCircle } from 'lucide-react';
+import { HelpCircle } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
+import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
 
 const TOOL_SLUG = 'calculateur-cout-salarie-btp';
@@ -218,17 +219,11 @@ export function CoutSalarieCalculator() {
                 </div>
               )}
 
-              <div className="space-y-2 pt-2">
-                <a href={ctaSignupHref} data-testid="cta-signup">
-                  <Button className="h-11 w-full rounded-full">
-                    Essayer Batup gratuitement
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </a>
+              <ToolCta href={ctaSignupHref}>
                 <p className="text-xs text-center text-gray-500">
                   Coût horaire chargé : {fmtRate(results.coutHoraireCharge)} — Batup l'intègre automatiquement dans la rentabilité de chaque chantier.
                 </p>
-              </div>
+              </ToolCta>
             </CardContent>
           </Card>
           </GatedReveal>
