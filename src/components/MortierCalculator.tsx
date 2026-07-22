@@ -7,6 +7,7 @@ import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
+import { useEmbedPrefill } from '@/lib/embed-context';
 
 const TOOL_SLUG = 'calculateur-mortier';
 const TOOL_LABEL = 'Calculateur de mortier';
@@ -37,7 +38,11 @@ function fmtL(n: number): string {
 }
 
 export function MortierCalculator() {
-  const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
+  const prefill = useEmbedPrefill();
+  const [inputs, setInputs] = useState<Inputs>(() => {
+    const surface = prefill.num('surface', { min: 0.1, max: 100000 });
+    return surface !== undefined ? { ...DEFAULTS, surface } : DEFAULTS;
+  });
   const { unlocked } = useEmailGate();
 
   const updateNumber = (key: keyof Inputs, value: string) => {

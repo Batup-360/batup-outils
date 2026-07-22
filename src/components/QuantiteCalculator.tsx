@@ -5,6 +5,7 @@ import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
+import { useEmbedPrefill } from '@/lib/embed-context';
 import type { EmbedResultPayload } from '@/lib/embed-result';
 
 /**
@@ -58,11 +59,18 @@ export const fmtNum = (n: number): string => (Number.isFinite(n) && n > 0 ? NUM_
 
 export function QuantiteCalculator({ config }: { config: QuantiteConfig }) {
   const { unlocked } = useEmailGate();
+  const prefill = useEmbedPrefill();
 
   const [values, setValues] = useState<Record<string, number>>(() => {
     const init: Record<string, number> = {};
     for (const f of config.fields) init[f.key] = f.default ?? 0;
     for (const s of config.selects ?? []) init[s.key] = s.default;
+    // Pré-remplissage embed (v1) : uniquement le champ dont l'entrée EST une
+    // surface en m² — jamais les autres champs (dimensions, taux, densités…).
+    if (config.fields.some((f) => f.key === 'surface' && f.suffix === 'm²')) {
+      const surface = prefill.num('surface', { min: 0.1, max: 100000 });
+      if (surface !== undefined) init.surface = surface;
+    }
     return init;
   });
 

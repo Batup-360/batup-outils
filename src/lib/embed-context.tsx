@@ -1,4 +1,5 @@
-import { createContext, useContext, type ReactNode } from 'react';
+import { createContext, useContext, useMemo, type ReactNode } from 'react';
+import { parsePrefillParam, type PrefillBounds } from './embed-prefill';
 
 /**
  * Contexte d'embed : porte le slug de l'outil quand un calculateur est rendu
@@ -19,4 +20,28 @@ export function useEmbedSlug(): string | null {
 
 export function useEmbedded(): boolean {
   return useEmbedSlug() !== null;
+}
+
+export interface EmbedPrefill {
+  /** Nombre lu depuis les query params de l'URL d'embed, ou `undefined`. */
+  num(name: string, opts?: PrefillBounds): number | undefined;
+}
+
+/**
+ * Pré-remplissage app → outil (v1) : lit `window.location.search` une seule
+ * fois et expose les paramètres numériques (`?surface=34&tva=10…`). Ne
+ * retourne des valeurs QU'EN mode embed — sur les pages publiques, `num()`
+ * retourne toujours `undefined`, même si l'URL porte les mêmes paramètres.
+ * Params invalides ou hors bornes = ignorés silencieusement (defaults
+ * conservés). Voir docs/embed.md, section « Pré-remplissage ».
+ */
+export function useEmbedPrefill(): EmbedPrefill {
+  const embedded = useEmbedded();
+  return useMemo(() => {
+    const search = embedded && typeof window !== 'undefined' ? window.location.search : '';
+    return {
+      num: (name: string, opts?: PrefillBounds) =>
+        embedded ? parsePrefillParam(search, name, opts) : undefined,
+    };
+  }, [embedded]);
 }

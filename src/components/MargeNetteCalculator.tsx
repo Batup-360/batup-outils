@@ -9,6 +9,7 @@ import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
+import { useEmbedPrefill } from '@/lib/embed-context';
 
 const TOOL_SLUG = 'calculateur-marge-nette-coefficient-btp';
 const TOOL_LABEL = 'Calculateur marge nette / coefficient BTP';
@@ -49,7 +50,13 @@ function fmtPct(n: number): string {
 }
 
 export function MargeNetteCalculator() {
-  const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
+  const prefill = useEmbedPrefill();
+  const [inputs, setInputs] = useState<Inputs>(() => {
+    // Une marge pré-remplie bascule le mode sur « marge » pour qu'elle soit
+    // visible et utilisée dans le calcul.
+    const marge = prefill.num('marge', { min: 0, max: 99 });
+    return marge !== undefined ? { ...DEFAULTS, mode: 'marge', margeNette: marge } : DEFAULTS;
+  });
   const { unlocked } = useEmailGate();
 
   const update = (key: keyof Inputs, value: string) => {

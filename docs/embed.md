@@ -184,3 +184,42 @@ Recommandations hôte :
   compatibility : de nouvelles lignes pourront s'ajouter sans bump de version).
 - `hint` et `meta` sont informatifs : les stocker en traçabilité, ne pas les
   parser.
+
+## Pré-remplissage (app → outil) — v1 FIGÉ
+
+En mode embed **uniquement**, l'app hôte peut pré-remplir certains champs via
+des query params sur l'URL d'embed :
+
+```
+https://outils.batup.fr/embed/calculateur-carrelage?surface=34
+https://outils.batup.fr/embed/calculateur-prix-chantier-btp?taux=45&marge=25
+https://outils.batup.fr/embed/calculateur-tva?tva=10
+```
+
+Règles :
+
+- **Embed only** : ces paramètres sont ignorés sur les pages publiques, même
+  si quelqu'un les ajoute à une URL publique.
+- Param absent, non numérique (NaN/Infinity) ou hors bornes = **ignoré
+  silencieusement**, le défaut de l'outil est conservé.
+- Le pré-remplissage ne s'applique qu'à l'**état initial** : l'utilisateur
+  reste libre de modifier la valeur ensuite.
+- Virgule décimale acceptée (`surface=12,5` ≡ `surface=12.5`).
+
+| Param | Type | Bornes | Champ pré-rempli | Outils supportés |
+| --- | --- | --- | --- | --- |
+| `surface` | nombre (m²) | 0,1 – 100 000 | l'entrée « surface » directe | `calculateur-carrelage`, `calculateur-parquet`, `calculateur-placo`, `calculateur-peinture`, `calculateur-enduit-facade`, `calculateur-isolant`, `calculateur-tuiles`, `calculateur-terrasse`, `calculateur-gravier-sable`, `calculateur-consommation-materiaux`, `calculateur-chape`, `calculateur-mortier` |
+| `tva` | taux % | 0 – 100 | taux de TVA (20/10/5,5/2,1 sélectionnent le bouton, sinon champ « autre ») | `calculateur-tva` |
+| `marge` | % marge nette | 0 – 99 | marge nette cible (bascule le mode « marge » sur l'outil marge/coefficient) | `calculateur-marge-nette-coefficient-btp`, `calculateur-prix-chantier-btp` |
+| `taux` | €/h | 1 – 500 | taux horaire facturé | `calculateur-prix-chantier-btp` |
+
+Outils **non** pré-remplissables par `surface` (leur entrée n'est pas une
+surface en m²) : `calculateur-surface`, `calculateur-papier-peint`,
+`calculateur-briques`, `calculateur-parpaings` (dimensions L×l/h),
+`calculateur-beton`, `calculateur-volume` (formes/dimensions). Le
+`calculateur-taux-horaire-btp` n'a pas de champ taux horaire en entrée (c'est
+sa sortie) ni le `calculateur-tva-autoliquidation-btp` de champ taux (c'est un
+questionnaire).
+
+Code source : `src/lib/embed-prefill.ts` (parsing pur, testé) et
+`useEmbedPrefill` dans `src/lib/embed-context.tsx`.

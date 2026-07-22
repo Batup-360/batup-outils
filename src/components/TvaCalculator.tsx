@@ -7,6 +7,7 @@ import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
+import { useEmbedPrefill } from '@/lib/embed-context';
 
 const TOOL_SLUG = 'calculateur-tva';
 const TOOL_LABEL = 'Calculateur de TVA';
@@ -34,7 +35,13 @@ function fmtRate(n: number): string {
 }
 
 export function TvaCalculator() {
-  const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
+  const prefill = useEmbedPrefill();
+  const [inputs, setInputs] = useState<Inputs>(() => {
+    // 20 / 10 / 5,5 / 2,1 sélectionnent le bouton correspondant ; toute autre
+    // valeur valide atterrit dans le champ « % (autre) ».
+    const taux = prefill.num('tva', { min: 0, max: 100 });
+    return taux !== undefined ? { ...DEFAULTS, taux } : DEFAULTS;
+  });
   const [copied, setCopied] = useState(false);
   const { unlocked } = useEmailGate();
 
