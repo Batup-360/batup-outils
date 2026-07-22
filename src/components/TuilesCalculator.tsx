@@ -1,5 +1,6 @@
 import { QuantiteCalculator, fmtInt, fmtNum, type QuantiteConfig } from './QuantiteCalculator';
 import { unitesParSurface, surfaceAvecPerte } from '@/lib/metre-quantite-math';
+import { buildTuilesPayload } from '@/lib/embed-payloads';
 
 const CONFIG: QuantiteConfig = {
   toolSlug: 'calculateur-tuiles',
@@ -34,6 +35,12 @@ const CONFIG: QuantiteConfig = {
     },
   ],
   stickyLabel: 'Tuiles',
+  buildEmbedPayload: (v) =>
+    buildTuilesPayload({
+      surface: v.surface,
+      tuilesParM2: v.densiteManuelle > 0 ? v.densiteManuelle : v.typeTuile,
+      perte: v.perte,
+    }),
   compute: (v) => {
     const densite = v.densiteManuelle > 0 ? v.densiteManuelle : v.typeTuile;
     const n = unitesParSurface(v.surface, densite, v.perte);

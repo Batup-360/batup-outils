@@ -1,5 +1,6 @@
 import { QuantiteCalculator, fmtInt, fmtNum, type QuantiteConfig } from './QuantiteCalculator';
 import { paquetsNecessaires, surfaceAvecPerte } from '@/lib/metre-quantite-math';
+import { buildParquetPayload } from '@/lib/embed-payloads';
 
 const CONFIG: QuantiteConfig = {
   toolSlug: 'calculateur-parquet',
@@ -25,6 +26,8 @@ const CONFIG: QuantiteConfig = {
     },
   ],
   stickyLabel: 'Paquets',
+  buildEmbedPayload: (v) =>
+    buildParquetPayload({ surface: v.surface, surfacePaquet: v.surfacePaquet, perte: v.perte }),
   compute: (v) => {
     const n = paquetsNecessaires(v.surface, v.surfacePaquet, v.perte);
     const surfaceAchat = surfaceAvecPerte(v.surface, v.perte);

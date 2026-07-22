@@ -1,5 +1,6 @@
 import { QuantiteCalculator, fmtInt, fmtNum, type QuantiteConfig } from './QuantiteCalculator';
 import { quantiteParSurface, surfaceAvecPerte } from '@/lib/metre-quantite-math';
+import { buildEnduitFacadePayload } from '@/lib/embed-payloads';
 
 const CONFIG: QuantiteConfig = {
   toolSlug: 'calculateur-enduit-facade',
@@ -34,6 +35,12 @@ const CONFIG: QuantiteConfig = {
     },
   ],
   stickyLabel: 'Sacs',
+  buildEmbedPayload: (v) =>
+    buildEnduitFacadePayload({
+      surface: v.surface,
+      consoKgParM2: v.consoManuelle > 0 ? v.consoManuelle : v.typeEnduit,
+      perte: v.perte,
+    }),
   compute: (v) => {
     const conso = v.consoManuelle > 0 ? v.consoManuelle : v.typeEnduit;
     const kg = quantiteParSurface(v.surface, conso, v.perte);

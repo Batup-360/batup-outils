@@ -1,5 +1,6 @@
 import { QuantiteCalculator, fmtInt, fmtNum, type QuantiteConfig } from './QuantiteCalculator';
 import { unitesParSurface } from '@/lib/metre-quantite-math';
+import { buildBriquesPayload } from '@/lib/embed-payloads';
 
 const CONFIG: QuantiteConfig = {
   toolSlug: 'calculateur-briques',
@@ -34,6 +35,8 @@ const CONFIG: QuantiteConfig = {
     },
   ],
   stickyLabel: 'Briques',
+  buildEmbedPayload: (v) =>
+    buildBriquesPayload({ longueur: v.longueur, hauteur: v.hauteur, unitesParM2: v.briquesParM2, perte: v.perte }),
   compute: (v) => {
     const surface = v.longueur * v.hauteur;
     const n = unitesParSurface(surface, v.briquesParM2, v.perte);

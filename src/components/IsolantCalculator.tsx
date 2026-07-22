@@ -1,5 +1,6 @@
 import { QuantiteCalculator, fmtInt, fmtNum, type QuantiteConfig } from './QuantiteCalculator';
 import { paquetsNecessaires, surfaceAvecPerte } from '@/lib/metre-quantite-math';
+import { buildIsolantPayload } from '@/lib/embed-payloads';
 
 const CONFIG: QuantiteConfig = {
   toolSlug: 'calculateur-isolant',
@@ -37,6 +38,14 @@ const CONFIG: QuantiteConfig = {
     },
   ],
   stickyLabel: 'Rouleaux',
+  buildEmbedPayload: (v) =>
+    buildIsolantPayload({
+      surface: v.surface,
+      surfaceRouleau: v.surfaceRouleau,
+      lambda: v.lambda,
+      paroiR: v.paroi,
+      perte: v.perte,
+    }),
   compute: (v) => {
     const n = paquetsNecessaires(v.surface, v.surfaceRouleau, v.perte);
     const surfaceAchat = surfaceAvecPerte(v.surface, v.perte);

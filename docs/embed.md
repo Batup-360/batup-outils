@@ -80,12 +80,107 @@ Usage : `<CalculatorModal slug="calculateur-beton" onClose={...} />`.
 ## Notes
 
 - Les pages `/embed/*` sont en `noindex` et hors sitemap (pas de SEO).
-- En mode embed, la capture email et la barre de résultat mobile fixe sont
-  désactivées (l'utilisateur est déjà authentifié dans l'app).
-- Le bouton « Essayer Batup gratuitement » reste présent dans le résultat : si
-  vous le voulez masqué dans l'app, on peut l'exclure en mode embed (ajout d'un
-  drapeau à faire côté outils.batup.fr).
-- **Récupérer le résultat dans l'app** (renvoyer le nombre calculé au parent par
-  `postMessage`) n'est pas encore branché — c'est un ajout simple si besoin :
-  chaque calculateur émettrait un message `batup-embed-result` avec sa valeur.
+- En mode embed, la capture email, la barre de résultat mobile fixe et le
+  bouton « Essayer Batup gratuitement » sont désactivés (l'utilisateur est
+  déjà authentifié dans l'app).
+- Sur les 20 outils métré, le CTA est remplacé par « Utiliser dans le devis »
+  qui renvoie les quantités calculées au parent — voir ci-dessous.
+
+## Canal résultat — `batup-embed-result` (v1, contrat FIGÉ)
+
+Les calculateurs **métré** peuvent renvoyer leurs quantités à l'app hôte pour
+les transformer en lignes de devis. Quand le résultat contient au moins une
+ligne valide, l'embed affiche un bouton « Utiliser dans le devis » ; le clic
+émet vers `window.parent` :
+
+```js
+{
+  type: 'batup-embed-result',
+  slug: 'calculateur-peinture',   // slug de l'outil embarqué
+  version: 1,                     // version du contrat — à vérifier côté hôte
+  payload: {
+    lines: [
+      {
+        lineKey: 'peinture.litres',       // identifiant STABLE — à mapper sur un article
+        label: 'Peinture (2 couches)',    // libellé d'affichage français
+        qty: 8.4,                          // quantité, toujours finie et > 0
+        unit: 'L',                         // unité normalisée (voir ci-dessous)
+        hint: 'rendement 10 m²/L, perte +5 %', // optionnel : détail dosage/rendement/perte
+      },
+    ],
+    meta: { surface: 40, couches: 2, rendement: 10, perte: 5 }, // optionnel :
+    // entrées du calculateur pour traçabilité (string | number | boolean uniquement)
+  }
+}
 ```
+
+Sémantique des champs :
+
+| Champ | Type | Sémantique |
+| --- | --- | --- |
+| `slug` | `string` | Slug de l'outil (celui de l'URL `/embed/<slug>`). |
+| `version` | `number` | Version du contrat. Vaut `1`. Toute évolution incompatible incrémentera ce numéro — l'hôte doit ignorer les versions inconnues. |
+| `payload.lines[].lineKey` | `string` | Identifiant stable `<domaine>.<quantite>` (snake_case après le point, regex `^[a-z_]+\.[a-z0-9_]+$`). C'est la clé de mapping vers la bibliothèque d'articles de l'hôte — elle ne changera jamais en v1. |
+| `payload.lines[].label` | `string` | Libellé français prêt à afficher (peut servir de désignation par défaut si le `lineKey` n'est pas mappé). |
+| `payload.lines[].qty` | `number` | Quantité, garantie finie et strictement positive (les lignes nulles sont filtrées côté embed). |
+| `payload.lines[].unit` | `string` | Une valeur de `'m2' \| 'm3' \| 'ml' \| 'u' \| 'kg' \| 'L' \| 'sac' \| 'paquet' \| 'h'`. |
+| `payload.lines[].hint` | `string?` | Détail de calcul (dosage, rendement, perte) — informatif uniquement. |
+| `payload.meta` | `object?` | Entrées du calculateur (traçabilité). Valeurs `string \| number \| boolean`. |
+
+Code source du contrat : `src/lib/embed-result.ts` (types + émission) et
+`src/lib/embed-payloads.ts` (un builder pur par outil).
+
+### lineKeys par outil (v1)
+
+Seuls les 20 outils métré émettent des résultats. Les outils pricing / paie /
+fiscal / assurances n'ont pas de lignes de devis naturelles et n'affichent
+rien en embed (v1).
+
+| Slug | lineKeys (unité) |
+| --- | --- |
+| `calculateur-beton` | `beton.volume` (m3), `beton.ciment_sacs35` (sac), `beton.sable` (kg), `beton.gravier` (kg) |
+| `calculateur-mortier` | `mortier.volume` (m3), `mortier.ciment_sacs35` (sac), `mortier.sable` (kg) |
+| `calculateur-chape` | `chape.volume` (m3), `chape.ciment_sacs35` (sac), `chape.sable` (kg) |
+| `calculateur-carrelage` | `carrelage.surface` (m2), `carrelage.carreaux` (u), `carrelage.colle` (kg), `carrelage.joint` (kg) |
+| `calculateur-parquet` | `parquet.surface` (m2), `parquet.paquets` (paquet), `parquet.sous_couche` (m2) |
+| `calculateur-placo` | `placo.surface` (m2), `placo.plaques` (u), `placo.vis` (u), `placo.bande_joint` (ml), `placo.enduit_joint` (kg) |
+| `calculateur-peinture` | `peinture.surface` (m2), `peinture.litres` (L), `peinture.pots_2_5l` (u) |
+| `calculateur-enduit-facade` | `enduit_facade.surface` (m2), `enduit_facade.enduit` (kg), `enduit_facade.sacs25` (sac) |
+| `calculateur-papier-peint` | `papier_peint.surface` (m2), `papier_peint.rouleaux` (u) |
+| `calculateur-parpaings` | `parpaings.surface` (m2), `parpaings.blocs` (u), `parpaings.mortier` (kg) |
+| `calculateur-briques` | `briques.surface` (m2), `briques.briques` (u) |
+| `calculateur-isolant` | `isolant.surface` (m2), `isolant.rouleaux` (u) |
+| `calculateur-terrasse` | `terrasse.surface` (m2), `terrasse.lames` (u), `terrasse.lambourdes` (ml), `terrasse.vis` (u), `terrasse.plots` (u) |
+| `calculateur-tuiles` | `tuiles.surface` (m2), `tuiles.tuiles` (u) |
+| `calculateur-escalier` | `escalier.marches` (u) |
+| `calculateur-pente-toiture` | `pente_toiture.rampant` (ml) — émis uniquement en mode « dimensions » (le rampant n'est pas calculable depuis une pente seule) |
+| `calculateur-surface` | `surface.totale` (m2) |
+| `calculateur-volume` | `volume.total` (m3) |
+| `calculateur-gravier-sable` | `gravier_sable.volume` (m3), `gravier_sable.tonnage` (kg), `gravier_sable.big_bags` (u) |
+| `calculateur-consommation-materiaux` | `consommation.quantite` (kg, L ou sac selon l'unité choisie), `consommation.surface` (m2) |
+
+### Côté hôte (app.batup.fr)
+
+```ts
+window.addEventListener('message', (e) => {
+  if (e.origin !== 'https://outils.batup.fr') return; // 1. TOUJOURS vérifier l'origine
+  const data = e.data;
+  if (data?.type !== 'batup-embed-result') return;
+  if (data.version !== 1) return;                     // 2. ignorer les versions inconnues
+  // 3. Re-valider le schéma (zod) : ne jamais faire confiance au payload brut.
+  // 4. Clamp des quantités (ex. 0 < qty <= 1 000 000) avant création des lignes.
+  // 5. Mapper chaque lineKey sur un article de la bibliothèque ; à défaut,
+  //    créer une ligne libre avec label + qty + unit.
+});
+```
+
+Recommandations hôte :
+
+- **Vérifier `event.origin === 'https://outils.batup.fr'`** — c'est la seule
+  authentification du canal (l'embed poste en `targetOrigin: '*'`).
+- **Valider le schéma** (zod) et **clamper `qty`** : le message traverse une
+  frontière de confiance, traiter comme une entrée utilisateur.
+- Ignorer silencieusement `version !== 1` et les `lineKey` inconnus (forward
+  compatibility : de nouvelles lignes pourront s'ajouter sans bump de version).
+- `hint` et `meta` sont informatifs : les stocker en traçabilité, ne pas les
+  parser.

@@ -1,5 +1,6 @@
 import { QuantiteCalculator, fmtInt, fmtNum, type QuantiteConfig } from './QuantiteCalculator';
 import { unitesParSurface, unitesParM2DepuisCm, surfaceAvecPerte } from '@/lib/metre-quantite-math';
+import { buildCarrelagePayload } from '@/lib/embed-payloads';
 
 const CONFIG: QuantiteConfig = {
   toolSlug: 'calculateur-carrelage',
@@ -26,6 +27,8 @@ const CONFIG: QuantiteConfig = {
     },
   ],
   stickyLabel: 'Carreaux',
+  buildEmbedPayload: (v) =>
+    buildCarrelagePayload({ surface: v.surface, carreauL: v.carreauL, carreaul: v.carreaul, perte: v.perte }),
   compute: (v) => {
     const parM2 = unitesParM2DepuisCm(v.carreauL, v.carreaul);
     const n = unitesParSurface(v.surface, parM2, v.perte);

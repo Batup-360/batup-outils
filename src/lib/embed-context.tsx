@@ -1,16 +1,22 @@
 import { createContext, useContext, type ReactNode } from 'react';
 
 /**
- * True when a calculator is rendered inside the /embed/<slug> shell (iframe
- * used by the main Batup app in a modal). In embed mode we drop the email
- * opt-in and the mobile sticky bar so the tool blends into the host app.
+ * Contexte d'embed : porte le slug de l'outil quand un calculateur est rendu
+ * dans le shell /embed/<slug> (iframe utilisée par l'app Batup dans une
+ * modale), `null` sinon. En mode embed on masque l'opt-in email et la barre
+ * mobile fixe pour que l'outil se fonde dans l'app hôte.
  */
-const EmbedContext = createContext(false);
+const EmbedContext = createContext<string | null>(null);
 
-export function EmbedProvider({ children }: { children: ReactNode }) {
-  return <EmbedContext.Provider value={true}>{children}</EmbedContext.Provider>;
+export function EmbedProvider({ slug, children }: { slug: string; children: ReactNode }) {
+  return <EmbedContext.Provider value={slug}>{children}</EmbedContext.Provider>;
+}
+
+/** Slug de l'outil embarqué, ou `null` hors mode embed. */
+export function useEmbedSlug(): string | null {
+  return useContext(EmbedContext);
 }
 
 export function useEmbedded(): boolean {
-  return useContext(EmbedContext);
+  return useEmbedSlug() !== null;
 }

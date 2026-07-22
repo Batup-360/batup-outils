@@ -1,5 +1,6 @@
 import { QuantiteCalculator, fmtInt, type QuantiteConfig } from './QuantiteCalculator';
 import { paquetsNecessaires } from '@/lib/metre-quantite-math';
+import { buildPlacoPayload } from '@/lib/embed-payloads';
 
 const CONFIG: QuantiteConfig = {
   toolSlug: 'calculateur-placo',
@@ -30,6 +31,8 @@ const CONFIG: QuantiteConfig = {
     },
   ],
   stickyLabel: 'Plaques',
+  buildEmbedPayload: (v) =>
+    buildPlacoPayload({ surface: v.surface, surfacePlaque: v.surfacePlaque, perte: v.perte }),
   compute: (v) => {
     const n = paquetsNecessaires(v.surface, v.surfacePlaque, v.perte);
     // Finitions : bande à joint ~1,4 m/m², enduit à joint ~1,2 kg/m².

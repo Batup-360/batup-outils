@@ -1,5 +1,6 @@
 import { QuantiteCalculator, fmtInt, fmtNum, type QuantiteConfig } from './QuantiteCalculator';
 import { paquetsNecessaires, surfaceAvecPerte } from '@/lib/metre-quantite-math';
+import { buildTerrassePayload } from '@/lib/embed-payloads';
 
 const CONFIG: QuantiteConfig = {
   toolSlug: 'calculateur-terrasse',
@@ -25,6 +26,13 @@ const CONFIG: QuantiteConfig = {
     },
   ],
   stickyLabel: 'Lames',
+  buildEmbedPayload: (v) =>
+    buildTerrassePayload({
+      surface: v.surface,
+      lameLongueurM: v.lameLongueur,
+      lameLargeurCm: v.lameLargeur,
+      perte: v.perte,
+    }),
   compute: (v) => {
     const aireLame = v.lameLongueur * (v.lameLargeur / 100);
     const n = paquetsNecessaires(v.surface, aireLame, v.perte);

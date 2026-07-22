@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { volumeMortier, dosageMortier } from '@/lib/mortier-math';
+import { buildMortierPayload } from '@/lib/embed-payloads';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
@@ -55,6 +56,11 @@ export function MortierCalculator() {
     if (results.volumeM3 > 0) params.set('volume_mortier', results.volumeM3.toFixed(2));
     return `${APP_BASE}/signup?${params.toString()}`;
   }, [results.volumeM3]);
+
+  const embedResult = useMemo(
+    () => buildMortierPayload(results, inputs.dosage, inputs.margePct),
+    [results, inputs.dosage, inputs.margePct],
+  );
 
   return (
     <div className="grid gap-6 pb-20 lg:grid-cols-5 lg:pb-0">
@@ -120,7 +126,7 @@ export function MortierCalculator() {
                   <Row label="Sable" value={fmtKg(results.sableKg)} />
                   <Row label="Eau de gâchage" value={fmtL(results.eauL)} />
                 </div>
-                <ToolCta href={ctaSignupHref} />
+                <ToolCta href={ctaSignupHref} embedResult={embedResult} />
               </CardContent>
             </Card>
           </GatedReveal>

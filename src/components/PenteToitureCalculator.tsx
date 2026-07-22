@@ -6,6 +6,7 @@ import {
   pourcentVersDegres,
   degresVersPourcent,
 } from '@/lib/pente-math';
+import { buildPenteToiturePayload } from '@/lib/embed-payloads';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
@@ -73,6 +74,16 @@ export function PenteToitureCalculator() {
     if (results.pourcent > 0) params.set('pente', results.pourcent.toFixed(1));
     return `${APP_BASE}/signup?${params.toString()}`;
   }, [results.pourcent]);
+
+  const embedResult = useMemo(
+    () =>
+      buildPenteToiturePayload({
+        pourcent: results.pourcent,
+        degres: results.degres,
+        rampantM: results.hasRampant ? results.rampant : 0,
+      }),
+    [results],
+  );
 
   const isDim = inputs.mode === 'dimensions';
 
@@ -177,7 +188,7 @@ export function PenteToitureCalculator() {
                   <Row label="Équivalent" value={results.pourcent > 0 ? `${N1.format(results.pourcent)} cm/m` : '—'} />
                   {results.hasRampant && <Row label="Longueur du rampant" value={fmtM(results.rampant)} />}
                 </div>
-                <ToolCta href={ctaSignupHref} />
+                <ToolCta href={ctaSignupHref} embedResult={embedResult} />
               </CardContent>
             </Card>
           </GatedReveal>

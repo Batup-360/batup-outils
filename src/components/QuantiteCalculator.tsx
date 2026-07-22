@@ -5,6 +5,7 @@ import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
+import type { EmbedResultPayload } from '@/lib/embed-result';
 
 /**
  * Moteur partagé des calculateurs de quantités « métré » (parpaings, briques,
@@ -44,6 +45,8 @@ export interface QuantiteConfig {
   fields: QuantiteField[];
   selects?: QuantiteSelect[];
   compute: (v: Record<string, number>) => QuantiteResult;
+  /** Payload « Utiliser dans le devis » en mode embed (voir src/lib/embed-payloads.ts). */
+  buildEmbedPayload?: (v: Record<string, number>) => EmbedResultPayload;
   stickyLabel: string;
 }
 
@@ -69,6 +72,7 @@ export function QuantiteCalculator({ config }: { config: QuantiteConfig }) {
   };
 
   const result = useMemo(() => config.compute(values), [config, values]);
+  const embedResult = useMemo(() => config.buildEmbedPayload?.(values), [config, values]);
 
   const ctaSignupHref = useMemo(() => {
     const params = new URLSearchParams({ source: config.source });
@@ -147,7 +151,7 @@ export function QuantiteCalculator({ config }: { config: QuantiteConfig }) {
                     ))}
                   </div>
                 )}
-                <ToolCta href={ctaSignupHref} />
+                <ToolCta href={ctaSignupHref} embedResult={embedResult} />
               </CardContent>
             </Card>
           </GatedReveal>

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { CheckCircle2, AlertTriangle, HelpCircle } from 'lucide-react';
 import { calculeEscalier, BLONDEL_MIN, BLONDEL_MAX } from '@/lib/escalier-math';
+import { buildEscalierPayload } from '@/lib/embed-payloads';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
@@ -43,6 +44,8 @@ export function EscalierCalculator() {
     if (r.nombreMarches > 0) params.set('marches', String(r.nombreMarches));
     return `${APP_BASE}/signup?${params.toString()}`;
   }, [r.nombreMarches]);
+
+  const embedResult = useMemo(() => buildEscalierPayload(r), [r]);
 
   return (
     <div className="grid gap-6 pb-20 lg:grid-cols-5 lg:pb-0">
@@ -140,7 +143,7 @@ export function EscalierCalculator() {
                   />
                 </div>
 
-                <ToolCta href={ctaSignupHref} className="space-y-2 pt-1" />
+                <ToolCta href={ctaSignupHref} className="space-y-2 pt-1" embedResult={embedResult} />
               </CardContent>
             </Card>
           </GatedReveal>

@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { volumeMortier, dosageMortier } from '@/lib/mortier-math';
+import { buildChapePayload } from '@/lib/embed-payloads';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
@@ -56,6 +57,8 @@ export function ChapeCalculator() {
     return `${APP_BASE}/signup?${params.toString()}`;
   }, [results.volumeM3]);
 
+  const embedResult = useMemo(() => buildChapePayload(results, inputs.margePct), [results, inputs.margePct]);
+
   return (
     <div className="grid gap-6 pb-20 lg:grid-cols-5 lg:pb-0">
       <div className="space-y-6 lg:col-span-3">
@@ -109,7 +112,7 @@ export function ChapeCalculator() {
                   <Row label="Sable" value={fmtKg(results.sableKg)} />
                   <Row label="Eau de gâchage" value={fmtL(results.eauL)} />
                 </div>
-                <ToolCta href={ctaSignupHref} />
+                <ToolCta href={ctaSignupHref} embedResult={embedResult} />
               </CardContent>
             </Card>
           </GatedReveal>
