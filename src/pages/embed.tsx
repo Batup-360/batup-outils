@@ -106,7 +106,7 @@ export default function Embed() {
   useNoIndex();
 
   return (
-    <EmbedProvider>
+    <EmbedProvider slug={slug}>
       <div className="bg-transparent p-4">
         {Calculator ? (
           <Suspense

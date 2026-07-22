@@ -1,5 +1,6 @@
 import { QuantiteCalculator, fmtInt, fmtNum, type QuantiteConfig } from './QuantiteCalculator';
 import { surfaceAvecPerte } from '@/lib/metre-quantite-math';
+import { buildGravierSablePayload } from '@/lib/embed-payloads';
 
 const CONFIG: QuantiteConfig = {
   toolSlug: 'calculateur-gravier-sable',
@@ -35,6 +36,13 @@ const CONFIG: QuantiteConfig = {
     },
   ],
   stickyLabel: 'Tonnage',
+  buildEmbedPayload: (v) =>
+    buildGravierSablePayload({
+      surface: v.surface,
+      epaisseurCm: v.epaisseur,
+      densiteTParM3: v.densiteManuelle > 0 ? v.densiteManuelle : v.materiau,
+      perte: v.perte,
+    }),
   compute: (v) => {
     const densite = v.densiteManuelle > 0 ? v.densiteManuelle : v.materiau;
     const volume = v.surface > 0 && v.epaisseur > 0 ? v.surface * (v.epaisseur / 100) : 0;

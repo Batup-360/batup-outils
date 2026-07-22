@@ -1,5 +1,6 @@
 import { QuantiteCalculator, fmtInt, fmtNum, type QuantiteConfig } from './QuantiteCalculator';
 import { unitesParSurface } from '@/lib/metre-quantite-math';
+import { buildParpaingsPayload } from '@/lib/embed-payloads';
 
 const PERTE = {
   key: 'perte',
@@ -35,6 +36,8 @@ const CONFIG: QuantiteConfig = {
     PERTE,
   ],
   stickyLabel: 'Parpaings',
+  buildEmbedPayload: (v) =>
+    buildParpaingsPayload({ longueur: v.longueur, hauteur: v.hauteur, unitesParM2: v.blocsParM2, perte: v.perte }),
   compute: (v) => {
     const surface = v.longueur * v.hauteur;
     const n = unitesParSurface(surface, v.blocsParM2, v.perte);

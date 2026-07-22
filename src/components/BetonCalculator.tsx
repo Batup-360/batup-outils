@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { volumeBeton, dosageBeton } from '@/lib/beton-math';
+import { buildBetonPayload } from '@/lib/embed-payloads';
 import { volumeCylindre } from '@/lib/volume-math';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
@@ -78,6 +79,11 @@ export function BetonCalculator() {
     if (results.volumeM3 > 0) params.set('volume_beton', results.volumeM3.toFixed(2));
     return `${APP_BASE}/signup?${params.toString()}`;
   }, [results.volumeM3]);
+
+  const embedResult = useMemo(
+    () => buildBetonPayload(results, inputs.dosage, inputs.margePct),
+    [results, inputs.dosage, inputs.margePct],
+  );
 
   return (
     <div className="grid gap-6 pb-20 lg:grid-cols-5 lg:pb-0">
@@ -199,7 +205,7 @@ export function BetonCalculator() {
                     est souvent plus économique et plus régulière que le béton fait à la bétonnière.
                   </div>
                 )}
-                <ToolCta href={ctaSignupHref} />
+                <ToolCta href={ctaSignupHref} embedResult={embedResult} />
               </CardContent>
             </Card>
           </GatedReveal>

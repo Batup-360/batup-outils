@@ -9,6 +9,7 @@ import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
+import { useEmbedPrefill } from '@/lib/embed-context';
 
 const TOOL_SLUG = 'calculateur-prix-chantier-btp';
 const TOOL_LABEL = 'Calculateur prix chantier BTP';
@@ -46,7 +47,16 @@ function fmtEuro(n: number, decimals = 0): string {
 
 export function QuotePriceCalculator() {
   const search = useSearch();
-  const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
+  const prefill = useEmbedPrefill();
+  const [inputs, setInputs] = useState<Inputs>(() => {
+    const taux = prefill.num('taux', { min: 1, max: 500 });
+    const marge = prefill.num('marge', { min: 0, max: 99 });
+    return {
+      ...DEFAULTS,
+      ...(taux !== undefined && { tauxHoraire: taux }),
+      ...(marge !== undefined && { margeCible: marge }),
+    };
+  });
   const { unlocked } = useEmailGate();
 
   useEffect(() => {

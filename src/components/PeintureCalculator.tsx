@@ -1,5 +1,6 @@
 import { QuantiteCalculator, fmtInt, fmtNum, type QuantiteConfig } from './QuantiteCalculator';
 import { peintureLitres, surfaceAvecPerte } from '@/lib/metre-quantite-math';
+import { buildPeinturePayload } from '@/lib/embed-payloads';
 
 const CONFIG: QuantiteConfig = {
   toolSlug: 'calculateur-peinture',
@@ -24,6 +25,8 @@ const CONFIG: QuantiteConfig = {
     },
   ],
   stickyLabel: 'Peinture',
+  buildEmbedPayload: (v) =>
+    buildPeinturePayload({ surface: v.surface, couches: v.couches, rendement: v.rendement, perte: v.perte }),
   compute: (v) => {
     const litres = peintureLitres(v.surface, v.couches, v.rendement, v.perte);
     const surfaceTotale = surfaceAvecPerte(v.surface, v.perte) * (v.couches > 0 ? v.couches : 1);

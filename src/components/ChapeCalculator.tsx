@@ -1,11 +1,13 @@
 import { useMemo, useState } from 'react';
 import { volumeMortier, dosageMortier } from '@/lib/mortier-math';
+import { buildChapePayload } from '@/lib/embed-payloads';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
 import { useEmailGate } from '@/lib/email-gate-context';
+import { useEmbedPrefill } from '@/lib/embed-context';
 
 const TOOL_SLUG = 'calculateur-chape';
 const TOOL_LABEL = 'Calculateur de chape';
@@ -36,7 +38,11 @@ function fmtL(n: number): string {
 }
 
 export function ChapeCalculator() {
-  const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
+  const prefill = useEmbedPrefill();
+  const [inputs, setInputs] = useState<Inputs>(() => {
+    const surface = prefill.num('surface', { min: 0.1, max: 100000 });
+    return surface !== undefined ? { ...DEFAULTS, surface } : DEFAULTS;
+  });
   const { unlocked } = useEmailGate();
 
   const updateNumber = (key: keyof Inputs, value: string) => {
@@ -55,6 +61,8 @@ export function ChapeCalculator() {
     if (results.volumeM3 > 0) params.set('volume_chape', results.volumeM3.toFixed(2));
     return `${APP_BASE}/signup?${params.toString()}`;
   }, [results.volumeM3]);
+
+  const embedResult = useMemo(() => buildChapePayload(results, inputs.margePct), [results, inputs.margePct]);
 
   return (
     <div className="grid gap-6 pb-20 lg:grid-cols-5 lg:pb-0">
@@ -109,7 +117,7 @@ export function ChapeCalculator() {
                   <Row label="Sable" value={fmtKg(results.sableKg)} />
                   <Row label="Eau de gâchage" value={fmtL(results.eauL)} />
                 </div>
-                <ToolCta href={ctaSignupHref} />
+                <ToolCta href={ctaSignupHref} embedResult={embedResult} />
               </CardContent>
             </Card>
           </GatedReveal>

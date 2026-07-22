@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 import { aireForme, type FormeSurface } from '@/lib/surface-math';
+import { buildSurfacePayload } from '@/lib/embed-payloads';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
@@ -69,6 +70,8 @@ export function SurfaceCalculator() {
     if (total > 0) params.set('surface', total.toFixed(2));
     return `${APP_BASE}/signup?${params.toString()}`;
   }, [total]);
+
+  const embedResult = useMemo(() => buildSurfacePayload(total, zones.length), [total, zones.length]);
 
   return (
     <div className="grid gap-6 pb-20 lg:grid-cols-5 lg:pb-0">
@@ -161,7 +164,7 @@ export function SurfaceCalculator() {
                     zones de moins de 1,80 m.
                   </p>
                 </div>
-                <ToolCta href={ctaSignupHref} className="space-y-2 pt-1" />
+                <ToolCta href={ctaSignupHref} className="space-y-2 pt-1" embedResult={embedResult} />
               </CardContent>
             </Card>
           </GatedReveal>

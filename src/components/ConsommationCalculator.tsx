@@ -1,5 +1,6 @@
 import { QuantiteCalculator, fmtNum, type QuantiteConfig } from './QuantiteCalculator';
 import { quantiteParSurface, surfaceAvecPerte } from '@/lib/metre-quantite-math';
+import { buildConsommationPayload } from '@/lib/embed-payloads';
 
 const UNITES = ['kg', 'L', 'sacs'];
 
@@ -35,6 +36,8 @@ const CONFIG: QuantiteConfig = {
     },
   ],
   stickyLabel: 'Quantité',
+  buildEmbedPayload: (v) =>
+    buildConsommationPayload({ surface: v.surface, tauxParM2: v.taux, uniteIndex: v.unite, perte: v.perte }),
   compute: (v) => {
     const unite = UNITES[v.unite] ?? 'kg';
     const total = quantiteParSurface(v.surface, v.taux, v.perte);

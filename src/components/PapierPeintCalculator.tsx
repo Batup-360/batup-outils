@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { calculePapierPeint } from '@/lib/papier-peint-math';
+import { buildPapierPeintPayload } from '@/lib/embed-payloads';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
@@ -58,6 +59,8 @@ export function PapierPeintCalculator() {
     return `${APP_BASE}/signup?${params.toString()}`;
   }, [r.rouleaux]);
 
+  const embedResult = useMemo(() => buildPapierPeintPayload(r), [r]);
+
   return (
     <div className="grid gap-6 pb-20 lg:grid-cols-5 lg:pb-0">
       <div className="space-y-6 lg:col-span-3">
@@ -113,7 +116,7 @@ export function PapierPeintCalculator() {
                   <Row label="Lés nécessaires" value={r.lesNecessaires > 0 ? `${N0.format(r.lesNecessaires)} lés` : '—'} />
                   <Row label="Lés par rouleau" value={r.lesParRouleau > 0 ? `${N0.format(r.lesParRouleau)} lés` : '—'} />
                 </div>
-                <ToolCta href={ctaSignupHref} />
+                <ToolCta href={ctaSignupHref} embedResult={embedResult} />
               </CardContent>
             </Card>
           </GatedReveal>

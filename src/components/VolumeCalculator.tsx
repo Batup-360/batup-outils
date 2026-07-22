@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { volumeForme, LITRES_PAR_M3, type FormeVolume } from '@/lib/volume-math';
+import { buildVolumePayload } from '@/lib/embed-payloads';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
@@ -48,6 +49,8 @@ export function VolumeCalculator() {
     if (volume > 0) params.set('volume', volume.toFixed(2));
     return `${APP_BASE}/signup?${params.toString()}`;
   }, [volume]);
+
+  const embedResult = useMemo(() => buildVolumePayload(volume), [volume]);
 
   const isPave = inputs.forme === 'pave';
 
@@ -123,7 +126,7 @@ export function VolumeCalculator() {
                   <p className="mt-1 text-4xl font-bold text-brand-500 sm:text-5xl">{fmtM3(volume)}</p>
                   <p className="mt-1 text-xs text-gray-500">soit {fmtL(volume * LITRES_PAR_M3)}</p>
                 </div>
-                <ToolCta href={ctaSignupHref} className="space-y-2 pt-1" />
+                <ToolCta href={ctaSignupHref} className="space-y-2 pt-1" embedResult={embedResult} />
               </CardContent>
             </Card>
           </GatedReveal>
