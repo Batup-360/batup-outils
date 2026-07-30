@@ -10,6 +10,21 @@
       content="Outils gratuits pour artisans et PME du BTP : calculez votre taux horaire à facturer et le prix juste d'un chantier en quelques minutes. Sans inscription."
     />
     <meta name="theme-color" content="#151515" />
+    <!-- Google Analytics 4 (même étiquette que batup.fr). Non chargé sur les
+         pages /embed/* (rendues en iframe dans l'app Batup) pour ne pas
+         gonfler les statistiques du site public. -->
+    <script>
+      if (!location.pathname.startsWith('/embed/')) {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-8NVKZYY1SE';
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-8NVKZYY1SE');
+      }
+    </script>
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:site_name" content="Batup Outils" />
