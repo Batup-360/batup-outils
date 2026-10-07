@@ -63,6 +63,11 @@ const SECTIONS: FooterSection[] = [
         label: 'Rentabilité chantier',
         external: true,
       },
+      {
+        href: `${MARKETING_BASE}/banque-tresorerie-btp`,
+        label: 'Banque et trésorerie',
+        external: true,
+      },
     ],
   },
   {
