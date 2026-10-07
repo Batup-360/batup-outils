@@ -73,6 +73,11 @@ const SECTIONS: FooterSection[] = [
         label: 'Sous-traitance',
         external: true,
       },
+      {
+        href: `${MARKETING_BASE}/reception-chantier-pv`,
+        label: 'Réception et PV',
+        external: true,
+      },
     ],
   },
   {
