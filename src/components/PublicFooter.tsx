@@ -68,6 +68,11 @@ const SECTIONS: FooterSection[] = [
         label: 'Banque et trésorerie',
         external: true,
       },
+      {
+        href: `${MARKETING_BASE}/sous-traitance-btp`,
+        label: 'Sous-traitance',
+        external: true,
+      },
     ],
   },
   {
