@@ -52,7 +52,7 @@ const MAIN_RESSOURCES: ToolLink[] = [
   },
   {
     label: 'Facturation électronique 2026',
-    desc: 'Réforme obligatoire au 1er septembre 2026. BatUp est Plateforme agréée.',
+    desc: 'Réforme en cours : réception obligatoire depuis septembre 2026, émission en 2027 pour les PME.',
     href: `${MARKETING_BASE}/facturation-electronique-btp`,
     icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
   },
@@ -578,7 +578,7 @@ export function PublicNav({
                     Facturation électronique 2026
                   </p>
                   <p className="mt-0.5 text-[11px] text-gray-500">
-                    Réforme obligatoire au 1er septembre 2026. BatUp est Plateforme agréée.
+                    Réforme en cours : réception obligatoire depuis septembre 2026, émission en 2027 pour les PME.
                   </p>
                 </div>
               </a>
@@ -895,7 +895,7 @@ export function PublicNav({
                         Facturation électronique 2026
                       </p>
                       <p className="text-[11px] leading-snug text-gray-500">
-                        Réforme obligatoire au 1er septembre 2026. BatUp est Plateforme agréée.
+                        Réforme en cours : réception obligatoire depuis septembre 2026, émission en 2027 pour les PME.
                       </p>
                     </div>
                   </a>

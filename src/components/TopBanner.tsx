@@ -24,9 +24,9 @@ const MESSAGES: Message[] = [
     tone: 'neutral',
   },
   {
-    text: 'Facture électronique obligatoire au',
+    text: 'Facture électronique : réception obligatoire depuis le',
     highlight: '1er septembre 2026',
-    cta: { label: 'Anticiper avec BatUp', href: `${MARKETING_BASE}/facturation-electronique-btp` },
+    cta: { label: 'Être prêt avec BatUp', href: `${MARKETING_BASE}/facturation-electronique-btp` },
     tone: 'violet',
   },
 ];
