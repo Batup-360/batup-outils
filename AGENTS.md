@@ -10,7 +10,7 @@ Standalone lead-magnet calculators for `outils.batup.fr`. Vite + React 18 SPA (c
 - **Tests**: `npm test` (vitest). Pure math lives in `src/lib/*-math.ts` with colocated `*.test.ts`.
 - **Prod deploy**: push to `main`. GA4 (`G-8NVKZYY1SE`) is baked in `src/lib/analytics.ts`, fires only on `*.batup.fr`, skipped in `/embed` iframes.
 
-## Tool catalog (43 tools + 28 fiches métier + 9 grilles régionales)
+## Tool catalog (42 tools + 28 fiches métier + 9 grilles régionales)
 
 What already exists — check here before building to avoid duplicates. Slug = URL path (minus leading `/`) and the identifier used everywhere (see invariant). `Q` = built on the shared `QuantiteCalculator` engine; `B` = bespoke component.
 
@@ -184,9 +184,9 @@ Add the slug to `TOOL_ASTUCE` with the right family (`metre | pricing | paie | f
 npm run build   # tsc + vite + prerender; page count must grow by 2 (SEO + embed)
 npm test        # all green
 ```
-Quick slug-coverage sanity check (should print the slug in each file):
+Quick slug-coverage sanity check (should print the slug in each file; the sitemap is generated, so check `dist/sitemap.xml` after `npm run build`):
 ```bash
-S=calculateur-foo; grep -l "$S" src/App.tsx src/pages/embed.tsx public/sitemap.xml src/seo-manifest.ts functions/api/subscribe.ts
+S=calculateur-foo; grep -l "$S" src/App.tsx src/pages/embed.tsx src/pages/home.tsx src/seo-manifest.ts functions/api/subscribe.ts dist/sitemap.xml
 ```
 
 ## Gotchas
