@@ -260,6 +260,15 @@ export function PublicNav({
           </a>
 
           <div className="hidden items-center gap-8 lg:flex">
+            {/* Nouveauté : page connecteur IA sur batup.fr */}
+            <a
+              href={`${MARKETING_BASE}/connecteur-ia-chatgpt-claude`}
+              className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-[rgba(169,174,247,0.45)] px-3 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+              style={{ background: 'linear-gradient(135deg, rgba(139,111,232,0.35), rgba(83,104,238,0.25))' }}
+            >
+              <span className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#A9AEF7] opacity-75" /><span className="relative inline-flex h-2 w-2 rounded-full bg-[#8B91F2]" /></span>
+              Nouveauté
+            </a>
             {/* Fonctionnalités → batup.fr */}
             <a
               href={`${MARKETING_BASE}/`}
@@ -756,6 +765,15 @@ export function PublicNav({
             </button>
           </div>
           <div className="flex-1 space-y-1 overflow-y-auto bg-white px-4 py-4 pb-24">
+            <a
+              href={`${MARKETING_BASE}/connecteur-ia-chatgpt-claude`}
+              className="mb-3 flex items-center gap-2 rounded-xl border border-[rgba(83,104,238,0.25)] px-3 py-3 text-base font-semibold text-gray-900"
+              style={{ background: 'linear-gradient(135deg, #F1EEFD, #E8EAFD)' }}
+              onClick={() => setMobileOpen(false)}
+            >
+              <span className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#A9AEF7] opacity-75" /><span className="relative inline-flex h-2 w-2 rounded-full bg-[#5368EE]" /></span>
+              Nouveauté : ChatGPT, Claude, Gemini
+            </a>
             <a
               href={`${MARKETING_BASE}/`}
               className="block rounded-lg px-2 py-3 text-base font-semibold text-gray-900 hover:bg-gray-50"
