@@ -131,3 +131,7 @@ Push sur `main` → Cloudflare Pages détecte le push, lance `npm run build`, pu
 ### Contrat de duplication de code
 
 Les formules de `src/lib/pricing.ts` sont dupliquées depuis l'app Batup principale. Ce choix est délibéré : ces valeurs sont fixées par la réalité comptable et réglementaire (taux horaires, marges), donc la duplication est peu risquée. En cas de changement, mettre à jour les deux repos.
+
+## Documentation
+
+Toute la documentation produit (PRD, specs, analyses, guides de déploiement) est dans le repo de docs **Batup-360-contexte**, dossier [`produits/outils/`](https://github.com/Batup-360/Batup-360-contexte/tree/main/produits/outils). Ce repo ne garde que le code, ce guide et les fichiers lus par le code, la CI ou les tests.
