@@ -1,7 +1,7 @@
 /**
  * Pré-remplissage app → outil (mode embed uniquement) — parsing pur des
  * query params de l'URL d'embed (`/embed/<slug>?surface=34&tva=10…`).
- * Contrat v1 (FIGÉ) : voir docs/embed.md, section « Pré-remplissage ».
+ * Contrat v1 (FIGÉ) : voir https://github.com/Batup-360/Batup-360-contexte/blob/main/produits/outils/docs/embed.md, section « Pré-remplissage ».
  *
  * Séparé du hook React (`useEmbedPrefill` dans embed-context.tsx) pour être
  * testable en environnement node pur, sans DOM.

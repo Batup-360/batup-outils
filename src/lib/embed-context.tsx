@@ -33,7 +33,7 @@ export interface EmbedPrefill {
  * retourne des valeurs QU'EN mode embed — sur les pages publiques, `num()`
  * retourne toujours `undefined`, même si l'URL porte les mêmes paramètres.
  * Params invalides ou hors bornes = ignorés silencieusement (defaults
- * conservés). Voir docs/embed.md, section « Pré-remplissage ».
+ * conservés). Voir https://github.com/Batup-360/Batup-360-contexte/blob/main/produits/outils/docs/embed.md, section « Pré-remplissage ».
  */
 export function useEmbedPrefill(): EmbedPrefill {
   const embedded = useEmbedded();

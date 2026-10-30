@@ -9,7 +9,7 @@
  * dans le devis » reste masqué).
  *
  * Convention lineKey : `<domaine>.<quantite>` en snake_case — la liste
- * complète est documentée dans docs/embed.md (contrat v1, FIGÉ).
+ * complète est documentée dans https://github.com/Batup-360/Batup-360-contexte/blob/main/produits/outils/docs/embed.md (contrat v1, FIGÉ).
  */
 import {
   validEmbedLines,

@@ -9,7 +9,7 @@ import { EmbedProvider } from '@/lib/embed-context';
  *
  * The shell reports its content height to the parent window via postMessage
  * ({ type: 'batup-embed-height', slug, height }) so the host can auto-size the
- * iframe. See docs/embed.md for the host-side snippet.
+ * iframe. See https://github.com/Batup-360/Batup-360-contexte/blob/main/produits/outils/docs/embed.md for the host-side snippet.
  */
 
 const lazyCalc = (loader: () => Promise<Record<string, unknown>>, name: string) =>

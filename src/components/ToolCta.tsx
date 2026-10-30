@@ -11,7 +11,7 @@ import { emitEmbedResult, validEmbedLines, type EmbedResultPayload } from '@/lib
  * place, si le calculateur fournit un `embedResult` avec au moins une ligne
  * valide, on affiche « Utiliser dans le devis » : le clic émet le payload
  * vers l'app hôte via postMessage (canal `batup-embed-result` v1, voir
- * docs/embed.md). Les outils sans payload (pricing, fiscal, RH…) continuent
+ * https://github.com/Batup-360/Batup-360-contexte/blob/main/produits/outils/docs/embed.md). Les outils sans payload (pricing, fiscal, RH…) continuent
  * de ne rien afficher en embed.
  *
  * `children` accueille le contenu d'accompagnement du CTA (tagline

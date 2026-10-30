@@ -1,5 +1,5 @@
 /**
- * Canal résultat embed — VERSION 1 (contrat FIGÉ, documenté dans docs/embed.md).
+ * Canal résultat embed — VERSION 1 (contrat FIGÉ, documenté dans https://github.com/Batup-360/Batup-360-contexte/blob/main/produits/outils/docs/embed.md).
  *
  * Quand un calculateur « métré » tourne dans le shell /embed/<slug> (iframe
  * dans l'éditeur de devis de l'app Batup), le bouton « Utiliser dans le
