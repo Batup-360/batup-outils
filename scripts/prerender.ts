@@ -15,12 +15,19 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { SEO_ROUTES, type SeoRoute } from '../src/seo-manifest';
+import {
+  BLOG_LINKS,
+  RELATED_TOOLS,
+  SEO_ROUTES,
+  SEO_ROUTE_BY_PATH,
+  TOOL_CATEGORIES,
+  type SeoRoute,
+} from '../src/seo-manifest';
 import { REGIONS, CADRES_NATIONAL, minimumApplicable, getRegion, type Region, type CategorieGrille } from '../src/lib/grille-salaires-btp';
 import { grilleSalairesCopy } from '../src/content/grille-salaires-copy';
 import { grilleSalairesFAQ } from '../src/content/grille-salaires-faq';
 
-import { METIERS, metierAtomicFaq } from '../src/lib/salaires-metiers-btp';
+import { METIERS, METIER_SOURCE, metierAtomicFaq } from '../src/lib/salaires-metiers-btp';
 import { salairesMetiersCopy } from '../src/content/salaires-metiers-copy';
 import { salairesMetiersFAQ } from '../src/content/salaires-metiers-faq';
 
@@ -90,8 +97,18 @@ function metierLinksHtml(): string {
   return `<nav aria-label="Salaires par métier du BTP">${links} · <a href="/grille-salaires-minima-batiment">Grille des salaires BTP</a></nav>`;
 }
 
-const METIER_ALSO_HTML =
-  '<nav aria-label="Voir aussi"><a href="/salaires-metiers-btp">Tous les salaires par métier</a> · <a href="/grille-salaires-minima-batiment">Grille des salaires BTP</a> · <a href="/calculateur-cout-salarie-btp">Coût salarié employeur</a></nav>';
+/** Bas de fiche métier : source, métiers de la même famille, liens utiles (comme la page React). */
+function metierAlsoHtml(slug: string): string {
+  const m = METIERS.find((x) => x.slug === slug)!;
+  const famille = METIERS.filter((x) => x.slug !== slug && x.famille === m.famille)
+    .map((x) => `<li><a href="/salaire-${x.slug}">Salaire ${escapeHtml(x.label.toLowerCase())}</a></li>`)
+    .join('');
+  return (
+    `<p>${escapeHtml(m.label)} — ${escapeHtml(m.famille)}. ${escapeHtml(m.facteurs)} Source : <a href="${METIER_SOURCE.url}" rel="noopener">${escapeHtml(METIER_SOURCE.label)}</a>.</p>` +
+    `<section><h2>Autres métiers : ${escapeHtml(m.famille.toLowerCase())}</h2><ul>${famille}</ul></section>` +
+    '<nav aria-label="Voir aussi"><a href="/salaires-metiers-btp">Tous les salaires par métier</a> · <a href="/grille-salaires-minima-batiment">Grille des salaires BTP</a> · <a href="/calculateur-cout-salarie-btp">Coût salarié employeur</a></nav>'
+  );
+}
 
 /** Pages programmatiques « grille salaires × région » : une par région. */
 const GRILLE_REGION_ROUTES: SeoRoute[] = REGIONS.map((r) => ({
@@ -177,13 +194,62 @@ function jsonLdScript(obj: unknown): string {
   return `<script type="application/ld+json">${json}</script>`;
 }
 
-/** The full 19-route internal-link hub, rendered on every page. */
-function navHub(): string {
-  const links = SEO_ROUTES.map(
-    (r) => `<a href="${r.path}">${escapeHtml(r.breadcrumbName)}</a>`
-  ).join('');
-  return `<nav aria-label="Tous les outils BTP">${links}</nav>`;
+function categoryRoutes(paths: string[]): SeoRoute[] {
+  return paths.map((p) => {
+    const r = SEO_ROUTE_BY_PATH[p];
+    if (!r) throw new Error(`[prerender] TOOL_CATEGORIES : route inconnue ${p}`);
+    return r;
+  });
 }
+
+const SALAIRES_HUBS_HTML =
+  '<li><a href="/salaires-metiers-btp">Salaires par métier du BTP</a></li><li><a href="/grille-salaires-minima-batiment">Grille des salaires minima du bâtiment</a></li>';
+
+/** Hub de liens internes rendu sur chaque page : un lien par outil, groupé par thème. */
+function navHub(): string {
+  const groups = TOOL_CATEGORIES.map((c) => {
+    const links = categoryRoutes(c.paths)
+      .map((r) => `<li><a href="${r.path}">${escapeHtml(r.breadcrumbName)}</a></li>`)
+      .join('');
+    return `<h3>${escapeHtml(c.label)}</h3><ul>${links}</ul>`;
+  }).join('');
+  return `<nav aria-label="Tous les outils BTP"><h2>Tous les outils BTP gratuits</h2>${groups}<h3>Salaires du BTP</h3><ul>${SALAIRES_HUBS_HTML}</ul></nav>`;
+}
+
+/** Accueil : chaque outil avec son lien et sa description, par thème. */
+function homeCatalogHtml(): string {
+  const sections = TOOL_CATEGORIES.map((c) => {
+    const items = categoryRoutes(c.paths)
+      .map(
+        (r) =>
+          `<li><a href="${r.path}">${escapeHtml(r.breadcrumbName)}</a> : ${escapeHtml(r.description)}</li>`
+      )
+      .join('');
+    return `<section><h2>${escapeHtml(c.label)}</h2><ul>${items}</ul></section>`;
+  }).join('');
+  return `${sections}<section><h2>Salaires du BTP</h2><ul>${SALAIRES_HUBS_HTML}</ul></section>`;
+}
+
+/** Outils proches (même carte que le bloc React « Outils BTP complémentaires »). */
+function relatedHtml(routePath: string): string {
+  const related = (RELATED_TOOLS[routePath] ?? [])
+    .map((p) => SEO_ROUTE_BY_PATH[p])
+    .filter(Boolean)
+    .map((r) => `<li><a href="${r.path}">${escapeHtml(r.breadcrumbName)}</a> : ${escapeHtml(r.description)}</li>`)
+    .join('');
+  return related ? `<section><h2>Outils BTP complémentaires</h2><ul>${related}</ul></section>` : '';
+}
+
+/** Articles de www.batup.fr liés à l'outil. */
+function blogHtml(routePath: string): string {
+  const links = (BLOG_LINKS[routePath] ?? [])
+    .map((b) => `<li><a href="${b.href}">${escapeHtml(b.label)}</a></li>`)
+    .join('');
+  return links ? `<section><h2>Pour aller plus loin</h2><ul>${links}</ul></section>` : '';
+}
+
+const WWW_FOOTER_HTML =
+  '<footer><p>Outils proposés par <a href="https://www.batup.fr/">Batup, logiciel de gestion pour artisans, TPE et PME du bâtiment</a>. <a href="https://www.batup.fr/blog">Blog Batup</a>.</p></footer>';
 
 function headMeta(opts: {
   title: string;
@@ -268,6 +334,8 @@ function routeBodyContent(route: SeoRoute): string {
     .join('');
   parts.push(`<section><h2>Questions fréquentes</h2>${faq}</section>`);
 
+  parts.push(relatedHtml(route.path));
+  parts.push(blogHtml(route.path));
   parts.push(navHub());
   return parts.join('');
 }
@@ -308,7 +376,7 @@ function main(): void {
       route.path === '/grille-salaires-minima-batiment'
         ? routeBodyContent(route) + grilleTablesHtml(getRegion(undefined)) + regionLinksHtml()
         : routeBodyContent(route);
-    html = injectRoot(html, body);
+    html = injectRoot(html, body + WWW_FOOTER_HTML);
     writePage(route.path, html);
     count++;
   }
@@ -331,7 +399,10 @@ function main(): void {
     let html = setTitle(template, route.title);
     html = injectHead(html, headMeta({ title: route.title, description: route.description, url }));
     html = injectHead(html, routeJsonLd(route, url));
-    html = injectRoot(html, routeBodyContent(route) + grilleTablesHtml(REGIONS[i]) + regionLinksHtml());
+    html = injectRoot(
+      html,
+      routeBodyContent(route) + grilleTablesHtml(REGIONS[i]) + regionLinksHtml() + WWW_FOOTER_HTML
+    );
     writePage(route.path, html);
     regionCount++;
   });
@@ -345,8 +416,8 @@ function main(): void {
     const metierBody =
       route.path === salairesMetiersCopy.hub.canonicalPath
         ? routeBodyContent(route) + metierLinksHtml()
-        : routeBodyContent(route) + METIER_ALSO_HTML;
-    html = injectRoot(html, metierBody);
+        : routeBodyContent(route) + metierAlsoHtml(route.path.replace(/^\/salaire-/, ''));
+    html = injectRoot(html, metierBody + WWW_FOOTER_HTML);
     writePage(route.path, html);
     regionCount++;
   }
@@ -356,7 +427,7 @@ function main(): void {
     const url = SITE + '/';
     let html = setTitle(template, HOME.title);
     html = injectHead(html, headMeta({ title: HOME.title, description: HOME.description, url }));
-    const body = `<h1>${escapeHtml(HOME.h1)}</h1><p>${escapeHtml(HOME.lede)}</p>${navHub()}`;
+    const body = `<h1>${escapeHtml(HOME.h1)}</h1><p>${escapeHtml(HOME.lede)}</p>${homeCatalogHtml()}${WWW_FOOTER_HTML}`;
     html = injectRoot(html, body);
     writePage('/', html);
     count++;
