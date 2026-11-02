@@ -101,6 +101,7 @@ import { enduitFacadeCopy } from '@/content/enduit-facade-copy';
 import { enduitFacadeFAQ } from '@/content/enduit-facade-faq';
 import { grilleSalairesCopy } from '@/content/grille-salaires-copy';
 import { grilleSalairesFAQ } from '@/content/grille-salaires-faq';
+import { REGIONS } from '@/lib/grille-salaires-btp';
 
 export interface SeoFaqItem {
   question: string;
@@ -560,6 +561,16 @@ const BLOG_RECRUTEMENT: BlogLink = {
   href: `${WWW}/blog/recrutement-couvreur-charpentier-2026-solutions`,
   label: 'Recruter un couvreur ou un charpentier en 2026 : les solutions',
 };
+const BLOG_GRILLE: BlogLink[] = [
+  {
+    href: `${WWW}/blog/grille-salaire-btp-2026`,
+    label: 'Grille des salaires BTP 2026 : les minima expliqués par région',
+  },
+  {
+    href: `${WWW}/blog/grille-salaires-batiment-2026-minima-region`,
+    label: 'Grille des salaires du bâtiment 2026 : minima conventionnels par région',
+  },
+];
 const LOGICIEL_DEVIS_FACTURE: BlogLink = {
   href: `${WWW}/logiciel-devis-facture-batiment`,
   label: 'Logiciel de devis et facture pour le bâtiment Batup',
@@ -594,4 +605,6 @@ export const BLOG_LINKS: Record<string, BlogLink[]> = {
   ],
   '/verificateur-mentions-obligatoires-facture-devis-btp': [LOGICIEL_DEVIS_FACTURE],
   '/calculateur-situation-travaux': [LOGICIEL_DEVIS_FACTURE],
+  '/grille-salaires-minima-batiment': BLOG_GRILLE,
+  ...Object.fromEntries(REGIONS.map((r) => [`/grille-salaires-minima-batiment/${r.key}`, BLOG_GRILLE])),
 };
