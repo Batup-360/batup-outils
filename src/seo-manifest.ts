@@ -101,6 +101,7 @@ import { enduitFacadeCopy } from '@/content/enduit-facade-copy';
 import { enduitFacadeFAQ } from '@/content/enduit-facade-faq';
 import { grilleSalairesCopy } from '@/content/grille-salaires-copy';
 import { grilleSalairesFAQ } from '@/content/grille-salaires-faq';
+import { REGIONS } from '@/lib/grille-salaires-btp';
 
 export interface SeoFaqItem {
   question: string;
@@ -232,3 +233,378 @@ export const SEO_ROUTES: SeoRoute[] = [
 export const SEO_ROUTE_BY_PATH: Record<string, SeoRoute> = Object.fromEntries(
   SEO_ROUTES.map((r) => [r.path, r])
 );
+
+/**
+ * Curated map of slug → related slugs. Each tool surfaces 3–4 contextually
+ * relevant siblings to deepen internal linking and keep users on-site.
+ */
+export const RELATED_TOOLS: Record<string, string[]> = {
+  '/calculateur-taux-horaire-btp': [
+    '/calculateur-prix-chantier-btp',
+    '/calculateur-marge-nette-coefficient-btp',
+    '/calculateur-cout-salarie-btp',
+  ],
+  '/calculateur-prix-chantier-btp': [
+    '/calculateur-marge-nette-coefficient-btp',
+    '/calculateur-taux-horaire-btp',
+    '/calculateur-situation-travaux',
+  ],
+  '/calculateur-marge-nette-coefficient-btp': [
+    '/calculateur-prix-chantier-btp',
+    '/calculateur-taux-horaire-btp',
+    '/calculateur-cout-salarie-btp',
+  ],
+  '/calculateur-revision-prix-index-bt': [
+    '/calculateur-situation-travaux',
+    '/calculateur-dgd-decompte-general-definitif',
+    '/calculateur-prix-chantier-btp',
+  ],
+  '/calculateur-heures-supplementaires-btp': [
+    '/calculateur-cout-salarie-btp',
+    '/calculateur-jours-intemperies-cibtp',
+    '/calculateur-prime-anciennete-ccn-batiment',
+  ],
+  '/calculateur-cout-salarie-btp': [
+    '/grille-salaires-minima-batiment',
+    '/calculateur-heures-supplementaires-btp',
+    '/calculateur-prime-anciennete-ccn-batiment',
+    '/calculateur-taux-horaire-btp',
+  ],
+  '/calculateur-jours-intemperies-cibtp': [
+    '/calculateur-heures-supplementaires-btp',
+    '/calculateur-cout-salarie-btp',
+    '/calculateur-prime-anciennete-ccn-batiment',
+  ],
+  '/calculateur-prime-anciennete-ccn-batiment': [
+    '/grille-salaires-minima-batiment',
+    '/calculateur-cout-salarie-btp',
+    '/calculateur-heures-supplementaires-btp',
+    '/calculateur-jours-intemperies-cibtp',
+  ],
+  '/calculateur-tva-autoliquidation-btp': [
+    '/generateur-mention-tva-facture-btp',
+    '/verificateur-mentions-obligatoires-facture-devis-btp',
+    '/calculateur-charges-sociales-artisan-btp',
+  ],
+  '/generateur-mention-tva-facture-btp': [
+    '/calculateur-tva-autoliquidation-btp',
+    '/verificateur-mentions-obligatoires-facture-devis-btp',
+    '/calculateur-prix-chantier-btp',
+  ],
+  '/calculateur-charges-sociales-artisan-btp': [
+    '/comparateur-statut-juridique-artisan-btp',
+    '/calculateur-cout-salarie-btp',
+    '/grille-salaires-minima-batiment',
+  ],
+  '/comparateur-statut-juridique-artisan-btp': [
+    '/calculateur-charges-sociales-artisan-btp',
+    '/calculateur-cout-salarie-btp',
+    '/simulateur-decennale-btp',
+  ],
+  '/verificateur-mentions-obligatoires-facture-devis-btp': [
+    '/generateur-mention-tva-facture-btp',
+    '/calculateur-tva-autoliquidation-btp',
+    '/simulateur-decennale-btp',
+  ],
+  '/calculateur-situation-travaux': [
+    '/calculateur-dgd-decompte-general-definitif',
+    '/calculateur-retenue-de-garantie',
+    '/calculateur-revision-prix-index-bt',
+  ],
+  '/calculateur-dgd-decompte-general-definitif': [
+    '/calculateur-situation-travaux',
+    '/calculateur-retenue-de-garantie',
+    '/calculateur-revision-prix-index-bt',
+  ],
+  '/calculateur-retenue-de-garantie': [
+    '/calculateur-situation-travaux',
+    '/calculateur-dgd-decompte-general-definitif',
+    '/calculateur-prix-chantier-btp',
+  ],
+  '/simulateur-decennale-btp': [
+    '/simulateur-rc-pro-btp',
+    '/calculateur-roi-certification-rge',
+    '/comparateur-statut-juridique-artisan-btp',
+  ],
+  '/simulateur-rc-pro-btp': [
+    '/simulateur-decennale-btp',
+    '/calculateur-roi-certification-rge',
+    '/comparateur-statut-juridique-artisan-btp',
+  ],
+  '/calculateur-roi-certification-rge': [
+    '/simulateur-decennale-btp',
+    '/simulateur-rc-pro-btp',
+    '/calculateur-prix-chantier-btp',
+  ],
+  '/calculateur-beton': [
+    '/calculateur-volume',
+    '/calculateur-surface',
+    '/calculateur-prix-chantier-btp',
+  ],
+  '/calculateur-tva': [
+    '/calculateur-tva-autoliquidation-btp',
+    '/generateur-mention-tva-facture-btp',
+    '/calculateur-prix-chantier-btp',
+  ],
+  '/calculateur-surface': [
+    '/calculateur-volume',
+    '/calculateur-beton',
+    '/calculateur-prix-chantier-btp',
+  ],
+  '/calculateur-volume': [
+    '/calculateur-beton',
+    '/calculateur-surface',
+    '/calculateur-escalier',
+  ],
+  '/calculateur-escalier': [
+    '/calculateur-surface',
+    '/calculateur-volume',
+    '/calculateur-beton',
+  ],
+  '/calculateur-mortier': [
+    '/calculateur-beton',
+    '/calculateur-chape',
+    '/calculateur-surface',
+  ],
+  '/calculateur-chape': [
+    '/calculateur-mortier',
+    '/calculateur-beton',
+    '/calculateur-surface',
+  ],
+  '/calculateur-pente-toiture': [
+    '/calculateur-surface',
+    '/calculateur-volume',
+    '/calculateur-beton',
+  ],
+  '/calculateur-papier-peint': [
+    '/calculateur-surface',
+    '/calculateur-mortier',
+    '/calculateur-chape',
+  ],
+  '/generateur-attestation-tva': [
+    '/generateur-mention-tva-facture-btp',
+    '/calculateur-tva',
+    '/calculateur-tva-autoliquidation-btp',
+  ],
+  '/calculateur-parpaings': [
+    '/calculateur-briques',
+    '/calculateur-mortier',
+    '/calculateur-surface',
+  ],
+  '/calculateur-briques': [
+    '/calculateur-parpaings',
+    '/calculateur-mortier',
+    '/calculateur-surface',
+  ],
+  '/calculateur-placo': [
+    '/calculateur-surface',
+    '/calculateur-peinture',
+    '/calculateur-isolant',
+  ],
+  '/calculateur-carrelage': [
+    '/calculateur-surface',
+    '/calculateur-consommation-materiaux',
+    '/calculateur-parquet',
+  ],
+  '/calculateur-parquet': [
+    '/calculateur-surface',
+    '/calculateur-carrelage',
+    '/calculateur-terrasse',
+  ],
+  '/calculateur-terrasse': [
+    '/calculateur-surface',
+    '/calculateur-parquet',
+    '/calculateur-beton',
+  ],
+  '/calculateur-isolant': [
+    '/calculateur-placo',
+    '/calculateur-surface',
+    '/calculateur-consommation-materiaux',
+  ],
+  '/calculateur-peinture': [
+    '/calculateur-surface',
+    '/calculateur-placo',
+    '/calculateur-papier-peint',
+  ],
+  '/calculateur-consommation-materiaux': [
+    '/calculateur-carrelage',
+    '/calculateur-surface',
+    '/calculateur-peinture',
+  ],
+  '/calculateur-tuiles': [
+    '/calculateur-pente-toiture',
+    '/calculateur-surface',
+    '/calculateur-isolant',
+  ],
+  '/calculateur-gravier-sable': [
+    '/calculateur-volume',
+    '/calculateur-beton',
+    '/calculateur-terrasse',
+  ],
+  '/calculateur-enduit-facade': [
+    '/calculateur-mortier',
+    '/calculateur-surface',
+    '/calculateur-peinture',
+  ],
+  '/grille-salaires-minima-batiment': [
+    '/calculateur-cout-salarie-btp',
+    '/calculateur-prime-anciennete-ccn-batiment',
+    '/calculateur-heures-supplementaires-btp',
+  ],
+};
+
+/**
+ * Catégories des outils (mêmes thèmes que la grille de l'accueil). Sert au
+ * prérendu de l'accueil et du hub de liens internes : un vrai lien par outil,
+ * groupé par thème, lisible sans JavaScript.
+ */
+export const TOOL_CATEGORIES: { label: string; paths: string[] }[] = [
+  {
+    label: 'Pricing & marge',
+    paths: [
+      '/calculateur-taux-horaire-btp',
+      '/calculateur-prix-chantier-btp',
+      '/calculateur-marge-nette-coefficient-btp',
+      '/calculateur-revision-prix-index-bt',
+    ],
+  },
+  {
+    label: 'Paie & RH',
+    paths: [
+      '/calculateur-heures-supplementaires-btp',
+      '/calculateur-cout-salarie-btp',
+      '/calculateur-jours-intemperies-cibtp',
+      '/calculateur-prime-anciennete-ccn-batiment',
+      '/grille-salaires-minima-batiment',
+    ],
+  },
+  {
+    label: 'Fiscal & légal',
+    paths: [
+      '/calculateur-tva',
+      '/calculateur-tva-autoliquidation-btp',
+      '/generateur-mention-tva-facture-btp',
+      '/generateur-attestation-tva',
+      '/calculateur-charges-sociales-artisan-btp',
+      '/comparateur-statut-juridique-artisan-btp',
+      '/verificateur-mentions-obligatoires-facture-devis-btp',
+    ],
+  },
+  {
+    label: 'Trésorerie & marchés',
+    paths: [
+      '/calculateur-situation-travaux',
+      '/calculateur-dgd-decompte-general-definitif',
+      '/calculateur-retenue-de-garantie',
+    ],
+  },
+  {
+    label: 'Assurances & aides',
+    paths: [
+      '/simulateur-decennale-btp',
+      '/simulateur-rc-pro-btp',
+      '/calculateur-roi-certification-rge',
+    ],
+  },
+  {
+    label: 'Métré & quantités',
+    paths: [
+      '/calculateur-beton',
+      '/calculateur-surface',
+      '/calculateur-volume',
+      '/calculateur-escalier',
+      '/calculateur-mortier',
+      '/calculateur-chape',
+      '/calculateur-pente-toiture',
+      '/calculateur-papier-peint',
+      '/calculateur-parpaings',
+      '/calculateur-briques',
+      '/calculateur-placo',
+      '/calculateur-carrelage',
+      '/calculateur-parquet',
+      '/calculateur-terrasse',
+      '/calculateur-isolant',
+      '/calculateur-peinture',
+      '/calculateur-consommation-materiaux',
+      '/calculateur-tuiles',
+      '/calculateur-gravier-sable',
+      '/calculateur-enduit-facade',
+    ],
+  },
+];
+
+export interface BlogLink {
+  href: string;
+  label: string;
+}
+
+const WWW = 'https://www.batup.fr';
+const BLOG_RENTABILITE: BlogLink = {
+  href: `${WWW}/blog/calcul-rentabilite-chantier`,
+  label: 'Calcul de rentabilité d’un chantier : la méthode pas à pas',
+};
+const BLOG_TVA: BlogLink[] = [
+  {
+    href: `${WWW}/blog/mention-tva-5-5-apres-suppression-cerfa-2026`,
+    label: 'Mention TVA 5,5 % sur devis en 2026 : le texte exact après la suppression du Cerfa',
+  },
+  {
+    href: `${WWW}/blog/tva-5-5-renovation-energetique-5-pieges-requalification`,
+    label: 'TVA 5,5 % en rénovation énergétique : 5 pièges qui font requalifier le taux',
+  },
+];
+const BLOG_OBLIGATIONS: BlogLink = {
+  href: `${WWW}/blog/obligations-legales-avant-premier-chantier-btp`,
+  label: 'Obligations légales de l’artisan BTP avant son premier chantier',
+};
+const BLOG_RECRUTEMENT: BlogLink = {
+  href: `${WWW}/blog/recrutement-couvreur-charpentier-2026-solutions`,
+  label: 'Recruter un couvreur ou un charpentier en 2026 : les solutions',
+};
+const BLOG_GRILLE: BlogLink[] = [
+  {
+    href: `${WWW}/blog/grille-salaire-btp-2026`,
+    label: 'Grille des salaires BTP 2026 : les minima expliqués par région',
+  },
+  {
+    href: `${WWW}/blog/grille-salaires-batiment-2026-minima-region`,
+    label: 'Grille des salaires du bâtiment 2026 : minima conventionnels par région',
+  },
+];
+const LOGICIEL_DEVIS_FACTURE: BlogLink = {
+  href: `${WWW}/logiciel-devis-facture-batiment`,
+  label: 'Logiciel de devis et facture pour le bâtiment Batup',
+};
+
+/** Articles et pages de www.batup.fr à lire après l'outil (liens dans le HTML prérendu et dans l'appli). */
+export const BLOG_LINKS: Record<string, BlogLink[]> = {
+  '/calculateur-retenue-de-garantie': [
+    {
+      href: `${WWW}/blog/retenue-garantie-btp-recuperer-5-pourcent`,
+      label: 'Retenue de garantie BTP : comment récupérer vos 5 %',
+    },
+  ],
+  '/calculateur-marge-nette-coefficient-btp': [BLOG_RENTABILITE],
+  '/calculateur-prix-chantier-btp': [BLOG_RENTABILITE],
+  '/calculateur-taux-horaire-btp': [BLOG_RENTABILITE],
+  '/generateur-attestation-tva': BLOG_TVA,
+  '/generateur-mention-tva-facture-btp': BLOG_TVA,
+  '/calculateur-tva-autoliquidation-btp': BLOG_TVA,
+  '/comparateur-statut-juridique-artisan-btp': [BLOG_OBLIGATIONS],
+  '/simulateur-decennale-btp': [BLOG_OBLIGATIONS],
+  '/simulateur-rc-pro-btp': [BLOG_OBLIGATIONS],
+  '/calculateur-charges-sociales-artisan-btp': [BLOG_OBLIGATIONS],
+  '/salaire-couvreur': [BLOG_RECRUTEMENT],
+  '/salaire-charpentier': [BLOG_RECRUTEMENT],
+  '/calculateur-cout-salarie-btp': [BLOG_RECRUTEMENT],
+  '/calculateur-jours-intemperies-cibtp': [
+    {
+      href: `${WWW}/blog/carte-btp-cibtp-2026-obligation-cout-sanction`,
+      label: 'Carte BTP et CIBTP en 2026 : obligation, coût et sanctions',
+    },
+  ],
+  '/verificateur-mentions-obligatoires-facture-devis-btp': [LOGICIEL_DEVIS_FACTURE],
+  '/calculateur-situation-travaux': [LOGICIEL_DEVIS_FACTURE],
+  '/grille-salaires-minima-batiment': BLOG_GRILLE,
+  ...Object.fromEntries(REGIONS.map((r) => [`/grille-salaires-minima-batiment/${r.key}`, BLOG_GRILLE])),
+};
