@@ -118,12 +118,15 @@ const SITE = 'https://outils.batup.fr';
 /**
  * Date (AAAA-MM-JJ) du dernier commit qui modifie le contenu d'une page, pour
  * <lastmod>. Le gabarit (ce script) est exclu : Google demande un lastmod qui
- * suit les changements de contenu. Clone superficiel ou git absent → pas de
- * lastmod plutôt qu'une date fausse.
+ * suit les changements de contenu. Historique introuvable → pas de lastmod
+ * plutôt qu'une date fausse.
  */
 const GIT_HISTORY_OK = (() => {
+  const git = (args: string[]) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', stdio: 'pipe' }).trim();
   try {
-    return execFileSync('git', ['rev-parse', '--is-shallow-repository'], { cwd: ROOT, encoding: 'utf8' }).trim() === 'false';
+    // Cloudflare Pages clone le dépôt en superficiel : on récupère l'historique.
+    if (git(['rev-parse', '--is-shallow-repository']) === 'true') git(['fetch', '--unshallow', '--quiet']);
+    return git(['rev-parse', '--is-shallow-repository']) === 'false';
   } catch {
     return false;
   }
