@@ -12,6 +12,7 @@
  *
  * Node built-ins only; ESM (package is `type: module`).
  */
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -130,6 +131,48 @@ const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
 const SITE = 'https://outils.batup.fr';
+
+/**
+ * Date (AAAA-MM-JJ) du dernier commit qui modifie le contenu d'une page, pour
+ * <lastmod>. Le gabarit (ce script) est exclu : Google demande un lastmod qui
+ * suit les changements de contenu. Historique introuvable → pas de lastmod
+ * plutôt qu'une date fausse.
+ */
+const GIT_HISTORY_OK = (() => {
+  const git = (args: string[]) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', stdio: 'pipe' }).trim();
+  try {
+    // Cloudflare Pages clone le dépôt en superficiel : on récupère l'historique.
+    if (git(['rev-parse', '--is-shallow-repository']) === 'true') git(['fetch', '--unshallow', '--quiet']);
+    return git(['rev-parse', '--is-shallow-repository']) === 'false';
+  } catch {
+    return false;
+  }
+})();
+if (!GIT_HISTORY_OK) console.warn('[prerender] historique git indisponible : sitemap sans lastmod');
+
+function lastmodOf(files: string[]): string | undefined {
+  if (!GIT_HISTORY_OK) return undefined;
+  const date = execFileSync('git', ['log', '-1', '--format=%cs', '--', ...files], { cwd: ROOT, encoding: 'utf8' }).trim();
+  return date || undefined;
+}
+
+/** Fichiers copy + FAQ d'un outil, retrouvés par leur canonicalPath. */
+const CONTENT_DIR = path.join(ROOT, 'src/content');
+const COPY_FILE_BY_PATH = new Map(
+  fs
+    .readdirSync(CONTENT_DIR)
+    .filter((f) => f.endsWith('-copy.ts'))
+    .flatMap((f) => {
+      const m = fs.readFileSync(path.join(CONTENT_DIR, f), 'utf8').match(/canonicalPath: '([^']+)'/);
+      return m ? [[m[1], f] as const] : [];
+    }),
+);
+
+function contentFilesOf(routePath: string): string[] {
+  const copy = COPY_FILE_BY_PATH.get(routePath);
+  if (!copy) throw new Error(`[prerender] pas de fichier copy pour ${routePath}`);
+  return [`src/content/${copy}`, `src/content/${copy.replace(/-copy\.ts$/, '-faq.ts')}`];
+}
 const OG_IMAGE = SITE + '/assets/logo-batup-marketing.png';
 
 // Home page SEO — mirrors the <SEOHead> values in src/pages/home.tsx.
@@ -457,18 +500,25 @@ function main(): void {
 
   // Sitemap généré depuis les routes (source unique = les tableaux de données ;
   // ajouter un outil/métier/région met le sitemap à jour automatiquement).
+  // Google ignore changefreq et priority ; seul un lastmod exact est utilisé.
   const sitemapUrls = [
-    { loc: '/', priority: '0.8' },
-    ...SEO_ROUTES.map((r) => ({ loc: r.path, priority: '0.9' })),
-    ...METIER_ROUTES.map((r) => ({ loc: r.path, priority: '0.8' })),
-    ...GRILLE_REGION_ROUTES.map((r) => ({ loc: r.path, priority: '0.8' })),
+    { loc: '/', lastmod: lastmodOf(['src/pages/home.tsx']) },
+    ...SEO_ROUTES.map((r) => ({ loc: r.path, lastmod: lastmodOf(contentFilesOf(r.path)) })),
+    ...METIER_ROUTES.map((r) => ({
+      loc: r.path,
+      lastmod: lastmodOf(['src/lib/salaires-metiers-btp.ts', 'src/content/salaires-metiers-copy.ts', 'src/content/salaires-metiers-faq.ts']),
+    })),
+    ...GRILLE_REGION_ROUTES.map((r) => ({
+      loc: r.path,
+      lastmod: lastmodOf(['src/lib/grille-salaires-btp.ts', 'src/content/grille-salaires-copy.ts', 'src/content/grille-salaires-faq.ts']),
+    })),
   ];
   const sitemap =
     '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     sitemapUrls
       .map(
         (u) =>
-          `  <url><loc>${SITE}${u.loc === '/' ? '/' : u.loc}</loc><changefreq>monthly</changefreq><priority>${u.priority}</priority></url>`,
+          `  <url><loc>${SITE}${u.loc === '/' ? '/' : u.loc}</loc>${u.lastmod ? `<lastmod>${u.lastmod}</lastmod>` : ''}</url>`,
       )
       .join('\n') +
     '\n</urlset>\n';
