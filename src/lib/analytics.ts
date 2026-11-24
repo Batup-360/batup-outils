@@ -1,5 +1,10 @@
+import { lireConsentement } from './consent';
+
 /**
  * Google Analytics 4 — même propriété que batup.fr.
+ *
+ * Chargé UNIQUEMENT après consentement (bandeau CookieConsent, voir lib/consent.ts).
+ * Au refus ou au retrait, GA est coupé et ses cookies effacés.
  *
  * Le Measurement ID (G-XXXX) est fourni par la variable d'environnement de build
  * `VITE_GA_MEASUREMENT_ID` (à définir dans Cloudflare Pages avec l'ID existant de
@@ -33,7 +38,10 @@ declare global {
 
 let initialized = false;
 
-function isEmbedded(): boolean {
+/** 13 mois en secondes (durée maximale CNIL pour un traceur). */
+const COOKIE_EXPIRES_S = 13 * 30 * 24 * 60 * 60;
+
+export function isEmbedded(): boolean {
   try {
     if (window.self !== window.top) return true;
   } catch {
@@ -44,12 +52,15 @@ function isEmbedded(): boolean {
 }
 
 export function initAnalytics(): void {
-  if (initialized) return;
   if (typeof window === 'undefined') return;
   if (!MEASUREMENT_ID) return;
   if (!isBatupHost()) return;
   if (isEmbedded()) return;
+  if (lireConsentement() !== 'accepte') return;
 
+  // Ré-acceptation après un retrait dans la même page : gtag est déjà là, on le réactive.
+  (window as unknown as Record<string, unknown>)[`ga-disable-${MEASUREMENT_ID}`] = false;
+  if (initialized) return;
   initialized = true;
 
   const script = document.createElement('script');
@@ -65,13 +76,32 @@ export function initAnalytics(): void {
   window.gtag('js', new Date());
   window.gtag('config', MEASUREMENT_ID, {
     cookie_domain: '.batup.fr',
+    cookie_expires: COOKIE_EXPIRES_S,
     // Vues de page envoyées manuellement au changement de route (SPA wouter).
     send_page_view: false,
   });
 }
 
+/**
+ * Refus ou retrait du consentement : coupe gtag (s'il tourne déjà dans la page) et
+ * efface les cookies `_ga*`, sur l'hôte et sur `.batup.fr` où GA les pose.
+ */
+export function disableAnalytics(): void {
+  if (typeof window === 'undefined') return;
+  (window as unknown as Record<string, unknown>)[`ga-disable-${MEASUREMENT_ID}`] = true;
+  const domaines = ['', `; domain=${window.location.hostname}`, '; domain=.batup.fr'];
+  for (const cookie of document.cookie.split(';')) {
+    const nom = cookie.split('=')[0].trim();
+    if (!nom.startsWith('_ga')) continue;
+    for (const d of domaines) {
+      document.cookie = `${nom}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${d}`;
+    }
+  }
+}
+
 export function trackPageView(path: string): void {
   if (!initialized || typeof window === 'undefined' || !window.gtag) return;
+  if (lireConsentement() !== 'accepte') return;
   window.gtag('event', 'page_view', {
     page_path: path,
     page_location: window.location.href,
