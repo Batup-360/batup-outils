@@ -6,6 +6,7 @@ import { disableAnalytics, initAnalytics, trackPageView } from '@/lib/analytics'
 import { EVENEMENT_CONSENTEMENT, type ChoixConsentement } from '@/lib/consent';
 import { CookieConsent } from '@/components/CookieConsent';
 import { METIERS } from '@/lib/salaires-metiers-btp';
+import { htmlPrerendu } from '@/lib/page-prerendue';
 
 const Home = lazy(() => import('./pages/home'));
 const NotFound = lazy(() => import('./pages/not-found'));
@@ -100,6 +101,11 @@ function AnalyticsTracker() {
 }
 
 function LoadingFallback() {
+  const [location] = useLocation();
+  // Page d'arrivée : on garde le contenu prérendu (HTML généré au build par nous)
+  // visible pendant le chargement du code de la page, au lieu d'un spinner.
+  const prerendu = htmlPrerendu(location);
+  if (prerendu) return <div dangerouslySetInnerHTML={{ __html: prerendu }} />;
   return (
     <div className="flex min-h-screen items-center justify-center bg-white">
       <div className="h-8 w-8 animate-spin rounded-full border-2 border-gray-200 border-t-brand-500" />
