@@ -1,5 +1,6 @@
 import { Link } from 'wouter';
 import { APP_BASE, MARKETING_BASE } from '@/lib/urls';
+import { ouvrirPreferencesCookies } from '@/lib/consent';
 
 /**
  * Footer aligné sur batup.fr : carte anthracite arrondie avec halos violets,
@@ -216,6 +217,17 @@ export function PublicFooter() {
                             </Link>
                           </li>
                         )
+                      )}
+                      {section.title === 'Légal' && (
+                        <li>
+                          <button
+                            type="button"
+                            onClick={ouvrirPreferencesCookies}
+                            className="text-left text-sm text-white/60 transition-colors hover:text-white"
+                          >
+                            Gérer les cookies
+                          </button>
+                        </li>
                       )}
                     </ul>
                   </div>

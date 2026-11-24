@@ -2,7 +2,9 @@ import { lazy, Suspense, useEffect } from 'react';
 import { Route, Switch, useLocation } from 'wouter';
 import { EmailGateProvider } from '@/lib/email-gate-context';
 import { EmailGate } from '@/components/EmailGate';
-import { initAnalytics, trackPageView } from '@/lib/analytics';
+import { disableAnalytics, initAnalytics, trackPageView } from '@/lib/analytics';
+import { EVENEMENT_CONSENTEMENT, type ChoixConsentement } from '@/lib/consent';
+import { CookieConsent } from '@/components/CookieConsent';
 import { METIERS } from '@/lib/salaires-metiers-btp';
 
 const Home = lazy(() => import('./pages/home'));
@@ -78,7 +80,18 @@ const SalaireMetier = lazy(() => import('./pages/salaire-metier'));
 function AnalyticsTracker() {
   const [location] = useLocation();
   useEffect(() => {
+    // GA n'est chargé qu'avec un consentement valide (sinon initAnalytics ne fait rien).
     initAnalytics();
+    const surChoix = (e: Event) => {
+      if ((e as CustomEvent<ChoixConsentement>).detail === 'accepte') {
+        initAnalytics();
+        trackPageView(window.location.pathname);
+      } else {
+        disableAnalytics();
+      }
+    };
+    window.addEventListener(EVENEMENT_CONSENTEMENT, surChoix);
+    return () => window.removeEventListener(EVENEMENT_CONSENTEMENT, surChoix);
   }, []);
   useEffect(() => {
     trackPageView(location);
@@ -98,6 +111,7 @@ export default function App() {
   return (
     <EmailGateProvider>
       <AnalyticsTracker />
+      <CookieConsent />
       <Suspense fallback={<LoadingFallback />}>
         <Switch>
         <Route path="/" component={Home} />
