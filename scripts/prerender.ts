@@ -8,7 +8,9 @@
  * crawlers get the real text content without executing JS.
  *
  * React mounts with `createRoot().render()` (NOT hydrateRoot — see src/main.tsx),
- * so this static markup is simply replaced on mount: no hydration mismatch.
+ * so this static markup is simply replaced on mount: no hydration mismatch. While
+ * the route's lazy chunk loads, the Suspense fallback re-displays this same markup
+ * (src/lib/page-prerendue.ts) instead of a full-screen spinner.
  *
  * Node built-ins only; ESM (package is `type: module`).
  */
