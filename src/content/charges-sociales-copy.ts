@@ -26,7 +26,7 @@ export const chargesSocialesCopy = {
     blocks: [
       {
         heading: '1. Micro-entreprise artisan : 21,2 % du CA encaissé',
-        body: "Pour un artisan BTP en micro (prestations BIC), les cotisations URSSAF s'élèvent à 21,2 % du chiffre d'affaires encaissé (et non du bénéfice). On ajoute 0,3 % de CFP (contribution à la formation professionnelle). Avec l'ACRE la première année, le taux est divisé par deux (10,6 %). Pas d'IS : l'impôt sur le revenu est calculé séparément, soit en barème progressif, soit en versement libératoire (1,7 % pour les prestations BIC).",
+        body: "Pour un artisan BTP en micro (prestations BIC), les cotisations URSSAF s'élèvent à 21,2 % du chiffre d'affaires encaissé (et non du bénéfice). On ajoute 0,3 % de CFP (contribution à la formation professionnelle). Avec l'ACRE la première année, le taux est réduit de 25 % (15,9 %) pour une création à partir du 1er juillet 2026. Pas d'IS : l'impôt sur le revenu est calculé séparément, soit en barème progressif, soit en versement libératoire (1,7 % pour les prestations BIC).",
       },
       {
         heading: '2. EI au réel et EURL à l’IR : ~45 % du bénéfice',
@@ -37,8 +37,8 @@ export const chargesSocialesCopy = {
         body: "En SARL à l'IS, le gérant majoritaire est TNS (~45 % de charges sur la rémunération). En SAS, le président est assimilé salarié, ce qui implique 70 à 80 % de cotisations totales (part employeur + part salarié) sur la rémunération brute. Ces structures payent aussi l'IS : 15 % sur les bénéfices jusqu'à 42 500 € puis 25 % au-dessus. Le calcul exact dépend de la répartition rémunération / dividendes et mérite l'avis d'un expert-comptable.",
       },
       {
-        heading: '4. ACRE : -50 % de cotisations la première année',
-        body: "L'Aide aux Créateurs et Repreneurs d'Entreprise (ACRE) divise par deux les cotisations sociales pendant les 12 premiers mois d'activité, sous conditions (demandeur d'emploi, jeune de moins de 26 ans, bénéficiaire RSA, etc.). Pour un micro-entrepreneur BTP, le taux passe de 21,2 % à 10,6 %. Pour un TNS au réel, il passe de ~45 % à ~27 %. Bien anticiper la sortie de l'ACRE pour éviter le choc de trésorerie en année 2.",
+        heading: '4. ACRE : -25 % de cotisations la première année',
+        body: "L'Aide aux Créateurs et Repreneurs d'Entreprise (ACRE) réduit les cotisations sociales pendant les 12 premiers mois d'activité, sous conditions (demandeur d'emploi, jeune de moins de 26 ans, bénéficiaire RSA, etc.). Depuis le décret du 6 février 2026, l'exonération est de 25 % (contre 50 % auparavant) : pour un micro-entrepreneur BTP créé à partir du 1er juillet 2026, le taux passe de 21,2 % à 15,9 %. Pour un TNS au réel, il passe de ~45 % à ~27 %. Bien anticiper la sortie de l'ACRE pour éviter le choc de trésorerie en année 2.",
       },
     ],
   },

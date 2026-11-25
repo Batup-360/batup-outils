@@ -308,7 +308,7 @@ export function ChargesSocialesCalculator() {
                       : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
-                  Oui (-50 %)
+                  Oui (-25 %)
                 </button>
               </div>
             </div>
