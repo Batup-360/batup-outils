@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { useLocation, Link } from 'wouter';
 import { Download } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Label } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Label, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
@@ -60,6 +60,7 @@ const METIERS_PAR_CAT: Record<CategorieKey, { slug: string; label: string }[]> =
 
 export function GrilleSalairesCalculator({ regionKey }: { regionKey?: string }) {
   const { unlocked } = useEmailGate();
+  const uid = useId();
   const [, setLocation] = useLocation();
   const [categorie, setCategorie] = useState<CategorieKey>('ouvriers');
   const [ligneIndex, setLigneIndex] = useState(0);
@@ -116,6 +117,7 @@ export function GrilleSalairesCalculator({ regionKey }: { regionKey?: string }) 
                   <button
                     key={c.key}
                     type="button"
+                    aria-pressed={selected}
                     onClick={() => changeCategorie(c.key)}
                     className={`rounded-lg border px-4 py-3 text-left text-sm transition-colors ${
                       selected
@@ -132,16 +134,17 @@ export function GrilleSalairesCalculator({ regionKey }: { regionKey?: string }) 
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
-                <Label>Région</Label>
+                <Label htmlFor={categorie === 'cadres' ? undefined : `${uid}-region`}>Région</Label>
                 {categorie === 'cadres' ? (
                   <div className="flex h-10 w-full items-center rounded-md border border-gray-200 bg-gray-50 px-3 text-sm text-gray-600">
                     France entière (grille nationale)
                   </div>
                 ) : (
                   <select
+                    id={`${uid}-region`}
                     value={region.key}
                     onChange={(e) => setLocation(`${BASE_PATH}/${e.target.value}`)}
-                    className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                    className="flex h-10 w-full rounded-md border border-gray-500 bg-white px-3 py-2 text-base text-gray-900 sm:text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
                   >
                     {REGIONS.map((r) => (
                       <option key={r.key} value={r.key}>
@@ -153,12 +156,13 @@ export function GrilleSalairesCalculator({ regionKey }: { regionKey?: string }) 
               </div>
 
               <div className="space-y-1.5">
-                <Label>Poste / niveau</Label>
+                <Label htmlFor={`${uid}-poste`}>Poste / niveau</Label>
                 <select
+                  id={`${uid}-poste`}
                   value={ligneIndex}
                   disabled={!grille}
                   onChange={(e) => setLigneIndex(Number(e.target.value))}
-                  className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-400"
+                  className="flex h-10 w-full rounded-md border border-gray-500 bg-white px-3 py-2 text-base text-gray-900 sm:text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-400"
                 >
                   {grille ? (
                     grille.lignes.map((l, i) => (
@@ -347,6 +351,7 @@ function ResultCard({
           <CardTitle>Salaire minimum</CardTitle>
         </CardHeader>
         <CardContent className="space-y-5">
+          <LiveResult message={`Minimum brut mensuel ${ligne.label} : ${fmtEuro(montant)}`} />
           <div>
             <p className="text-xs uppercase tracking-wider text-gray-500">Minimum brut mensuel — {ligne.label}</p>
             <p className="mt-1 text-4xl font-bold text-brand-500 sm:text-5xl">{fmtEuro(montant)}</p>

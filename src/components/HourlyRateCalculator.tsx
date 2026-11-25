@@ -1,9 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { Link } from 'wouter';
 import { ArrowRight, HelpCircle } from 'lucide-react';
 import { calculateBillableHourlyRate } from '@/lib/pricing';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
@@ -49,6 +49,7 @@ function fmtRate(n: number): string {
 export function HourlyRateCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
   const { unlocked } = useEmailGate();
+  const uid = useId();
   const update = (key: keyof Inputs, value: string) => {
     const num = parseFloat(value.replace(',', '.')) || 0;
     setInputs((prev) => ({ ...prev, [key]: num }));
@@ -114,15 +115,17 @@ export function HourlyRateCalculator() {
             <Field label="Heures facturables / jour" hint="Hors trajets, pauses, administratif" suffix="h" value={inputs.heuresParJour} onChange={(v) => update('heuresParJour', v)} step="0.5" />
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label className="flex items-center gap-1">
+                <Label htmlFor={`${uid}-marge`} className="flex items-center gap-1">
                   Marge nette cible
                   <span title="Marge nette = (PV − coût) / PV × 100. 23,08 % = coefficient 1,30." className="cursor-help text-gray-400">
-                    <HelpCircle className="h-4 w-4" />
+                    <HelpCircle className="h-4 w-4" aria-hidden />
+                    <span className="sr-only">Marge nette = (PV − coût) / PV × 100. 23,08 % = coefficient 1,30.</span>
                   </span>
                 </Label>
                 <span className="text-sm font-semibold text-brand-500">{inputs.margeCible.toFixed(2)} %</span>
               </div>
               <input
+                id={`${uid}-marge`}
                 type="range"
                 min={0}
                 max={50}
@@ -153,6 +156,7 @@ export function HourlyRateCalculator() {
                 <p className="mt-1 text-4xl font-bold text-brand-500 sm:text-5xl">{fmtRate(results.tauxFacturer)}</p>
                 <p className="mt-1 text-xs text-gray-500">HT, hors TVA</p>
               </div>
+              <LiveResult message={`Taux horaire à facturer : ${fmtRate(results.tauxFacturer)} HT`} />
               <div className="space-y-2 border-t border-gray-100 pt-4 text-sm">
                 <Row label="Coût de revient horaire" value={fmtRate(results.coutHoraire)} />
                 <Row label="Heures facturables / an" value={`${NUMBER_FMT.format(results.heuresProductives)} h`} />
@@ -206,11 +210,14 @@ function Field({
   onChange: (v: string) => void;
   step?: string;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <div className="relative">
         <Input
+          id={id}
+          aria-describedby={hint ? `${id}-hint` : undefined}
           type="number"
           inputMode="decimal"
           min={0}
@@ -224,7 +231,7 @@ function Field({
           {suffix}
         </span>
       </div>
-      {hint && <p className="text-xs text-gray-500">{hint}</p>}
+      {hint && <p id={`${id}-hint`} className="text-xs text-gray-500">{hint}</p>}
     </div>
   );
 }

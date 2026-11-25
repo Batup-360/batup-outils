@@ -1,9 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 import { aireForme, type FormeSurface } from '@/lib/surface-math';
 import { buildSurfacePayload } from '@/lib/embed-payloads';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
@@ -52,6 +52,7 @@ function formuleSurface(z: Zone): string {
 export function SurfaceCalculator() {
   const [zones, setZones] = useState<Zone[]>(() => [newZone()]);
   const { unlocked } = useEmailGate();
+  const uid = useId();
 
   const update = (id: number, patch: Partial<Zone>) =>
     setZones((prev) => prev.map((z) => (z.id === id ? { ...z, ...patch } : z)));
@@ -101,11 +102,12 @@ export function SurfaceCalculator() {
                   </div>
                   <div className="grid gap-3 sm:grid-cols-3">
                     <div className="space-y-1.5">
-                      <Label>Forme</Label>
+                      <Label htmlFor={`${uid}-forme-${z.id}`}>Forme</Label>
                       <select
+                        id={`${uid}-forme-${z.id}`}
                         value={z.forme}
                         onChange={(e) => update(z.id, { forme: e.target.value as FormeSurface })}
-                        className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                        className="flex h-10 w-full rounded-md border border-gray-500 bg-white px-3 py-2 text-base text-gray-900 sm:text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
                       >
                         <option value="rectangle">Rectangle</option>
                         <option value="triangle">Triangle</option>
@@ -171,6 +173,7 @@ export function SurfaceCalculator() {
         </div>
       </div>
 
+      <LiveResult message={`Surface totale : ${fmtM2(total)}`} />
       {unlocked && <StickyResultBar label="Surface totale" value={fmtM2(total)} ctaHref={ctaSignupHref} />}
     </div>
   );
@@ -187,11 +190,13 @@ function Field({
   value: number;
   onChange: (v: string) => void;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <div className="relative">
         <Input
+          id={id}
           type="number"
           inputMode="decimal"
           min={0}

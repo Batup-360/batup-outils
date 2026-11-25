@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { ArrowRight, AlertTriangle, TrendingUp, TrendingDown } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { useEmailGate } from '@/lib/email-gate-context';
@@ -181,6 +181,7 @@ function computeFactors(inputs: Inputs): FactorImpact[] {
 export function DecennaleSimulator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
   const { unlocked } = useEmailGate();
+  const uid = useId();
   const embedded = useEmbedded();
 
   const update = <K extends keyof Inputs>(key: K, value: Inputs[K]) => {
@@ -245,7 +246,7 @@ export function DecennaleSimulator() {
                 id="metier"
                 value={inputs.metier}
                 onChange={(e) => update('metier', e.target.value as MetierKey)}
-                className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                className="flex h-10 w-full rounded-md border border-gray-500 bg-white px-3 py-2 text-base text-gray-900 sm:text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
               >
                 {(Object.keys(METIERS) as MetierKey[]).map((key) => (
                   <option key={key} value={key}>
@@ -259,9 +260,11 @@ export function DecennaleSimulator() {
             </div>
 
             <div className="space-y-1.5">
-              <Label>Chiffre d'affaires annuel HT</Label>
+              <Label htmlFor={`${uid}-ca`}>Chiffre d'affaires annuel HT</Label>
               <div className="relative">
                 <Input
+                  id={`${uid}-ca`}
+                  aria-describedby={`${uid}-ca-aide`}
                   type="number"
                   inputMode="decimal"
                   min={0}
@@ -275,19 +278,21 @@ export function DecennaleSimulator() {
                   € HT/an
                 </span>
               </div>
-              <p className="text-xs text-gray-500">
+              <p id={`${uid}-ca-aide`} className="text-xs text-gray-500">
                 Majoration de 10 % par tranche de 50 000 € au-delà du palier de base.
               </p>
             </div>
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label>Ancienneté de l'activité</Label>
+                <Label htmlFor={`${uid}-anciennete`}>Ancienneté de l'activité</Label>
                 <span className="text-sm font-semibold text-brand-500">
                   {inputs.anciennete >= 20 ? '20 ans et +' : `${inputs.anciennete} an${inputs.anciennete > 1 ? 's' : ''}`}
                 </span>
               </div>
               <input
+                id={`${uid}-anciennete`}
+                aria-describedby={`${uid}-anciennete-aide`}
                 type="range"
                 min={1}
                 max={20}
@@ -296,7 +301,7 @@ export function DecennaleSimulator() {
                 onChange={(e) => update('anciennete', parseInt(e.target.value, 10))}
                 className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 accent-brand-500"
               />
-              <p className="text-xs text-gray-500">
+              <p id={`${uid}-anciennete-aide`} className="text-xs text-gray-500">
                 Surprime de 30 % en dessous de 3 ans d'activité (primo-souscription).
               </p>
             </div>
@@ -307,7 +312,7 @@ export function DecennaleSimulator() {
                 id="effectif"
                 value={inputs.effectif}
                 onChange={(e) => update('effectif', e.target.value as EffectifKey)}
-                className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                className="flex h-10 w-full rounded-md border border-gray-500 bg-white px-3 py-2 text-base text-gray-900 sm:text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
               >
                 {(Object.keys(EFFECTIF_LABELS) as EffectifKey[]).map((key) => (
                   <option key={key} value={key}>
@@ -326,7 +331,7 @@ export function DecennaleSimulator() {
                 id="sinistralite"
                 value={inputs.sinistralite}
                 onChange={(e) => update('sinistralite', e.target.value as SinistraliteKey)}
-                className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                className="flex h-10 w-full rounded-md border border-gray-500 bg-white px-3 py-2 text-base text-gray-900 sm:text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
               >
                 <option value="aucune">Aucun sinistre</option>
                 <option value="1">1 sinistre déclaré</option>
@@ -352,6 +357,9 @@ export function DecennaleSimulator() {
               <CardTitle>Votre fourchette estimée</CardTitle>
             </CardHeader>
             <CardContent className="space-y-5">
+              <LiveResult
+                message={`Prime décennale annuelle : entre ${fmtEuro(results.min)} et ${fmtEuro(results.max)} HT par an`}
+              />
               <div>
                 <p className="text-xs uppercase tracking-wider text-gray-500">Prime décennale annuelle</p>
                 <p className="mt-1 text-3xl font-bold leading-tight text-brand-500 sm:text-4xl">

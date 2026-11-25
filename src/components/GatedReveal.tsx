@@ -44,7 +44,7 @@ export function GatedReveal({ toolSlug, toolLabel, resultPreview, children }: Ga
           Recevoir mon résultat par email
         </button>
       )}
-      <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[11px] text-gray-400">
+      <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-gray-600">
         <span className="inline-flex items-center gap-1">
           <ShieldCheck className="h-3.5 w-3.5" /> 100 % gratuit
         </span>

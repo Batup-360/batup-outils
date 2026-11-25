@@ -1,9 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { CheckCircle2, AlertTriangle, HelpCircle } from 'lucide-react';
 import { calculeEscalier, BLONDEL_MIN, BLONDEL_MAX } from '@/lib/escalier-math';
 import { buildEscalierPayload } from '@/lib/embed-payloads';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
@@ -135,7 +135,8 @@ export function EscalierCalculator() {
                       <span className="inline-flex items-center gap-1">
                         Formule de Blondel
                         <span title="2 × hauteur de marche + giron" className="cursor-help text-gray-400">
-                          <HelpCircle className="h-3.5 w-3.5" />
+                          <HelpCircle className="h-3.5 w-3.5" aria-hidden="true" />
+                          <span className="sr-only">(2 × hauteur de marche + giron)</span>
                         </span>
                       </span>
                     }
@@ -150,6 +151,9 @@ export function EscalierCalculator() {
         </div>
       </div>
 
+      <LiveResult
+        message={`Nombre de marches : ${r.nombreMarches > 0 ? r.nombreMarches : '—'}, hauteur de marche ${fmtCm(r.hauteurMarcheCm)}, giron ${fmtCm(r.gironCm)}`}
+      />
       {unlocked && (
         <StickyResultBar
           label="Nombre de marches"
@@ -174,11 +178,14 @@ function Field({
   value: number;
   onChange: (v: string) => void;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <div className="relative">
         <Input
+          id={id}
+          aria-describedby={hint ? `${id}-hint` : undefined}
           type="number"
           inputMode="decimal"
           min={0}
@@ -192,7 +199,7 @@ function Field({
           {suffix}
         </span>
       </div>
-      {hint && <p className="text-xs text-gray-500">{hint}</p>}
+      {hint && <p id={`${id}-hint`} className="text-xs text-gray-500">{hint}</p>}
     </div>
   );
 }

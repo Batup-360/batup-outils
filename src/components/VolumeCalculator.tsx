@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { volumeForme, LITRES_PAR_M3, type FormeVolume } from '@/lib/volume-math';
 import { buildVolumePayload } from '@/lib/embed-payloads';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
@@ -35,6 +35,7 @@ function fmtL(n: number): string {
 export function VolumeCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
   const { unlocked } = useEmailGate();
+  const uid = useId();
 
   const parseNum = (v: string) => parseFloat(v.replace(',', '.')) || 0;
   const update = (key: keyof Inputs, value: number) => setInputs((prev) => ({ ...prev, [key]: value }));
@@ -63,8 +64,8 @@ export function VolumeCalculator() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-1.5">
-              <Label>Forme</Label>
-              <div className="inline-flex w-full rounded-full border border-gray-200 bg-gray-50 p-1">
+              <Label id={`${uid}-forme`}>Forme</Label>
+              <div role="group" aria-labelledby={`${uid}-forme`} className="inline-flex w-full rounded-full border border-gray-200 bg-gray-50 p-1">
                 <button
                   type="button"
                   onClick={() => setInputs((p) => ({ ...p, forme: 'pave' }))}
@@ -133,6 +134,7 @@ export function VolumeCalculator() {
         </div>
       </div>
 
+      <LiveResult message={`Volume : ${fmtM3(volume)}`} />
       {unlocked && <StickyResultBar label="Volume" value={fmtM3(volume)} ctaHref={ctaSignupHref} />}
     </div>
   );
@@ -149,11 +151,13 @@ function Field({
   value: number;
   onChange: (v: string) => void;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <div className="relative">
         <Input
+          id={id}
           type="number"
           inputMode="decimal"
           min={0}

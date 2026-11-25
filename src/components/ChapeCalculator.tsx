@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { volumeMortier, dosageMortier } from '@/lib/mortier-math';
 import { buildChapePayload } from '@/lib/embed-payloads';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
@@ -44,6 +44,7 @@ export function ChapeCalculator() {
     return surface !== undefined ? { ...DEFAULTS, surface } : DEFAULTS;
   });
   const { unlocked } = useEmailGate();
+  const uid = useId();
 
   const updateNumber = (key: keyof Inputs, value: string) => {
     const num = parseFloat(value.replace(',', '.')) || 0;
@@ -75,11 +76,12 @@ export function ChapeCalculator() {
             <Field label="Surface au sol" suffix="m²" value={inputs.surface} onChange={(v) => updateNumber('surface', v)} />
             <Field label="Épaisseur" hint="4 à 6 cm en général" suffix="cm" value={inputs.epaisseur} onChange={(v) => updateNumber('epaisseur', v)} />
             <div className="space-y-1.5 sm:col-span-2">
-              <Label>Marge de sécurité</Label>
+              <Label htmlFor={`${uid}-marge`}>Marge de sécurité</Label>
               <select
+                id={`${uid}-marge`}
                 value={inputs.margePct}
                 onChange={(e) => updateNumber('margePct', e.target.value)}
-                className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                className="flex h-10 w-full rounded-md border border-gray-500 bg-white px-3 py-2 text-base text-gray-900 sm:text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
               >
                 <option value="0">Aucune (0 %)</option>
                 <option value="5">+ 5 %</option>
@@ -124,6 +126,7 @@ export function ChapeCalculator() {
         </div>
       </div>
 
+      <LiveResult message={`Volume de chape : ${fmtM3(results.volumeM3)}`} />
       {unlocked && (
         <StickyResultBar label="Volume de chape" value={fmtM3(results.volumeM3)} ctaHref={ctaSignupHref} />
       )}
@@ -144,11 +147,14 @@ function Field({
   value: number;
   onChange: (v: string) => void;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <div className="relative">
         <Input
+          id={id}
+          aria-describedby={hint ? `${id}-hint` : undefined}
           type="number"
           inputMode="decimal"
           min={0}
@@ -162,7 +168,7 @@ function Field({
           {suffix}
         </span>
       </div>
-      {hint && <p className="text-xs text-gray-500">{hint}</p>}
+      {hint && <p id={`${id}-hint`} className="text-xs text-gray-500">{hint}</p>}
     </div>
   );
 }

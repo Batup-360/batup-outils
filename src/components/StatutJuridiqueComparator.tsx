@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Check, Minus } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Label } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
@@ -321,6 +321,7 @@ export function StatutJuridiqueComparator() {
             <CardContent>
               <RadioGroup
                 name="ca"
+                label="Quel CA prévoyez-vous la première année ?"
                 value={answers.ca}
                 options={Object.entries(CA_LABELS) as [CAOption, string][]}
                 onChange={(v) => setAnswers((a) => ({ ...a, ca: v as CAOption }))}
@@ -335,6 +336,7 @@ export function StatutJuridiqueComparator() {
             <CardContent>
               <RadioGroup
                 name="associes"
+                label="Vous lancez seul ou avec des associés ?"
                 value={answers.associes}
                 options={Object.entries(ASSOCIES_LABELS) as [AssociesOption, string][]}
                 onChange={(v) => setAnswers((a) => ({ ...a, associes: v as AssociesOption }))}
@@ -349,6 +351,7 @@ export function StatutJuridiqueComparator() {
             <CardContent>
               <RadioGroup
                 name="activite"
+                label="Quel type d’activité ?"
                 value={answers.activite}
                 options={Object.entries(ACTIVITE_LABELS) as [ActiviteOption, string][]}
                 onChange={(v) => setAnswers((a) => ({ ...a, activite: v as ActiviteOption }))}
@@ -363,6 +366,7 @@ export function StatutJuridiqueComparator() {
             <CardContent>
               <RadioGroup
                 name="priorite"
+                label="Quelle est votre priorité ?"
                 value={answers.priorite}
                 options={Object.entries(PRIORITE_LABELS) as [PrioriteOption, string][]}
                 onChange={(v) => setAnswers((a) => ({ ...a, priorite: v as PrioriteOption }))}
@@ -383,6 +387,9 @@ export function StatutJuridiqueComparator() {
                 <CardTitle>Notre recommandation</CardTitle>
               </CardHeader>
               <CardContent className="space-y-5">
+                <LiveResult
+                  message={allAnswered && top ? `Statut recommandé : ${STATUT_LABELS[top.statut]}, note ${top.score.toFixed(1)} sur 10` : ''}
+                />
                 {!allAnswered && (
                   <p className="text-sm text-gray-600">
                     Répondez aux 4 questions pour obtenir une recommandation personnalisée.
@@ -507,18 +514,19 @@ export function StatutJuridiqueComparator() {
 }
 
 function RadioGroup<T extends string>({
-  name,
+  label: groupLabel,
   value,
   options,
   onChange,
 }: {
   name: string;
+  label: string;
   value: T | null;
   options: [T, string][];
   onChange: (v: T) => void;
 }) {
   return (
-    <div className="grid gap-2 sm:grid-cols-2">
+    <div role="radiogroup" aria-label={groupLabel} className="grid gap-2 sm:grid-cols-2">
       {options.map(([key, label]) => {
         const selected = value === key;
         return (
@@ -544,9 +552,6 @@ function RadioGroup<T extends string>({
               </span>
               <span>{label}</span>
             </span>
-            <Label className="sr-only">
-              {name} {label}
-            </Label>
           </button>
         );
       })}

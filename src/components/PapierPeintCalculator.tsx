@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { calculePapierPeint } from '@/lib/papier-peint-math';
 import { buildPapierPeintPayload } from '@/lib/embed-payloads';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
@@ -123,6 +123,7 @@ export function PapierPeintCalculator() {
         </div>
       </div>
 
+      <LiveResult message={`Rouleaux à acheter : ${r.rouleaux > 0 ? `${r.rouleaux} rouleaux` : '—'}`} />
       {unlocked && (
         <StickyResultBar
           label="Rouleaux"
@@ -147,11 +148,14 @@ function Field({
   value: number;
   onChange: (v: string) => void;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <div className="relative">
         <Input
+          id={id}
+          aria-describedby={hint ? `${id}-hint` : undefined}
           type="number"
           inputMode="decimal"
           min={0}
@@ -165,7 +169,7 @@ function Field({
           {suffix}
         </span>
       </div>
-      {hint && <p className="text-xs text-gray-500">{hint}</p>}
+      {hint && <p id={`${id}-hint`} className="text-xs text-gray-500">{hint}</p>}
     </div>
   );
 }

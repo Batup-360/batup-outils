@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { AlertTriangle, CheckCircle, HelpCircle, TrendingDown } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
@@ -87,6 +87,7 @@ function computeVerdict(solde: number, montantDefinitifTTC: number): Verdict {
 export function DGDCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
   const { unlocked } = useEmailGate();
+  const uid = useId();
 
   const updateNumber = (key: keyof Inputs, value: string) => {
     const num = parseFloat(value.replace(',', '.')) || 0;
@@ -182,7 +183,7 @@ export function DGDCalculator() {
               onChange={(v) => updateNumber('penalitesHT', v)}
             />
             <div className="space-y-1.5 sm:col-span-2">
-              <Label className="flex items-center gap-1">
+              <Label htmlFor={`${uid}-tva`} className="flex items-center gap-1">
                 Taux de TVA applicable
                 <span
                   title="20 % en neuf, 10 % en rénovation logement +2 ans, 5,5 % en travaux d'amélioration énergétique éligibles."
@@ -191,10 +192,15 @@ export function DGDCalculator() {
                   <HelpCircle className="h-4 w-4" />
                 </span>
               </Label>
+              <span id={`${uid}-tva-aide`} className="sr-only">
+                20 % en neuf, 10 % en rénovation logement +2 ans, 5,5 % en travaux d'amélioration énergétique éligibles.
+              </span>
               <select
+                id={`${uid}-tva`}
+                aria-describedby={`${uid}-tva-aide`}
                 value={inputs.tvaPct}
                 onChange={(e) => updateNumber('tvaPct', e.target.value)}
-                className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                className="flex h-10 w-full rounded-md border border-gray-500 bg-white px-3 py-2 text-base text-gray-900 sm:text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
               >
                 <option value="20">20 % (neuf)</option>
                 <option value="10">10 % (rénovation logement)</option>
@@ -269,6 +275,7 @@ export function DGDCalculator() {
               <CardTitle>Solde du DGD</CardTitle>
             </CardHeader>
             <CardContent className="space-y-5">
+              <LiveResult message={`Solde DGD à percevoir : ${fmtEuroSigned(results.solde)} TTC`} />
               <div>
                 <p className="text-xs uppercase tracking-wider text-gray-500">
                   Solde DGD à percevoir (TTC)
@@ -384,11 +391,14 @@ function Field({
   onChange: (v: string) => void;
   step?: string;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <div className="relative">
         <Input
+          id={id}
+          aria-describedby={hint ? `${id}-hint` : undefined}
           type="number"
           inputMode="decimal"
           min={0}
@@ -404,7 +414,7 @@ function Field({
           </span>
         )}
       </div>
-      {hint && <p className="text-xs text-gray-500">{hint}</p>}
+      {hint && <p id={`${id}-hint`} className="text-xs text-gray-500">{hint}</p>}
     </div>
   );
 }
@@ -420,13 +430,19 @@ function ToggleRow({
   value: boolean;
   onChange: (v: boolean) => void;
 }) {
+  const id = useId();
   return (
     <div className="flex items-start justify-between gap-4 rounded-md border border-gray-200 bg-white p-3">
       <div className="space-y-1">
-        <Label>{label}</Label>
-        {hint && <p className="text-xs text-gray-500">{hint}</p>}
+        <Label id={id}>{label}</Label>
+        {hint && <p id={`${id}-hint`} className="text-xs text-gray-500">{hint}</p>}
       </div>
-      <div className="inline-flex rounded-full border border-gray-200 bg-gray-50 p-1">
+      <div
+        role="group"
+        aria-labelledby={id}
+        aria-describedby={hint ? `${id}-hint` : undefined}
+        className="inline-flex rounded-full border border-gray-200 bg-gray-50 p-1"
+      >
         <button
           type="button"
           onClick={() => onChange(false)}

@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
@@ -59,6 +59,7 @@ export const fmtNum = (n: number): string => (Number.isFinite(n) && n > 0 ? NUM_
 
 export function QuantiteCalculator({ config }: { config: QuantiteConfig }) {
   const { unlocked } = useEmailGate();
+  const uid = useId();
   const prefill = useEmbedPrefill();
 
   const [values, setValues] = useState<Record<string, number>>(() => {
@@ -113,11 +114,13 @@ export function QuantiteCalculator({ config }: { config: QuantiteConfig }) {
             ))}
             {(config.selects ?? []).map((s) => (
               <div key={s.key} className="space-y-1.5">
-                <Label>{s.label}</Label>
+                <Label htmlFor={`${uid}-${s.key}`}>{s.label}</Label>
                 <select
+                  id={`${uid}-${s.key}`}
+                  aria-describedby={s.hint ? `${uid}-${s.key}-hint` : undefined}
                   value={values[s.key]}
                   onChange={(e) => setNum(s.key, e.target.value)}
-                  className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                  className="flex h-10 w-full rounded-md border border-gray-500 bg-white px-3 py-2 text-base text-gray-900 sm:text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
                 >
                   {s.options.map((o) => (
                     <option key={o.value} value={o.value}>
@@ -125,7 +128,7 @@ export function QuantiteCalculator({ config }: { config: QuantiteConfig }) {
                     </option>
                   ))}
                 </select>
-                {s.hint && <p className="text-xs text-gray-500">{s.hint}</p>}
+                {s.hint && <p id={`${uid}-${s.key}-hint`} className="text-xs text-gray-500">{s.hint}</p>}
               </div>
             ))}
           </CardContent>
@@ -166,6 +169,7 @@ export function QuantiteCalculator({ config }: { config: QuantiteConfig }) {
         </div>
       </div>
 
+      <LiveResult message={`${result.mainLabel} : ${result.mainValue}`} />
       {unlocked && (
         <StickyResultBar label={config.stickyLabel} value={result.mainValue} ctaHref={ctaSignupHref} />
       )}
@@ -186,11 +190,14 @@ function Field({
   value: number;
   onChange: (v: string) => void;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <div className="relative">
         <Input
+          id={id}
+          aria-describedby={hint ? `${id}-hint` : undefined}
           type="number"
           inputMode="decimal"
           min={0}
@@ -204,7 +211,7 @@ function Field({
           {suffix}
         </span>
       </div>
-      {hint && <p className="text-xs text-gray-500">{hint}</p>}
+      {hint && <p id={`${id}-hint`} className="text-xs text-gray-500">{hint}</p>}
     </div>
   );
 }
