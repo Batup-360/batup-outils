@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { HelpCircle } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
@@ -194,6 +194,7 @@ function computeResults(inputs: Inputs): Results {
 export function ChargesSocialesCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
   const { unlocked } = useEmailGate();
+  const uid = useId();
 
   const update = (key: keyof Inputs, value: string | boolean | Statut) => {
     setInputs((prev) => {
@@ -229,7 +230,7 @@ export function ChargesSocialesCalculator() {
             <CardTitle>Votre statut juridique</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-2 sm:grid-cols-2">
+            <div role="group" aria-label="Votre statut juridique" className="grid gap-2 sm:grid-cols-2">
               {(Object.keys(STATUT_LABELS) as Statut[]).map((s) => {
                 const selected = inputs.statut === s;
                 return (
@@ -237,6 +238,7 @@ export function ChargesSocialesCalculator() {
                     key={s}
                     type="button"
                     onClick={() => update('statut', s)}
+                    aria-pressed={selected}
                     className={`rounded-lg border px-4 py-3 text-left text-sm transition-colors ${
                       selected
                         ? 'border-brand-500 bg-brand-50 text-gray-900'
@@ -267,19 +269,27 @@ export function ChargesSocialesCalculator() {
               onChange={(v) => update('ca', v)}
             />
             <div className="space-y-2">
-              <Label className="flex items-center gap-1">
+              <Label id={`${uid}-acre`} className="flex items-center gap-1">
                 ACRE (1ère année) ?
                 <span
                   title="ACRE = exonération partielle des cotisations la 1ère année (12 mois). 25 % depuis le 1er juillet 2026 (50 % avant). Conditions : demandeur d'emploi, jeune < 26 ans, RSA, etc."
                   className="cursor-help text-gray-400"
                 >
-                  <HelpCircle className="h-4 w-4" />
+                  <HelpCircle className="h-4 w-4" aria-hidden />
+                  <span className="sr-only">
+                    ACRE = exonération partielle des cotisations la 1ère année (12 mois). 25 % depuis le 1er juillet 2026 (50 % avant). Conditions : demandeur d'emploi, jeune &lt; 26 ans, RSA, etc.
+                  </span>
                 </span>
               </Label>
-              <div className="inline-flex w-full rounded-full border border-gray-200 bg-gray-50 p-1">
+              <div
+                role="group"
+                aria-labelledby={`${uid}-acre`}
+                className="inline-flex w-full rounded-full border border-gray-200 bg-gray-50 p-1"
+              >
                 <button
                   type="button"
                   onClick={() => update('acre', false)}
+                  aria-pressed={!inputs.acre}
                   className={`flex-1 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                     !inputs.acre
                       ? 'bg-white text-brand-500 shadow-sm'
@@ -291,13 +301,14 @@ export function ChargesSocialesCalculator() {
                 <button
                   type="button"
                   onClick={() => update('acre', true)}
+                  aria-pressed={inputs.acre}
                   className={`flex-1 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                     inputs.acre
                       ? 'bg-white text-brand-500 shadow-sm'
                       : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
-                  Oui (-50 %)
+                  Oui (-25 %)
                 </button>
               </div>
             </div>
@@ -305,13 +316,16 @@ export function ChargesSocialesCalculator() {
             {showBeneficeSlider && (
               <div className="space-y-2 sm:col-span-2">
                 <div className="flex items-center justify-between">
-                  <Label className="flex items-center gap-1">
+                  <Label htmlFor={`${uid}-benefice`} className="flex items-center gap-1">
                     Bénéfice prévu (% du CA)
                     <span
                       title="Pour EI/EURL/SARL/SAS, les cotisations s'appliquent au bénéfice, pas au CA. Estimez votre marge nette d'exploitation."
                       className="cursor-help text-gray-400"
                     >
-                      <HelpCircle className="h-4 w-4" />
+                      <HelpCircle className="h-4 w-4" aria-hidden />
+                      <span className="sr-only">
+                        Pour EI/EURL/SARL/SAS, les cotisations s'appliquent au bénéfice, pas au CA. Estimez votre marge nette d'exploitation.
+                      </span>
                     </span>
                   </Label>
                   <span className="text-sm font-semibold text-brand-500">
@@ -319,6 +333,7 @@ export function ChargesSocialesCalculator() {
                   </span>
                 </div>
                 <input
+                  id={`${uid}-benefice`}
                   type="range"
                   min={5}
                   max={70}
@@ -359,6 +374,9 @@ export function ChargesSocialesCalculator() {
                   Barème indicatif 2026, hors IR personnel
                 </p>
               </div>
+              <LiveResult
+                message={`Cotisations totales estimées : ${fmtEuro(results.totalCotisations + results.isAmount)}`}
+              />
 
               {results.breakdown.length > 0 && (
                 <div className="space-y-2 border-t border-gray-100 pt-4 text-sm">
@@ -417,11 +435,14 @@ function Field({
   onChange: (v: string) => void;
   step?: string;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <div className="relative">
         <Input
+          id={id}
+          aria-describedby={hint ? `${id}-hint` : undefined}
           type="number"
           inputMode="decimal"
           min={0}
@@ -437,7 +458,7 @@ function Field({
           </span>
         )}
       </div>
-      {hint && <p className="text-xs text-gray-500">{hint}</p>}
+      {hint && <p id={`${id}-hint`} className="text-xs text-gray-500">{hint}</p>}
     </div>
   );
 }

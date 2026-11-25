@@ -20,4 +20,14 @@
   #root {
     min-height: 100vh;
   }
+
+  /* Dialogues modaux natifs (EmailGate, menu mobile) : le défilement reste dans le
+     dialogue au lieu de faire défiler la page derrière. */
+  dialog:modal {
+    overscroll-behavior: contain;
+  }
+  dialog::backdrop {
+    overflow: hidden;
+    overscroll-behavior: contain;
+  }
 }

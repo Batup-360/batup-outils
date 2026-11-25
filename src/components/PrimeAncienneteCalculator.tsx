@@ -1,7 +1,7 @@
-import { useMemo, useState, type ReactNode } from 'react';
+import { useId, useMemo, useState, type ReactNode } from 'react';
 import { HelpCircle, Info } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
@@ -41,6 +41,7 @@ function fmtEuro(n: number, decimals = 0): string {
 export function PrimeAncienneteCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
   const { unlocked } = useEmailGate();
+  const uid = useId();
 
   const updateNum = (key: keyof Inputs, value: string) => {
     const num = parseFloat(value.replace(',', '.')) || 0;
@@ -97,7 +98,7 @@ export function PrimeAncienneteCalculator() {
               step="1"
             />
             <div className="sm:col-span-2 space-y-1.5">
-              <Label className="flex items-center gap-1">
+              <Label htmlFor={`${uid}-contrat`} className="flex items-center gap-1">
                 Type de contrat
                 <span
                   title="Ouvriers : CCN art. 6.2, barème 3/6/9/12/15 %. ETAM : CCN art. 14, barème 1/2/3/4/5 %. Cadres : pas de prime conventionnelle barémée."
@@ -106,7 +107,12 @@ export function PrimeAncienneteCalculator() {
                   <HelpCircle className="h-4 w-4" />
                 </span>
               </Label>
+              <span id={`${uid}-contrat-aide`} className="sr-only">
+                Ouvriers : CCN art. 6.2, barème 3/6/9/12/15 %. ETAM : CCN art. 14, barème 1/2/3/4/5 %. Cadres : pas de prime conventionnelle barémée.
+              </span>
               <Select
+                id={`${uid}-contrat`}
+                describedBy={`${uid}-contrat-aide`}
                 value={inputs.contrat}
                 onChange={(v) => updateField('contrat', v as Contrat)}
               >
@@ -204,6 +210,9 @@ export function PrimeAncienneteCalculator() {
               <CardTitle>Votre résultat</CardTitle>
             </CardHeader>
             <CardContent className="space-y-5">
+              <LiveResult
+                message={results.applicable ? `Prime d'ancienneté mensuelle : ${fmtEuro(results.primeMensuelle, 2)}` : ''}
+              />
               {!results.applicable ? (
                 <div
                   className="flex items-start gap-2 rounded-md border border-amber-200 bg-amber-50 px-3 py-3 text-sm text-amber-800"
@@ -307,11 +316,14 @@ function Field({
   onChange: (v: string) => void;
   step?: string;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <div className="relative">
         <Input
+          id={id}
+          aria-describedby={hint ? `${id}-hint` : undefined}
           type="number"
           inputMode="decimal"
           min={0}
@@ -327,25 +339,31 @@ function Field({
           </span>
         )}
       </div>
-      {hint && <p className="text-xs text-gray-500">{hint}</p>}
+      {hint && <p id={`${id}-hint`} className="text-xs text-gray-500">{hint}</p>}
     </div>
   );
 }
 
 function Select({
+  id,
+  describedBy,
   value,
   onChange,
   children,
 }: {
+  id?: string;
+  describedBy?: string;
   value: string;
   onChange: (v: string) => void;
   children: ReactNode;
 }) {
   return (
     <select
+      id={id}
+      aria-describedby={describedBy}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+      className="flex h-10 w-full rounded-md border border-gray-500 bg-white px-3 py-2 text-base text-gray-900 sm:text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
     >
       {children}
     </select>

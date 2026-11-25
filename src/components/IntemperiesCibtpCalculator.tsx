@@ -1,7 +1,7 @@
-import { useMemo, useState, type ReactNode } from 'react';
+import { useId, useMemo, useState, type ReactNode } from 'react';
 import { AlertTriangle, HelpCircle } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
@@ -165,7 +165,12 @@ export function IntemperiesCibtpCalculator() {
                   </span>
                 </span>
               }
-              hint="Pour vérifier le reste de plafond avant blocage"
+              hint={
+                <>
+                  Pour vérifier le reste de plafond avant blocage
+                  <span className="sr-only"> — Cumul intempéries du salarié depuis le 1er novembre. Plafond légal de 55 jours par salarié et par campagne intempéries (1er novembre — 31 mars), art. L. 5424-15.</span>
+                </>
+              }
               suffix="jours"
               value={inputs.cumulAnnee}
               onChange={(v) => updateNum('cumulAnnee', v)}
@@ -192,6 +197,7 @@ export function IntemperiesCibtpCalculator() {
               <CardTitle>Votre résultat</CardTitle>
             </CardHeader>
             <CardContent className="space-y-5">
+              <LiveResult message={`Indemnité CIBTP totale : ${fmtEuro(results.indemniteTotale)}`} />
               <div>
                 <p className="text-xs uppercase tracking-wider text-gray-500">Indemnité CIBTP totale</p>
                 <p className="mt-1 text-4xl font-bold text-brand-500 sm:text-5xl">
@@ -312,11 +318,14 @@ function Field({
   onChange: (v: string) => void;
   step?: string;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <div className="relative">
         <Input
+          id={id}
+          aria-describedby={hint ? `${id}-hint` : undefined}
           type="number"
           inputMode="decimal"
           min={0}
@@ -332,7 +341,7 @@ function Field({
           </span>
         )}
       </div>
-      {hint && <p className="text-xs text-gray-500">{hint}</p>}
+      {hint && <p id={`${id}-hint`} className="text-xs text-gray-500">{hint}</p>}
     </div>
   );
 }

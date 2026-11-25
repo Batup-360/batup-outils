@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
@@ -53,9 +53,14 @@ function MetierView({ metier }: { metier: MetierSalaire }) {
             <CardTitle>Niveau d'expérience</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="inline-flex w-full rounded-full border border-gray-200 bg-gray-50 p-1">
+            <div
+              role="group"
+              aria-label="Niveau d'expérience"
+              className="inline-flex w-full rounded-full border border-gray-200 bg-gray-50 p-1"
+            >
               <button
                 type="button"
+                aria-pressed={exp === 'debutant'}
                 onClick={() => setExp('debutant')}
                 className={`flex-1 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                   exp === 'debutant' ? 'bg-white text-brand-500 shadow-sm' : 'text-gray-600 hover:text-gray-900'
@@ -65,6 +70,7 @@ function MetierView({ metier }: { metier: MetierSalaire }) {
               </button>
               <button
                 type="button"
+                aria-pressed={exp === 'confirme'}
                 onClick={() => setExp('confirme')}
                 className={`flex-1 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                   exp === 'confirme' ? 'bg-white text-brand-500 shadow-sm' : 'text-gray-600 hover:text-gray-900'
@@ -129,6 +135,9 @@ function MetierView({ metier }: { metier: MetierSalaire }) {
                 <CardTitle>Salaire {metier.label.toLowerCase()}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-5">
+                <LiveResult
+                  message={`${exp === 'debutant' ? 'Net mensuel début de carrière' : 'Net mensuel estimé confirmé'} : ${fmtEuro(net)}`}
+                />
                 <div>
                   <p className="text-xs uppercase tracking-wider text-gray-500">
                     {exp === 'debutant' ? 'Net mensuel — début de carrière' : 'Net mensuel estimé — confirmé'}

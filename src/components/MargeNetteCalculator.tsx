@@ -1,9 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { Link } from 'wouter';
 import { ArrowRight, HelpCircle } from 'lucide-react';
 import { computeVerdict, type VerdictKind } from '@/lib/pricing';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button, LiveResult } from './ui';
 import { ResultVerdict } from './ResultVerdict';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -58,6 +58,7 @@ export function MargeNetteCalculator() {
     return marge !== undefined ? { ...DEFAULTS, mode: 'marge', margeNette: marge } : DEFAULTS;
   });
   const { unlocked } = useEmailGate();
+  const uid = useId();
 
   const update = (key: keyof Inputs, value: string) => {
     const num = parseFloat(value.replace(',', '.')) || 0;
@@ -168,13 +169,14 @@ export function MargeNetteCalculator() {
             ) : (
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label className="flex items-center gap-1">
+                  <Label htmlFor={`${uid}-marge`} className="flex items-center gap-1">
                     Marge nette cible
                     <span
                       title="Marge nette = (PV − coût) / PV × 100. 23,08 % = coefficient 1,30."
                       className="cursor-help text-gray-400"
                     >
-                      <HelpCircle className="h-4 w-4" />
+                      <HelpCircle className="h-4 w-4" aria-hidden />
+                      <span className="sr-only">Marge nette = (PV − coût) / PV × 100. 23,08 % = coefficient 1,30.</span>
                     </span>
                   </Label>
                   <span className="text-sm font-semibold text-brand-500">
@@ -182,6 +184,7 @@ export function MargeNetteCalculator() {
                   </span>
                 </div>
                 <input
+                  id={`${uid}-marge`}
                   type="range"
                   min={0}
                   max={60}
@@ -229,6 +232,7 @@ export function MargeNetteCalculator() {
                 </p>
                 <p className="mt-1 text-xs text-gray-500">HT, hors TVA</p>
               </div>
+              <LiveResult message={`Prix de vente HT recommandé : ${fmtEuro(results.prixVente)}`} />
 
               <ResultVerdict verdict={results.verdict} />
 
@@ -286,11 +290,14 @@ function Field({
   onChange: (v: string) => void;
   step?: string;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <div className="relative">
         <Input
+          id={id}
+          aria-describedby={hint ? `${id}-hint` : undefined}
           type="number"
           inputMode="decimal"
           min={0}
@@ -306,7 +313,7 @@ function Field({
           </span>
         )}
       </div>
-      {hint && <p className="text-xs text-gray-500">{hint}</p>}
+      {hint && <p id={`${id}-hint`} className="text-xs text-gray-500">{hint}</p>}
     </div>
   );
 }

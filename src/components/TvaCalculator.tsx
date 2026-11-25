@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { Check, Clipboard } from 'lucide-react';
 import { htToTtc, ttcToHt, tvaFromHT } from '@/lib/tva-math';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
@@ -44,6 +44,7 @@ export function TvaCalculator() {
   });
   const [copied, setCopied] = useState(false);
   const { unlocked } = useEmailGate();
+  const uid = useId();
 
   const updateNumber = (key: keyof Inputs, value: string) => {
     const num = parseFloat(value.replace(',', '.')) || 0;
@@ -87,8 +88,12 @@ export function TvaCalculator() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-1.5">
-              <Label>Sens de conversion</Label>
-              <div className="inline-flex w-full rounded-full border border-gray-200 bg-gray-50 p-1">
+              <Label id={`${uid}-sens`}>Sens de conversion</Label>
+              <div
+                role="group"
+                aria-labelledby={`${uid}-sens`}
+                className="inline-flex w-full rounded-full border border-gray-200 bg-gray-50 p-1"
+              >
                 <button
                   type="button"
                   onClick={() => setInputs((p) => ({ ...p, sens: 'htToTtc' }))}
@@ -119,8 +124,8 @@ export function TvaCalculator() {
               onChange={(v) => updateNumber('montant', v)}
             />
 
-            <div className="space-y-1.5">
-              <Label>Taux de TVA</Label>
+            <div role="group" aria-labelledby={`${uid}-taux`} className="space-y-1.5">
+              <Label id={`${uid}-taux`}>Taux de TVA</Label>
               <div className="flex flex-wrap gap-2">
                 {RATES.map((r) => (
                   <button
@@ -175,6 +180,7 @@ export function TvaCalculator() {
                   <p className="mt-1 text-4xl font-bold text-brand-500 sm:text-5xl">{fmtEuro(cible)}</p>
                   <p className="mt-1 text-xs text-gray-500">TVA à {fmtRate(inputs.taux)}</p>
                 </div>
+                <LiveResult message={`${cibleLabel} : ${fmtEuro(cible)}, TVA à ${fmtRate(inputs.taux)}`} />
                 <div className="space-y-2 border-t border-gray-100 pt-4 text-sm">
                   <Row label="Montant HT" value={fmtEuro(results.ht)} />
                   <Row label={`TVA (${fmtRate(inputs.taux)})`} value={fmtEuro(results.tva)} />
@@ -225,11 +231,13 @@ function Field({
   value: number;
   onChange: (v: string) => void;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <div className="relative">
         <Input
+          id={id}
           type="number"
           inputMode="decimal"
           min={0}

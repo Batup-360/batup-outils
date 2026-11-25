@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import type { ReactNode, ButtonHTMLAttributes, InputHTMLAttributes, LabelHTMLAttributes } from 'react';
 
 /**
@@ -34,7 +34,7 @@ export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputE
       <input
         ref={ref}
         {...rest}
-        className={`flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+        className={`flex h-10 w-full rounded-md border border-gray-500 bg-white px-3 py-2 text-base text-gray-900 placeholder:text-gray-400 sm:text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
       />
     );
   },
@@ -69,9 +69,30 @@ export function Button({
   return (
     <button
       {...rest}
-      className={`inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500/40 disabled:pointer-events-none disabled:opacity-50 ${styles} ${className}`}
+      className={`inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700 disabled:pointer-events-none disabled:opacity-50 ${styles} ${className}`}
     >
       {children}
     </button>
+  );
+}
+
+/**
+ * Annonce le résultat principal d'un calculateur aux lecteurs d'écran
+ * (région `role="status"`, polie), avec un délai pour ne pas parler à chaque frappe.
+ * Invisible à l'écran : le résultat visible reste celui du calculateur.
+ * Rien n'est annoncé au chargement, seulement après une modification.
+ */
+export function LiveResult({ message, delay = 600 }: { message: string; delay?: number }) {
+  const [annonce, setAnnonce] = useState('');
+  const initial = useRef(message);
+  useEffect(() => {
+    if (message === initial.current && annonce === '') return;
+    const t = window.setTimeout(() => setAnnonce(message), delay);
+    return () => window.clearTimeout(t);
+  }, [message, delay]);
+  return (
+    <p role="status" className="sr-only">
+      {annonce}
+    </p>
   );
 }

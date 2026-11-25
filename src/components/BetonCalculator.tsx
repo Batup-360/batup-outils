@@ -1,9 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { volumeBeton, dosageBeton } from '@/lib/beton-math';
 import { buildBetonPayload } from '@/lib/embed-payloads';
 import { volumeCylindre } from '@/lib/volume-math';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
@@ -57,6 +57,7 @@ function fmtL(n: number): string {
 export function BetonCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
   const { unlocked } = useEmailGate();
+  const uid = useId();
 
   const updateNumber = (key: keyof Inputs, value: string) => {
     const num = parseFloat(value.replace(',', '.')) || 0;
@@ -94,8 +95,8 @@ export function BetonCalculator() {
           </CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-1.5 sm:col-span-2">
-              <Label>Forme de l'ouvrage</Label>
-              <div className="inline-flex w-full rounded-full border border-gray-200 bg-gray-50 p-1">
+              <Label id={`${uid}-forme`}>Forme de l'ouvrage</Label>
+              <div role="group" aria-labelledby={`${uid}-forme`} className="inline-flex w-full rounded-full border border-gray-200 bg-gray-50 p-1">
                 <button
                   type="button"
                   onClick={() => setInputs((p) => ({ ...p, forme: 'rectangle' }))}
@@ -132,11 +133,12 @@ export function BetonCalculator() {
               </>
             )}
             <div className="space-y-1.5">
-              <Label>Marge de sécurité</Label>
+              <Label htmlFor={`${uid}-marge`}>Marge de sécurité</Label>
               <select
+                id={`${uid}-marge`}
                 value={inputs.margePct}
                 onChange={(e) => updateNumber('margePct', e.target.value)}
-                className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                className="flex h-10 w-full rounded-md border border-gray-500 bg-white px-3 py-2 text-base text-gray-900 sm:text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
               >
                 <option value="0">Aucune (0 %)</option>
                 <option value="5">+ 5 % (pose soignée)</option>
@@ -152,11 +154,12 @@ export function BetonCalculator() {
           </CardHeader>
           <CardContent>
             <div className="space-y-1.5">
-              <Label>Dosage selon l'usage</Label>
+              <Label htmlFor={`${uid}-dosage`}>Dosage selon l'usage</Label>
               <select
+                id={`${uid}-dosage`}
                 value={inputs.dosage}
                 onChange={(e) => updateNumber('dosage', e.target.value)}
-                className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                className="flex h-10 w-full rounded-md border border-gray-500 bg-white px-3 py-2 text-base text-gray-900 sm:text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
               >
                 <option value="250">250 kg/m³ — fondation légère, béton de propreté</option>
                 <option value="350">350 kg/m³ — dalle, terrasse (standard)</option>
@@ -212,6 +215,7 @@ export function BetonCalculator() {
         </div>
       </div>
 
+      <LiveResult message={`Volume de béton : ${fmtM3(results.volumeM3)}`} />
       {unlocked && (
         <StickyResultBar label="Volume de béton" value={fmtM3(results.volumeM3)} ctaHref={ctaSignupHref} />
       )}
@@ -234,11 +238,14 @@ function Field({
   onChange: (v: string) => void;
   step?: string;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <div className="relative">
         <Input
+          id={id}
+          aria-describedby={hint ? `${id}-hint` : undefined}
           type="number"
           inputMode="decimal"
           min={0}
@@ -252,7 +259,7 @@ function Field({
           {suffix}
         </span>
       </div>
-      {hint && <p className="text-xs text-gray-500">{hint}</p>}
+      {hint && <p id={`${id}-hint`} className="text-xs text-gray-500">{hint}</p>}
     </div>
   );
 }

@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { AlertTriangle, HelpCircle, ExternalLink } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
@@ -150,9 +150,10 @@ export function RevisionPrixIndexBTCalculator() {
               <Label htmlFor="index-bt-select">Type d'index BT</Label>
               <select
                 id="index-bt-select"
+                aria-describedby="index-bt-select-hint"
                 value={inputs.indexCode}
                 onChange={(e) => updateStr('indexCode', e.target.value)}
-                className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                className="flex h-10 w-full rounded-md border border-gray-500 bg-white px-3 py-2 text-base text-gray-900 sm:text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
               >
                 {INDEX_BT_OPTIONS.map((opt) => (
                   <option key={opt.code} value={opt.code}>
@@ -160,7 +161,7 @@ export function RevisionPrixIndexBTCalculator() {
                   </option>
                 ))}
               </select>
-              <p className="text-xs text-gray-500">
+              <p id="index-bt-select-hint" className="text-xs text-gray-500">
                 BT01 est l'index par défaut pour les marchés tous corps d'état. Pour un lot
                 unique, choisissez l'index du corps de métier concerné.
               </p>
@@ -220,7 +221,10 @@ export function RevisionPrixIndexBTCalculator() {
                   title="Convention CCAG-Travaux : part fixe 0,15 + part variable 0,85 = 1. La somme des coefficients doit toujours faire 1."
                   className="cursor-help text-gray-400"
                 >
-                  <HelpCircle className="h-4 w-4" />
+                  <HelpCircle className="h-4 w-4" aria-hidden />
+                  <span className="sr-only">
+                    Convention CCAG-Travaux : part fixe 0,15 + part variable 0,85 = 1. La somme des coefficients doit toujours faire 1.
+                  </span>
                 </span>
               </span>
             </CardTitle>
@@ -280,6 +284,7 @@ export function RevisionPrixIndexBTCalculator() {
                 </p>
                 <p className="mt-1 text-xs text-gray-500">HT, hors TVA</p>
               </div>
+              <LiveResult message={`Prix révisé HT : ${fmtEuro(results.prixRevise)}`} />
 
               <div className="space-y-2 border-t border-gray-100 pt-4 text-sm">
                 <Row label="Coefficient de révision" value={fmtCoef(results.coefRevision)} />
@@ -379,11 +384,14 @@ function Field({
   onChange: (v: string) => void;
   step?: string;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <div className="relative">
         <Input
+          id={id}
+          aria-describedby={hint ? `${id}-hint` : undefined}
           type="number"
           inputMode="decimal"
           min={0}
@@ -399,7 +407,7 @@ function Field({
           </span>
         )}
       </div>
-      {hint && <p className="text-xs text-gray-500">{hint}</p>}
+      {hint && <p id={`${id}-hint`} className="text-xs text-gray-500">{hint}</p>}
     </div>
   );
 }

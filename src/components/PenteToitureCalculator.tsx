@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import {
   pentePourcent,
   angleDegres,
@@ -8,7 +8,7 @@ import {
 } from '@/lib/pente-math';
 import { buildPenteToiturePayload } from '@/lib/embed-payloads';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
@@ -49,6 +49,7 @@ function fmtM(n: number): string {
 export function PenteToitureCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
   const { unlocked } = useEmailGate();
+  const uid = useId();
 
   const parseNum = (v: string) => parseFloat(v.replace(',', '.')) || 0;
   const update = (key: keyof Inputs, value: number) => setInputs((prev) => ({ ...prev, [key]: value }));
@@ -96,8 +97,8 @@ export function PenteToitureCalculator() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-1.5">
-              <Label>Méthode</Label>
-              <div className="inline-flex w-full rounded-full border border-gray-200 bg-gray-50 p-1">
+              <Label id={`${uid}-methode`}>Méthode</Label>
+              <div role="group" aria-labelledby={`${uid}-methode`} className="inline-flex w-full rounded-full border border-gray-200 bg-gray-50 p-1">
                 <button
                   type="button"
                   onClick={() => setInputs((p) => ({ ...p, mode: 'dimensions' }))}
@@ -129,8 +130,8 @@ export function PenteToitureCalculator() {
             ) : (
               <div className="space-y-4">
                 <div className="space-y-1.5">
-                  <Label>Unité de la pente connue</Label>
-                  <div className="inline-flex w-full rounded-full border border-gray-200 bg-gray-50 p-1">
+                  <Label id={`${uid}-unite`}>Unité de la pente connue</Label>
+                  <div role="group" aria-labelledby={`${uid}-unite`} className="inline-flex w-full rounded-full border border-gray-200 bg-gray-50 p-1">
                     <button
                       type="button"
                       onClick={() => setInputs((p) => ({ ...p, unite: 'pourcent' }))}
@@ -195,6 +196,7 @@ export function PenteToitureCalculator() {
         </div>
       </div>
 
+      <LiveResult message={`Pente : ${fmtPct(results.pourcent)}, soit ${fmtDeg(results.degres)}`} />
       {unlocked && <StickyResultBar label="Pente" value={fmtPct(results.pourcent)} ctaHref={ctaSignupHref} />}
     </div>
   );
@@ -213,11 +215,14 @@ function Field({
   value: number;
   onChange: (v: string) => void;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <div className="relative">
         <Input
+          id={id}
+          aria-describedby={hint ? `${id}-hint` : undefined}
           type="number"
           inputMode="decimal"
           min={0}
@@ -231,7 +236,7 @@ function Field({
           {suffix}
         </span>
       </div>
-      {hint && <p className="text-xs text-gray-500">{hint}</p>}
+      {hint && <p id={`${id}-hint`} className="text-xs text-gray-500">{hint}</p>}
     </div>
   );
 }

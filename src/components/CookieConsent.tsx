@@ -32,7 +32,7 @@ export function CookieConsent() {
   }
 
   const bouton =
-    'flex-1 rounded-full px-4 py-2 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500/40';
+    'flex-1 rounded-full px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700';
 
   return (
     <section

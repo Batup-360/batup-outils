@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { Check, CheckCircle, Clipboard, FileSignature, Info, TrendingDown } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Label } from './ui';
@@ -106,6 +106,7 @@ const SLUG_BY_VERDICT: Record<Verdict, string> = {
 
 export function MentionTvaGenerator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
+  const montantId = useId();
   const [copied, setCopied] = useState(false);
   const { unlocked } = useEmailGate();
 
@@ -220,9 +221,10 @@ export function MentionTvaGenerator() {
             />
 
             <div className="space-y-1.5">
-              <Label>Montant HT de la facture (optionnel)</Label>
+              <Label htmlFor={montantId}>Montant HT de la facture (optionnel)</Label>
               <div className="relative">
                 <input
+                  id={montantId}
                   type="number"
                   inputMode="decimal"
                   min={0}
@@ -232,7 +234,7 @@ export function MentionTvaGenerator() {
                     update('montantHT', parseFloat(e.target.value.replace(',', '.')) || 0)
                   }
                   placeholder="0"
-                  className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 pr-12 text-sm text-gray-900 placeholder:text-gray-400 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                  className="flex h-10 w-full rounded-md border border-gray-500 bg-white px-3 py-2 pr-12 text-base text-gray-900 sm:text-sm placeholder:text-gray-400 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
                 />
                 <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">
                   €

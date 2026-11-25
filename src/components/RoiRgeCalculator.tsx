@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { ArrowRight, CheckCircle, AlertTriangle, TrendingDown } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { useEmailGate } from '@/lib/email-gate-context';
@@ -76,6 +76,7 @@ const VERDICT_CONFIG: Record<
 export function RoiRgeCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
   const { unlocked } = useEmailGate();
+  const uid = useId();
   const embedded = useEmbedded();
 
   const updateNumber = (key: keyof Inputs, value: string) => {
@@ -140,9 +141,11 @@ export function RoiRgeCalculator() {
           </CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-1.5">
-              <Label>Coût total de la certification</Label>
+              <Label htmlFor={`${uid}-coutCertif`}>Coût total de la certification</Label>
               <div className="relative">
                 <Input
+                  id={`${uid}-coutCertif`}
+                  aria-describedby={`${uid}-coutCertif-aide`}
                   type="number"
                   inputMode="decimal"
                   min={0}
@@ -156,15 +159,17 @@ export function RoiRgeCalculator() {
                   €
                 </span>
               </div>
-              <p className="text-xs text-gray-500">
+              <p id={`${uid}-coutCertif-aide`} className="text-xs text-gray-500">
                 Audit + dossier d'admission QualibatRGE (~1 200 € en 2026).
               </p>
             </div>
 
             <div className="space-y-1.5">
-              <Label>Coût annuel de maintien</Label>
+              <Label htmlFor={`${uid}-coutMaintien`}>Coût annuel de maintien</Label>
               <div className="relative">
                 <Input
+                  id={`${uid}-coutMaintien`}
+                  aria-describedby={`${uid}-coutMaintien-aide`}
                   type="number"
                   inputMode="decimal"
                   min={0}
@@ -178,15 +183,17 @@ export function RoiRgeCalculator() {
                   €/an
                 </span>
               </div>
-              <p className="text-xs text-gray-500">
+              <p id={`${uid}-coutMaintien-aide`} className="text-xs text-gray-500">
                 Audit de suivi tous les 4 ans + contrôle chantier.
               </p>
             </div>
 
             <div className="space-y-1.5">
-              <Label>Heures de formation FEEBat</Label>
+              <Label htmlFor={`${uid}-heuresFormation`}>Heures de formation FEEBat</Label>
               <div className="relative">
                 <Input
+                  id={`${uid}-heuresFormation`}
+                  aria-describedby={`${uid}-heuresFormation-aide`}
                   type="number"
                   inputMode="decimal"
                   min={0}
@@ -200,15 +207,17 @@ export function RoiRgeCalculator() {
                   h
                 </span>
               </div>
-              <p className="text-xs text-gray-500">
+              <p id={`${uid}-heuresFormation-aide`} className="text-xs text-gray-500">
                 Module FEEBat RENOVE : 21 h obligatoires (3 jours).
               </p>
             </div>
 
             <div className="space-y-1.5">
-              <Label>Coût horaire de votre temps</Label>
+              <Label htmlFor={`${uid}-coutHoraire`}>Coût horaire de votre temps</Label>
               <div className="relative">
                 <Input
+                  id={`${uid}-coutHoraire`}
+                  aria-describedby={`${uid}-coutHoraire-aide`}
                   type="number"
                   inputMode="decimal"
                   min={0}
@@ -222,7 +231,7 @@ export function RoiRgeCalculator() {
                   €/h
                 </span>
               </div>
-              <p className="text-xs text-gray-500">
+              <p id={`${uid}-coutHoraire-aide`} className="text-xs text-gray-500">
                 Coût d'opportunité — heures non facturées pendant la formation.
               </p>
             </div>
@@ -236,12 +245,14 @@ export function RoiRgeCalculator() {
           <CardContent className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2 sm:col-span-2">
               <div className="flex items-center justify-between">
-                <Label>Chantiers RGE-éligibles par an grâce au label</Label>
+                <Label htmlFor={`${uid}-chantiersParAn`}>Chantiers RGE-éligibles par an grâce au label</Label>
                 <span className="text-sm font-semibold text-brand-500">
                   {inputs.chantiersParAn} chantier{inputs.chantiersParAn > 1 ? 's' : ''}/an
                 </span>
               </div>
               <input
+                id={`${uid}-chantiersParAn`}
+                aria-describedby={`${uid}-chantiersParAn-aide`}
                 type="range"
                 min={0}
                 max={50}
@@ -250,15 +261,17 @@ export function RoiRgeCalculator() {
                 onChange={(e) => updateSlider('chantiersParAn', parseInt(e.target.value, 10))}
                 className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 accent-brand-500"
               />
-              <p className="text-xs text-gray-500">
+              <p id={`${uid}-chantiersParAn-aide`} className="text-xs text-gray-500">
                 Nombre de chantiers MaPrimeRénov / CEE / éco-PTZ que vous espérez décrocher chaque année grâce au label RGE.
               </p>
             </div>
 
             <div className="space-y-1.5">
-              <Label>CA moyen par chantier RGE</Label>
+              <Label htmlFor={`${uid}-caChantier`}>CA moyen par chantier RGE</Label>
               <div className="relative">
                 <Input
+                  id={`${uid}-caChantier`}
+                  aria-describedby={`${uid}-caChantier-aide`}
                   type="number"
                   inputMode="decimal"
                   min={0}
@@ -272,15 +285,17 @@ export function RoiRgeCalculator() {
                   € HT
                 </span>
               </div>
-              <p className="text-xs text-gray-500">
+              <p id={`${uid}-caChantier-aide`} className="text-xs text-gray-500">
                 Chantier MaPrimeRénov type : isolation, PAC, menuiseries.
               </p>
             </div>
 
             <div className="space-y-1.5">
-              <Label>Marge nette par chantier</Label>
+              <Label htmlFor={`${uid}-margeNettePct`}>Marge nette par chantier</Label>
               <div className="relative">
                 <Input
+                  id={`${uid}-margeNettePct`}
+                  aria-describedby={`${uid}-margeNettePct-aide`}
                   type="number"
                   inputMode="decimal"
                   min={0}
@@ -295,7 +310,7 @@ export function RoiRgeCalculator() {
                   %
                 </span>
               </div>
-              <p className="text-xs text-gray-500">
+              <p id={`${uid}-margeNettePct-aide`} className="text-xs text-gray-500">
                 Marge nette = (PV − coût) / PV × 100. 23 % est la médiane BTP 2026.
               </p>
             </div>
@@ -315,6 +330,9 @@ export function RoiRgeCalculator() {
               <CardTitle>Votre rentabilité RGE</CardTitle>
             </CardHeader>
             <CardContent className="space-y-5">
+              <LiveResult
+                message={`Marge supplémentaire annuelle : ${fmtEuro(results.margeSuppAnnuelle)}, ROI année 1 : ${fmtPct(results.roiAn1Pct)}`}
+              />
               <div>
                 <p className="text-xs uppercase tracking-wider text-gray-500">
                   Marge supplémentaire annuelle

@@ -1,7 +1,7 @@
-import { useMemo, useState, type ReactNode } from 'react';
+import { useId, useMemo, useState, type ReactNode } from 'react';
 import { HelpCircle } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
-import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
+import { Card, CardContent, CardHeader, CardTitle, Input, Label, LiveResult } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
 import { ToolCta } from './ToolCta';
@@ -72,6 +72,7 @@ function fmtEuro(n: number, decimals = 0): string {
 export function HeuresSupCalculator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
   const { unlocked } = useEmailGate();
+  const uid = useId();
 
   const updateNum = (key: keyof Inputs, value: string) => {
     const num = parseFloat(value.replace(',', '.')) || 0;
@@ -128,8 +129,9 @@ export function HeuresSupCalculator() {
               step="0.5"
             />
             <div className="space-y-1.5">
-              <Label>Convention applicable</Label>
+              <Label htmlFor={`${uid}-convention`}>Convention applicable</Label>
               <Select
+                id={`${uid}-convention`}
                 value={inputs.convention}
                 onChange={(v) => updateField('convention', v as Convention)}
               >
@@ -138,10 +140,11 @@ export function HeuresSupCalculator() {
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label>
+              <Label htmlFor={`${uid}-niveau`}>
                 Niveau / position
               </Label>
               <Select
+                id={`${uid}-niveau`}
                 value={inputs.niveau}
                 onChange={(v) => updateField('niveau', v)}
               >
@@ -169,13 +172,18 @@ export function HeuresSupCalculator() {
               step="1"
             />
             <div className="space-y-1.5">
-              <Label className="flex items-center gap-1">
+              <Label htmlFor={`${uid}-zone`} className="flex items-center gap-1">
                 Zone d'indemnité de trajet
                 <span title="Distance entre le siège et le chantier. Barème CCN ouvriers BTP." className="cursor-help text-gray-400">
                   <HelpCircle className="h-4 w-4" />
                 </span>
               </Label>
+              <span id={`${uid}-zone-aide`} className="sr-only">
+                Distance entre le siège et le chantier. Barème CCN ouvriers BTP.
+              </span>
               <Select
+                id={`${uid}-zone`}
+                describedBy={`${uid}-zone-aide`}
                 value={inputs.zoneTrajet}
                 onChange={(v) => updateField('zoneTrajet', v as ZoneTrajet)}
               >
@@ -216,6 +224,7 @@ export function HeuresSupCalculator() {
                 <CardTitle>Votre résultat</CardTitle>
               </CardHeader>
               <CardContent className="space-y-5">
+                <LiveResult message={`Total brut semaine : ${fmtEuro(results.totalSemaine)}`} />
                 <div>
                   <p className="text-xs uppercase tracking-wider text-gray-500">Total brut semaine</p>
                   <p className="mt-1 text-4xl font-bold text-brand-500 sm:text-5xl">{fmtEuro(results.totalSemaine)}</p>
@@ -285,11 +294,14 @@ function Field({
   onChange: (v: string) => void;
   step?: string;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <div className="relative">
         <Input
+          id={id}
+          aria-describedby={hint ? `${id}-hint` : undefined}
           type="number"
           inputMode="decimal"
           min={0}
@@ -305,25 +317,31 @@ function Field({
           </span>
         )}
       </div>
-      {hint && <p className="text-xs text-gray-500">{hint}</p>}
+      {hint && <p id={`${id}-hint`} className="text-xs text-gray-500">{hint}</p>}
     </div>
   );
 }
 
 function Select({
+  id,
+  describedBy,
   value,
   onChange,
   children,
 }: {
+  id?: string;
+  describedBy?: string;
   value: string;
   onChange: (v: string) => void;
   children: ReactNode;
 }) {
   return (
     <select
+      id={id}
+      aria-describedby={describedBy}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+      className="flex h-10 w-full rounded-md border border-gray-500 bg-white px-3 py-2 text-base text-gray-900 focus:border-brand-500 sm:text-sm focus:outline-none focus:ring-1 focus:ring-brand-500"
     >
       {children}
     </select>

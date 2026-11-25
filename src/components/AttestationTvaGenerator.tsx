@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { Check, Clipboard } from 'lucide-react';
 import { APP_BASE } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
@@ -68,6 +68,7 @@ export function AttestationTvaGenerator() {
   const [inputs, setInputs] = useState<Inputs>(DEFAULTS);
   const [copied, setCopied] = useState(false);
   const { unlocked } = useEmailGate();
+  const tauxId = useId();
 
   const update = <K extends keyof Inputs>(key: K, value: Inputs[K]) =>
     setInputs((prev) => ({ ...prev, [key]: value }));
@@ -98,8 +99,12 @@ export function AttestationTvaGenerator() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-1.5">
-              <Label>Taux de TVA applicable</Label>
-              <div className="inline-flex w-full rounded-full border border-gray-200 bg-gray-50 p-1">
+              <Label id={tauxId}>Taux de TVA applicable</Label>
+              <div
+                role="group"
+                aria-labelledby={tauxId}
+                className="inline-flex w-full rounded-full border border-gray-200 bg-gray-50 p-1"
+              >
                 <button
                   type="button"
                   onClick={() => update('taux', '10')}
@@ -201,10 +206,11 @@ function TextField({
   onChange: (v: string) => void;
   placeholder?: string;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
-      <Input type="text" value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} />
+      <Label htmlFor={id}>{label}</Label>
+      <Input id={id} type="text" value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} />
     </div>
   );
 }

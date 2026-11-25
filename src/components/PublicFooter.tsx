@@ -157,7 +157,7 @@ export function PublicFooter() {
               <div className="col-span-2 lg:col-span-3">
                 <a href={MARKETING_BASE} className="mb-5 inline-flex items-center gap-2">
                   <img
-                    src="/assets/logo-batup-marketing.png"
+                    src="/assets/logo-batup-marketing.webp" width={116} height={72}
                     alt="BatUp"
                     className="h-9 w-auto"
                   />
