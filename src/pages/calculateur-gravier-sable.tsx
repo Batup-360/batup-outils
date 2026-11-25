@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { GravierSableCalculator } from '@/components/GravierSableCalculator';
 import { gravierSableCopy } from '@/content/gravier-sable-copy';
 import { gravierSableFAQ } from '@/content/gravier-sable-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurGravierSable() {
   const base = siteOrigin();
@@ -18,7 +18,7 @@ export default function CalculateurGravierSable() {
       ]}
       heroH1={gravierSableCopy.hero.h1}
       heroLede={gravierSableCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-gravier-sable`}
+      signupHref={signupUrl({ source: 'calculateur-gravier-sable' })}
       ctaBannerTitle={gravierSableCopy.ctaBanner.title}
       ctaBannerSubtitle={gravierSableCopy.ctaBanner.subtitle}
       methodology={gravierSableCopy.methodology}

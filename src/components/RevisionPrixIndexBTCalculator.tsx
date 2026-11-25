@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { AlertTriangle, HelpCircle, ExternalLink } from 'lucide-react';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -135,7 +135,7 @@ export function RevisionPrixIndexBTCalculator() {
     if (inputs.prixInitial > 0) params.set('prix_initial', inputs.prixInitial.toFixed(2));
     if (results.prixRevise > 0) params.set('prix_revise', results.prixRevise.toFixed(2));
     if (inputs.indexCode) params.set('index', inputs.indexCode);
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [inputs.prixInitial, inputs.indexCode, results.prixRevise]);
 
   return (

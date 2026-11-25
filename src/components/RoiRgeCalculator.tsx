@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { ArrowRight, CheckCircle, AlertTriangle, TrendingDown } from 'lucide-react';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -125,7 +125,7 @@ export function RoiRgeCalculator() {
         ? results.breakEven.toString()
         : '0',
     });
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [results.roiAn1Pct, results.breakEven]);
 
   const verdictCfg = VERDICT_CONFIG[results.verdict];

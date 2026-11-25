@@ -1,6 +1,6 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import { HelpCircle, Info } from 'lucide-react';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -69,7 +69,7 @@ export function PrimeAncienneteCalculator() {
     if (results.primeMensuelle > 0) {
       params.set('prime_mensuelle', results.primeMensuelle.toFixed(0));
     }
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [results.primeMensuelle]);
 
   return (

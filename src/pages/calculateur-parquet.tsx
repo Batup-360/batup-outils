@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { ParquetCalculator } from '@/components/ParquetCalculator';
 import { parquetCopy } from '@/content/parquet-copy';
 import { parquetFAQ } from '@/content/parquet-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurParquet() {
   const base = siteOrigin();
@@ -18,7 +18,7 @@ export default function CalculateurParquet() {
       ]}
       heroH1={parquetCopy.hero.h1}
       heroLede={parquetCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-parquet`}
+      signupHref={signupUrl({ source: 'calculateur-parquet' })}
       ctaBannerTitle={parquetCopy.ctaBanner.title}
       ctaBannerSubtitle={parquetCopy.ctaBanner.subtitle}
       methodology={parquetCopy.methodology}

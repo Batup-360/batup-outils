@@ -4,7 +4,7 @@ import { GrilleSalairesCalculator } from '@/components/GrilleSalairesCalculator'
 import { grilleSalairesCopy } from '@/content/grille-salaires-copy';
 import { grilleSalairesFAQ } from '@/content/grille-salaires-faq';
 import { REGIONS, getRegion } from '@/lib/grille-salaires-btp';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 const BASE_PATH = '/grille-salaires-minima-batiment';
 
@@ -49,7 +49,7 @@ export default function GrilleSalairesMinimaBatiment() {
       breadcrumb={breadcrumb}
       heroH1={h1}
       heroLede={lede}
-      signupHref={`${APP_BASE}/signup?source=grille-salaires-minima-batiment`}
+      signupHref={signupUrl({ source: 'grille-salaires-minima-batiment' })}
       ctaBannerTitle={grilleSalairesCopy.ctaBanner.title}
       ctaBannerSubtitle={grilleSalairesCopy.ctaBanner.subtitle}
       methodology={grilleSalairesCopy.methodology}

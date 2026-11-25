@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { Link } from 'wouter';
-import { APP_BASE, MARKETING_BASE } from '@/lib/urls';
+import { APP_BASE, signupUrl, MARKETING_BASE } from '@/lib/urls';
 
 /**
  * Marketing navbar — dark floating pill matching batup.fr.
@@ -219,7 +219,7 @@ interface PublicNavProps {
 }
 
 export function PublicNav({
-  signupHref = `${APP_BASE}/signup`,
+  signupHref = signupUrl(),
   loginHref = `${APP_BASE}/login`,
 }: PublicNavProps) {
   const [mobileOpen, setMobileOpen] = useState(false);

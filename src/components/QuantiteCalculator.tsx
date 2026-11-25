@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -90,7 +90,7 @@ export function QuantiteCalculator({ config }: { config: QuantiteConfig }) {
       const v = values[f.key];
       if (Number.isFinite(v) && v > 0) params.set(f.key, String(v));
     }
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [config.source, config.fields, values]);
 
   return (

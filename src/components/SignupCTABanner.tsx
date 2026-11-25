@@ -1,5 +1,5 @@
 import { ArrowRight, Check } from 'lucide-react';
-import { APP_BASE, MARKETING_BASE } from '@/lib/urls';
+import { signupUrl, MARKETING_BASE } from '@/lib/urls';
 
 /**
  * CTA banner aligné sur batup.fr (CTA.astro) :
@@ -24,7 +24,7 @@ export function SignupCTABanner({
   title = 'Ne perdez plus d’argent sur vos prochains chantiers',
   subtitle = 'Pilotez vos charges, vos marges et vos devis en temps réel avec BatUp. Essai gratuit, sans carte bancaire.',
   ctaLabel = 'Essayer BatUp gratuitement',
-  signupHref = `${APP_BASE}/signup`,
+  signupHref = signupUrl(),
   demoHref = `${MARKETING_BASE}/demander-une-demo`,
 }: SignupCTABannerProps) {
   return (

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { Link, useSearch } from 'wouter';
 import { ArrowRight, HelpCircle } from 'lucide-react';
 import { computeVerdict, type VerdictKind } from '@/lib/pricing';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
 import { ResultVerdict } from './ResultVerdict';
 import { StickyResultBar } from './StickyResultBar';
@@ -106,7 +106,7 @@ export function QuotePriceCalculator() {
     if (inputs.tauxHoraire > 0) params.set('hourly_rate', inputs.tauxHoraire.toFixed(2));
     if (inputs.margeCible > 0) params.set('margin', inputs.margeCible.toFixed(2));
     if (results.prixEstime > 0) params.set('job_value', results.prixEstime.toFixed(0));
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [inputs.tauxHoraire, inputs.margeCible, results.prixEstime]);
 
   return (

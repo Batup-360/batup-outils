@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { PeintureCalculator } from '@/components/PeintureCalculator';
 import { peintureCopy } from '@/content/peinture-copy';
 import { peintureFAQ } from '@/content/peinture-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurPeinture() {
   const base = siteOrigin();
@@ -18,7 +18,7 @@ export default function CalculateurPeinture() {
       ]}
       heroH1={peintureCopy.hero.h1}
       heroLede={peintureCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-peinture`}
+      signupHref={signupUrl({ source: 'calculateur-peinture' })}
       ctaBannerTitle={peintureCopy.ctaBanner.title}
       ctaBannerSubtitle={peintureCopy.ctaBanner.subtitle}
       methodology={peintureCopy.methodology}

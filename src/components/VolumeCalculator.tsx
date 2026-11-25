@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { volumeForme, LITRES_PAR_M3, type FormeVolume } from '@/lib/volume-math';
 import { buildVolumePayload } from '@/lib/embed-payloads';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -47,7 +47,7 @@ export function VolumeCalculator() {
   const ctaSignupHref = useMemo(() => {
     const params = new URLSearchParams({ source: TOOL_SLUG });
     if (volume > 0) params.set('volume', volume.toFixed(2));
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [volume]);
 
   const embedResult = useMemo(() => buildVolumePayload(volume), [volume]);

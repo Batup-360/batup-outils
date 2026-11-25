@@ -1,6 +1,6 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import { HelpCircle } from 'lucide-react';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -100,7 +100,7 @@ export function HeuresSupCalculator() {
     const params = new URLSearchParams({ source: 'calculateur-heures-supplementaires-btp' });
     if (inputs.tauxHoraire > 0) params.set('hourly_rate', inputs.tauxHoraire.toFixed(2));
     if (results.extrasMois > 0) params.set('monthly_extras', results.extrasMois.toFixed(0));
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [inputs.tauxHoraire, results.extrasMois]);
 
   return (

@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { ChargesSocialesCalculator } from '@/components/ChargesSocialesCalculator';
 import { chargesSocialesCopy } from '@/content/charges-sociales-copy';
 import { chargesSocialesFAQ } from '@/content/charges-sociales-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurChargesSociales() {
   const base = siteOrigin();
@@ -22,7 +22,7 @@ export default function CalculateurChargesSociales() {
       ]}
       heroH1={chargesSocialesCopy.hero.h1}
       heroLede={chargesSocialesCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-charges-sociales-artisan`}
+      signupHref={signupUrl({ source: 'calculateur-charges-sociales-artisan' })}
       ctaBannerTitle={chargesSocialesCopy.ctaBanner.title}
       ctaBannerSubtitle={chargesSocialesCopy.ctaBanner.subtitle}
       methodology={chargesSocialesCopy.methodology}

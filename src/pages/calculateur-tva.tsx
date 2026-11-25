@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { TvaCalculator } from '@/components/TvaCalculator';
 import { tvaCopy } from '@/content/tva-copy';
 import { tvaFAQ } from '@/content/tva-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurTva() {
   const base = siteOrigin();
@@ -18,7 +18,7 @@ export default function CalculateurTva() {
       ]}
       heroH1={tvaCopy.hero.h1}
       heroLede={tvaCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-tva`}
+      signupHref={signupUrl({ source: 'calculateur-tva' })}
       ctaBannerTitle={tvaCopy.ctaBanner.title}
       ctaBannerSubtitle={tvaCopy.ctaBanner.subtitle}
       methodology={tvaCopy.methodology}

@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { BriquesCalculator } from '@/components/BriquesCalculator';
 import { briquesCopy } from '@/content/briques-copy';
 import { briquesFAQ } from '@/content/briques-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurBriques() {
   const base = siteOrigin();
@@ -18,7 +18,7 @@ export default function CalculateurBriques() {
       ]}
       heroH1={briquesCopy.hero.h1}
       heroLede={briquesCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-briques`}
+      signupHref={signupUrl({ source: 'calculateur-briques' })}
       ctaBannerTitle={briquesCopy.ctaBanner.title}
       ctaBannerSubtitle={briquesCopy.ctaBanner.subtitle}
       methodology={briquesCopy.methodology}

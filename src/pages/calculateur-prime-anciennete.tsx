@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { PrimeAncienneteCalculator } from '@/components/PrimeAncienneteCalculator';
 import { primeAncienneteCopy } from '@/content/prime-anciennete-copy';
 import { primeAncienneteFAQ } from '@/content/prime-anciennete-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurPrimeAnciennete() {
   const base = siteOrigin();
@@ -22,7 +22,7 @@ export default function CalculateurPrimeAnciennete() {
       ]}
       heroH1={primeAncienneteCopy.hero.h1}
       heroLede={primeAncienneteCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-prime-anciennete-ccn`}
+      signupHref={signupUrl({ source: 'calculateur-prime-anciennete-ccn' })}
       ctaBannerTitle={primeAncienneteCopy.ctaBanner.title}
       ctaBannerSubtitle={primeAncienneteCopy.ctaBanner.subtitle}
       methodology={primeAncienneteCopy.methodology}

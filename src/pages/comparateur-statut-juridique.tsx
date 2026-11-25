@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { StatutJuridiqueComparator } from '@/components/StatutJuridiqueComparator';
 import { statutJuridiqueCopy } from '@/content/statut-juridique-copy';
 import { statutJuridiqueFAQ } from '@/content/statut-juridique-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function ComparateurStatutJuridique() {
   const base = siteOrigin();
@@ -22,7 +22,7 @@ export default function ComparateurStatutJuridique() {
       ]}
       heroH1={statutJuridiqueCopy.hero.h1}
       heroLede={statutJuridiqueCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=comparateur-statut-juridique`}
+      signupHref={signupUrl({ source: 'comparateur-statut-juridique' })}
       ctaBannerTitle={statutJuridiqueCopy.ctaBanner.title}
       ctaBannerSubtitle={statutJuridiqueCopy.ctaBanner.subtitle}
       methodology={statutJuridiqueCopy.methodology}

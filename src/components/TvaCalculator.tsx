@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Check, Clipboard } from 'lucide-react';
 import { htToTtc, ttcToHt, tvaFromHT } from '@/lib/tva-math';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -64,7 +64,7 @@ export function TvaCalculator() {
   const ctaSignupHref = useMemo(() => {
     const params = new URLSearchParams({ source: TOOL_SLUG });
     if (inputs.montant > 0) params.set('amount', inputs.montant.toFixed(2));
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [inputs.montant]);
 
   const handleCopy = async () => {

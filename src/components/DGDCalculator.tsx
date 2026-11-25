@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { AlertTriangle, CheckCircle, HelpCircle, TrendingDown } from 'lucide-react';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -142,7 +142,7 @@ export function DGDCalculator() {
       params.set('marche', inputs.marcheInitialHT.toFixed(0));
     if (Number.isFinite(results.solde) && results.solde !== 0)
       params.set('solde', results.solde.toFixed(0));
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [inputs.marcheInitialHT, results.solde]);
 
   return (

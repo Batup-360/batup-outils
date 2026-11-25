@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { MortierCalculator } from '@/components/MortierCalculator';
 import { mortierCopy } from '@/content/mortier-copy';
 import { mortierFAQ } from '@/content/mortier-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurMortier() {
   const base = siteOrigin();
@@ -18,7 +18,7 @@ export default function CalculateurMortier() {
       ]}
       heroH1={mortierCopy.hero.h1}
       heroLede={mortierCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-mortier`}
+      signupHref={signupUrl({ source: 'calculateur-mortier' })}
       ctaBannerTitle={mortierCopy.ctaBanner.title}
       ctaBannerSubtitle={mortierCopy.ctaBanner.subtitle}
       methodology={mortierCopy.methodology}

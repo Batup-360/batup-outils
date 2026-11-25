@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { HeuresSupCalculator } from '@/components/HeuresSupCalculator';
 import { heuresSupCopy } from '@/content/heures-sup-copy';
 import { heuresSupFAQ } from '@/content/heures-sup-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurHeuresSup() {
   const base = siteOrigin();
@@ -22,7 +22,7 @@ export default function CalculateurHeuresSup() {
       ]}
       heroH1={heuresSupCopy.hero.h1}
       heroLede={heuresSupCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-heures-supplementaires-btp`}
+      signupHref={signupUrl({ source: 'calculateur-heures-supplementaires-btp' })}
       ctaBannerTitle={heuresSupCopy.ctaBanner.title}
       ctaBannerSubtitle={heuresSupCopy.ctaBanner.subtitle}
       methodology={heuresSupCopy.methodology}

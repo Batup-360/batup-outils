@@ -1,6 +1,6 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import { AlertTriangle, HelpCircle } from 'lucide-react';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -102,7 +102,7 @@ export function IntemperiesCibtpCalculator() {
     if (results.indemniteTotale > 0) {
       params.set('indemnite', results.indemniteTotale.toFixed(0));
     }
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [results.indemniteTotale]);
 
   return (

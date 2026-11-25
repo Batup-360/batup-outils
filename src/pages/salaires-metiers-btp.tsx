@@ -3,7 +3,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { salairesMetiersCopy } from '@/content/salaires-metiers-copy';
 import { salairesMetiersFAQ } from '@/content/salaires-metiers-faq';
 import { METIERS } from '@/lib/salaires-metiers-btp';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 const EURO = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 });
 const FAMILLES = ['Gros œuvre', 'Second œuvre', 'Encadrement & études'] as const;
@@ -24,7 +24,7 @@ export default function SalairesMetiersBtp() {
       ]}
       heroH1={hub.h1}
       heroLede={hub.lede}
-      signupHref={`${APP_BASE}/signup?source=salaires-metiers-btp`}
+      signupHref={signupUrl({ source: 'salaires-metiers-btp' })}
       ctaBannerTitle={salairesMetiersCopy.ctaBanner.title}
       ctaBannerSubtitle={salairesMetiersCopy.ctaBanner.subtitle}
       methodology={salairesMetiersCopy.methodology}

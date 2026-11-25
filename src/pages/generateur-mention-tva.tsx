@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { MentionTvaGenerator } from '@/components/MentionTvaGenerator';
 import { mentionTvaCopy } from '@/content/mention-tva-copy';
 import { mentionTvaFAQ } from '@/content/mention-tva-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function GenerateurMentionTva() {
   const base = siteOrigin();
@@ -22,7 +22,7 @@ export default function GenerateurMentionTva() {
       ]}
       heroH1={mentionTvaCopy.hero.h1}
       heroLede={mentionTvaCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=generateur-mention-tva`}
+      signupHref={signupUrl({ source: 'generateur-mention-tva' })}
       ctaBannerTitle={mentionTvaCopy.ctaBanner.title}
       ctaBannerSubtitle={mentionTvaCopy.ctaBanner.subtitle}
       methodology={mentionTvaCopy.methodology}

@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { CheckCircle2, AlertTriangle, HelpCircle } from 'lucide-react';
 import { calculeEscalier, BLONDEL_MIN, BLONDEL_MAX } from '@/lib/escalier-math';
 import { buildEscalierPayload } from '@/lib/embed-payloads';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -42,7 +42,7 @@ export function EscalierCalculator() {
   const ctaSignupHref = useMemo(() => {
     const params = new URLSearchParams({ source: TOOL_SLUG });
     if (r.nombreMarches > 0) params.set('marches', String(r.nombreMarches));
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [r.nombreMarches]);
 
   const embedResult = useMemo(() => buildEscalierPayload(r), [r]);

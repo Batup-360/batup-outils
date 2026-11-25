@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { AlertCircle, CheckCircle, XCircle } from 'lucide-react';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -402,7 +402,7 @@ export function MentionsObligatoiresChecker() {
       doc_type: docType,
       missing_count: String(missing.length),
     });
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [docType, missing.length]);
 
   return (

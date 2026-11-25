@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { TuilesCalculator } from '@/components/TuilesCalculator';
 import { tuilesCopy } from '@/content/tuiles-copy';
 import { tuilesFAQ } from '@/content/tuiles-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurTuiles() {
   const base = siteOrigin();
@@ -18,7 +18,7 @@ export default function CalculateurTuiles() {
       ]}
       heroH1={tuilesCopy.hero.h1}
       heroLede={tuilesCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-tuiles`}
+      signupHref={signupUrl({ source: 'calculateur-tuiles' })}
       ctaBannerTitle={tuilesCopy.ctaBanner.title}
       ctaBannerSubtitle={tuilesCopy.ctaBanner.subtitle}
       methodology={tuilesCopy.methodology}

@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { RevisionPrixIndexBTCalculator } from '@/components/RevisionPrixIndexBTCalculator';
 import { revisionPrixIndexBTCopy } from '@/content/revision-prix-index-bt-copy';
 import { revisionPrixIndexBTFAQ } from '@/content/revision-prix-index-bt-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurRevisionPrixIndexBT() {
   const base = siteOrigin();
@@ -22,7 +22,7 @@ export default function CalculateurRevisionPrixIndexBT() {
       ]}
       heroH1={revisionPrixIndexBTCopy.hero.h1}
       heroLede={revisionPrixIndexBTCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-revision-prix-index-bt`}
+      signupHref={signupUrl({ source: 'calculateur-revision-prix-index-bt' })}
       ctaBannerTitle={revisionPrixIndexBTCopy.ctaBanner.title}
       ctaBannerSubtitle={revisionPrixIndexBTCopy.ctaBanner.subtitle}
       methodology={revisionPrixIndexBTCopy.methodology}
