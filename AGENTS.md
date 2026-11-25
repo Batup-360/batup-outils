@@ -131,7 +131,7 @@ export function FooCalculator() { return <QuantiteCalculator config={CONFIG} />;
 Bespoke path: custom component with a `const TOOL_SLUG = 'calculateur-foo'`, gated via `<GatedReveal toolSlug={TOOL_SLUG} …>`.
 
 ### 5. Page — `src/pages/calculateur-foo.tsx`
-Default-export using `PublicToolLayout` (copy from `src/pages/calculateur-isolant.tsx`). Wire `seo`, `webApplication*`, `breadcrumb`, `hero*`, `methodology`, `faqItems`, and `signupHref={`${APP_BASE}/signup?source=calculateur-foo`}`.
+Default-export using `PublicToolLayout` (copy from `src/pages/calculateur-isolant.tsx`). Wire `seo`, `webApplication*`, `breadcrumb`, `hero*`, `methodology`, `faqItems`, and `signupHref={signupUrl({ source: 'calculateur-foo' })}`. Never build a signup URL by hand: `signupUrl()` (`src/lib/urls.ts`) is the single builder and appends the visitor's arrival `utm_*`.
 
 ### 6. Router — `src/App.tsx`
 ```ts

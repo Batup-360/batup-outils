@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 import { aireForme, type FormeSurface } from '@/lib/surface-math';
 import { buildSurfacePayload } from '@/lib/embed-payloads';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -68,7 +68,7 @@ export function SurfaceCalculator() {
   const ctaSignupHref = useMemo(() => {
     const params = new URLSearchParams({ source: TOOL_SLUG });
     if (total > 0) params.set('surface', total.toFixed(2));
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [total]);
 
   const embedResult = useMemo(() => buildSurfacePayload(total, zones.length), [total, zones.length]);

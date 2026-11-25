@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { IsolantCalculator } from '@/components/IsolantCalculator';
 import { isolantCopy } from '@/content/isolant-copy';
 import { isolantFAQ } from '@/content/isolant-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurIsolant() {
   const base = siteOrigin();
@@ -18,7 +18,7 @@ export default function CalculateurIsolant() {
       ]}
       heroH1={isolantCopy.hero.h1}
       heroLede={isolantCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-isolant`}
+      signupHref={signupUrl({ source: 'calculateur-isolant' })}
       ctaBannerTitle={isolantCopy.ctaBanner.title}
       ctaBannerSubtitle={isolantCopy.ctaBanner.subtitle}
       methodology={isolantCopy.methodology}

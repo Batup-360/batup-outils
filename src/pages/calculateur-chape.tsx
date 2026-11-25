@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { ChapeCalculator } from '@/components/ChapeCalculator';
 import { chapeCopy } from '@/content/chape-copy';
 import { chapeFAQ } from '@/content/chape-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurChape() {
   const base = siteOrigin();
@@ -18,7 +18,7 @@ export default function CalculateurChape() {
       ]}
       heroH1={chapeCopy.hero.h1}
       heroLede={chapeCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-chape`}
+      signupHref={signupUrl({ source: 'calculateur-chape' })}
       ctaBannerTitle={chapeCopy.ctaBanner.title}
       ctaBannerSubtitle={chapeCopy.ctaBanner.subtitle}
       methodology={chapeCopy.methodology}

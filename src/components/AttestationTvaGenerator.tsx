@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Check, Clipboard } from 'lucide-react';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -76,7 +76,7 @@ export function AttestationTvaGenerator() {
 
   const ctaSignupHref = useMemo(() => {
     const params = new URLSearchParams({ source: TOOL_SLUG, taux: inputs.taux });
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [inputs.taux]);
 
   const handleCopy = async () => {

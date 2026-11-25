@@ -1,6 +1,6 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import { HelpCircle } from 'lucide-react';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -104,7 +104,7 @@ export function CoutSalarieCalculator() {
     const params = new URLSearchParams({ source: 'calculateur-cout-salarie-btp' });
     if (results.coutHoraireCharge > 0) params.set('cout_horaire', results.coutHoraireCharge.toFixed(2));
     if (inputs.salaireBrut > 0) params.set('brut', inputs.salaireBrut.toFixed(0));
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [results.coutHoraireCharge, inputs.salaireBrut]);
 
   return (

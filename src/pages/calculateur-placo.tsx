@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { PlacoCalculator } from '@/components/PlacoCalculator';
 import { placoCopy } from '@/content/placo-copy';
 import { placoFAQ } from '@/content/placo-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurPlaco() {
   const base = siteOrigin();
@@ -18,7 +18,7 @@ export default function CalculateurPlaco() {
       ]}
       heroH1={placoCopy.hero.h1}
       heroLede={placoCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-placo`}
+      signupHref={signupUrl({ source: 'calculateur-placo' })}
       ctaBannerTitle={placoCopy.ctaBanner.title}
       ctaBannerSubtitle={placoCopy.ctaBanner.subtitle}
       methodology={placoCopy.methodology}

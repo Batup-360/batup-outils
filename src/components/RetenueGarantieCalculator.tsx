@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { CalendarDays, HelpCircle, ShieldCheck } from 'lucide-react';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -97,7 +97,7 @@ export function RetenueGarantieCalculator() {
   const ctaSignupHref = useMemo(() => {
     const params = new URLSearchParams({ source: 'calculateur-retenue-de-garantie' });
     if (inputs.montantHT > 0) params.set('job_value', inputs.montantHT.toFixed(0));
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [inputs.montantHT]);
 
   return (

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Check, CheckCircle, Clipboard, FileSignature, Info, TrendingDown } from 'lucide-react';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -122,7 +122,7 @@ export function MentionTvaGenerator() {
     const params = new URLSearchParams({ source: 'generateur-mention-tva' });
     if (verdict) params.set('regime', SLUG_BY_VERDICT[verdict]);
     if (inputs.montantHT > 0) params.set('amount_ht', inputs.montantHT.toFixed(2));
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [verdict, inputs.montantHT]);
 
   const handleCopy = async (text: string) => {

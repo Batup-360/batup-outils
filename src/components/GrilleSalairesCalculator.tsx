@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useLocation, Link } from 'wouter';
 import { Download } from 'lucide-react';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -74,7 +74,7 @@ export function GrilleSalairesCalculator({ regionKey }: { regionKey?: string }) 
 
   // Slug de suivi = page réellement consultée (région → email + signup ciblés).
   const toolSlug = regionKey ? `${TOOL_SLUG}/${regionKey}` : TOOL_SLUG;
-  const ctaSignupHref = `${APP_BASE}/signup?source=${toolSlug}`;
+  const ctaSignupHref = signupUrl({ source: toolSlug });
 
   const printPdf = () => {
     if (!grille) return;

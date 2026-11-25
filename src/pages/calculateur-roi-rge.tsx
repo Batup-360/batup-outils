@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { RoiRgeCalculator } from '@/components/RoiRgeCalculator';
 import { roiRgeCopy } from '@/content/roi-rge-copy';
 import { roiRgeFAQ } from '@/content/roi-rge-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurRoiRge() {
   const base = siteOrigin();
@@ -22,7 +22,7 @@ export default function CalculateurRoiRge() {
       ]}
       heroH1={roiRgeCopy.hero.h1}
       heroLede={roiRgeCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-roi-rge`}
+      signupHref={signupUrl({ source: 'calculateur-roi-rge' })}
       ctaBannerTitle={roiRgeCopy.ctaBanner.title}
       ctaBannerSubtitle={roiRgeCopy.ctaBanner.subtitle}
       methodology={roiRgeCopy.methodology}

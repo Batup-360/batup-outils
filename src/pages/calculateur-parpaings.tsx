@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { ParpaingsCalculator } from '@/components/ParpaingsCalculator';
 import { parpaingsCopy } from '@/content/parpaings-copy';
 import { parpaingsFAQ } from '@/content/parpaings-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurParpaings() {
   const base = siteOrigin();
@@ -18,7 +18,7 @@ export default function CalculateurParpaings() {
       ]}
       heroH1={parpaingsCopy.hero.h1}
       heroLede={parpaingsCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-parpaings`}
+      signupHref={signupUrl({ source: 'calculateur-parpaings' })}
       ctaBannerTitle={parpaingsCopy.ctaBanner.title}
       ctaBannerSubtitle={parpaingsCopy.ctaBanner.subtitle}
       methodology={parpaingsCopy.methodology}

@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { IntemperiesCibtpCalculator } from '@/components/IntemperiesCibtpCalculator';
 import { intemperiesCibtpCopy } from '@/content/intemperies-cibtp-copy';
 import { intemperiesCibtpFAQ } from '@/content/intemperies-cibtp-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurIntemperiesCibtp() {
   const base = siteOrigin();
@@ -22,7 +22,7 @@ export default function CalculateurIntemperiesCibtp() {
       ]}
       heroH1={intemperiesCibtpCopy.hero.h1}
       heroLede={intemperiesCibtpCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-intemperies-cibtp`}
+      signupHref={signupUrl({ source: 'calculateur-intemperies-cibtp' })}
       ctaBannerTitle={intemperiesCibtpCopy.ctaBanner.title}
       ctaBannerSubtitle={intemperiesCibtpCopy.ctaBanner.subtitle}
       methodology={intemperiesCibtpCopy.methodology}

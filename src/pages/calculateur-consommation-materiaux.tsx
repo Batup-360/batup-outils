@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { ConsommationCalculator } from '@/components/ConsommationCalculator';
 import { consommationCopy } from '@/content/consommation-copy';
 import { consommationFAQ } from '@/content/consommation-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurConsommationMateriaux() {
   const base = siteOrigin();
@@ -18,7 +18,7 @@ export default function CalculateurConsommationMateriaux() {
       ]}
       heroH1={consommationCopy.hero.h1}
       heroLede={consommationCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-consommation-materiaux`}
+      signupHref={signupUrl({ source: 'calculateur-consommation-materiaux' })}
       ctaBannerTitle={consommationCopy.ctaBanner.title}
       ctaBannerSubtitle={consommationCopy.ctaBanner.subtitle}
       methodology={consommationCopy.methodology}

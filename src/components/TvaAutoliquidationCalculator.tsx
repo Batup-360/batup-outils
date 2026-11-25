@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Check, CheckCircle, Clipboard, Info, TrendingDown } from 'lucide-react';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -99,7 +99,7 @@ export function TvaAutoliquidationCalculator() {
     const params = new URLSearchParams({ source: 'calculateur-tva-autoliquidation' });
     if (verdict) params.set('tva_regime', verdict);
     if (inputs.montantHT > 0) params.set('amount_ht', inputs.montantHT.toFixed(2));
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [verdict, inputs.montantHT]);
 
   const handleCopy = async (text: string) => {

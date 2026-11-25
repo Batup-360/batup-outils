@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { AlertTriangle, HelpCircle } from 'lucide-react';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -89,7 +89,7 @@ export function SituationTravauxCalculator() {
     const params = new URLSearchParams({ source: 'calculateur-situation-travaux' });
     if (inputs.montantMarcheHT > 0) params.set('marche', inputs.montantMarcheHT.toFixed(0));
     if (inputs.avancementPct > 0) params.set('avancement', inputs.avancementPct.toFixed(0));
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [inputs.montantMarcheHT, inputs.avancementPct]);
 
   return (

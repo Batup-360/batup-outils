@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { EnduitFacadeCalculator } from '@/components/EnduitFacadeCalculator';
 import { enduitFacadeCopy } from '@/content/enduit-facade-copy';
 import { enduitFacadeFAQ } from '@/content/enduit-facade-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurEnduitFacade() {
   const base = siteOrigin();
@@ -18,7 +18,7 @@ export default function CalculateurEnduitFacade() {
       ]}
       heroH1={enduitFacadeCopy.hero.h1}
       heroLede={enduitFacadeCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-enduit-facade`}
+      signupHref={signupUrl({ source: 'calculateur-enduit-facade' })}
       ctaBannerTitle={enduitFacadeCopy.ctaBanner.title}
       ctaBannerSubtitle={enduitFacadeCopy.ctaBanner.subtitle}
       methodology={enduitFacadeCopy.methodology}

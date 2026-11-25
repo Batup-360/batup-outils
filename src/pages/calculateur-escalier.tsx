@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { EscalierCalculator } from '@/components/EscalierCalculator';
 import { escalierCopy } from '@/content/escalier-copy';
 import { escalierFAQ } from '@/content/escalier-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurEscalier() {
   const base = siteOrigin();
@@ -18,7 +18,7 @@ export default function CalculateurEscalier() {
       ]}
       heroH1={escalierCopy.hero.h1}
       heroLede={escalierCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-escalier`}
+      signupHref={signupUrl({ source: 'calculateur-escalier' })}
       ctaBannerTitle={escalierCopy.ctaBanner.title}
       ctaBannerSubtitle={escalierCopy.ctaBanner.subtitle}
       methodology={escalierCopy.methodology}

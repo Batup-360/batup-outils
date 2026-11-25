@@ -7,7 +7,7 @@ import {
   degresVersPourcent,
 } from '@/lib/pente-math';
 import { buildPenteToiturePayload } from '@/lib/embed-payloads';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -72,7 +72,7 @@ export function PenteToitureCalculator() {
   const ctaSignupHref = useMemo(() => {
     const params = new URLSearchParams({ source: TOOL_SLUG });
     if (results.pourcent > 0) params.set('pente', results.pourcent.toFixed(1));
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [results.pourcent]);
 
   const embedResult = useMemo(

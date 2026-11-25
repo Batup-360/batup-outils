@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { MargeNetteCalculator } from '@/components/MargeNetteCalculator';
 import { margeNetteCopy } from '@/content/marge-nette-copy';
 import { margeNetteFAQ } from '@/content/marge-nette-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurMargeNette() {
   const base = siteOrigin();
@@ -22,7 +22,7 @@ export default function CalculateurMargeNette() {
       ]}
       heroH1={margeNetteCopy.hero.h1}
       heroLede={margeNetteCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-marge-nette-coefficient`}
+      signupHref={signupUrl({ source: 'calculateur-marge-nette-coefficient' })}
       ctaBannerTitle={margeNetteCopy.ctaBanner.title}
       ctaBannerSubtitle={margeNetteCopy.ctaBanner.subtitle}
       methodology={margeNetteCopy.methodology}

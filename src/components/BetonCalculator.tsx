@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { volumeBeton, dosageBeton } from '@/lib/beton-math';
 import { buildBetonPayload } from '@/lib/embed-payloads';
 import { volumeCylindre } from '@/lib/volume-math';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -77,7 +77,7 @@ export function BetonCalculator() {
   const ctaSignupHref = useMemo(() => {
     const params = new URLSearchParams({ source: TOOL_SLUG });
     if (results.volumeM3 > 0) params.set('volume_beton', results.volumeM3.toFixed(2));
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [results.volumeM3]);
 
   const embedResult = useMemo(

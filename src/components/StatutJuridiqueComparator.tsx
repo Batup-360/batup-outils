@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Check, Minus } from 'lucide-react';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -307,7 +307,7 @@ export function StatutJuridiqueComparator() {
       source: 'comparateur-statut-juridique',
     });
     if (top && allAnswered) params.set('statut_recommande', top.statut);
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [top, allAnswered]);
 
   return (

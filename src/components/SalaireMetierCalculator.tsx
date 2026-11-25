@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'wouter';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -43,7 +43,7 @@ function MetierView({ metier }: { metier: MetierSalaire }) {
   const brutAnnuel = brut * 12;
 
   const TOOL_SLUG = `salaire-${metier.slug}`;
-  const ctaSignupHref = `${APP_BASE}/signup?source=${TOOL_SLUG}`;
+  const ctaSignupHref = signupUrl({ source: TOOL_SLUG });
 
   return (
     <div className="grid gap-6 pb-20 lg:grid-cols-5 lg:pb-0">

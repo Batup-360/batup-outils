@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { RcProSimulator } from '@/components/RcProSimulator';
 import { rcProCopy } from '@/content/rc-pro-copy';
 import { rcProFAQ } from '@/content/rc-pro-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function SimulateurRcPro() {
   const base = siteOrigin();
@@ -22,7 +22,7 @@ export default function SimulateurRcPro() {
       ]}
       heroH1={rcProCopy.hero.h1}
       heroLede={rcProCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=simulateur-rc-pro`}
+      signupHref={signupUrl({ source: 'simulateur-rc-pro' })}
       ctaBannerTitle={rcProCopy.ctaBanner.title}
       ctaBannerSubtitle={rcProCopy.ctaBanner.subtitle}
       methodology={rcProCopy.methodology}

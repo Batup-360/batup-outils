@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { TerrasseCalculator } from '@/components/TerrasseCalculator';
 import { terrasseCopy } from '@/content/terrasse-copy';
 import { terrasseFAQ } from '@/content/terrasse-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurTerrasse() {
   const base = siteOrigin();
@@ -18,7 +18,7 @@ export default function CalculateurTerrasse() {
       ]}
       heroH1={terrasseCopy.hero.h1}
       heroLede={terrasseCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-terrasse`}
+      signupHref={signupUrl({ source: 'calculateur-terrasse' })}
       ctaBannerTitle={terrasseCopy.ctaBanner.title}
       ctaBannerSubtitle={terrasseCopy.ctaBanner.subtitle}
       methodology={terrasseCopy.methodology}

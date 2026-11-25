@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { SEOHead } from '@/lib/seo-head';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { PublicNav } from './PublicNav';
 import { TopBanner } from './TopBanner';
 import { PublicFooter } from './PublicFooter';
@@ -41,7 +41,7 @@ export function PublicToolLayout({
   breadcrumb,
   heroH1,
   heroLede,
-  signupHref = `${APP_BASE}/signup`,
+  signupHref = signupUrl(),
   ctaBannerTitle,
   ctaBannerSubtitle,
   methodology,

@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { TvaAutoliquidationCalculator } from '@/components/TvaAutoliquidationCalculator';
 import { tvaAutoliquidationCopy } from '@/content/tva-autoliquidation-copy';
 import { tvaAutoliquidationFAQ } from '@/content/tva-autoliquidation-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurTvaAutoliquidation() {
   const base = siteOrigin();
@@ -22,7 +22,7 @@ export default function CalculateurTvaAutoliquidation() {
       ]}
       heroH1={tvaAutoliquidationCopy.hero.h1}
       heroLede={tvaAutoliquidationCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-tva-autoliquidation`}
+      signupHref={signupUrl({ source: 'calculateur-tva-autoliquidation' })}
       ctaBannerTitle={tvaAutoliquidationCopy.ctaBanner.title}
       ctaBannerSubtitle={tvaAutoliquidationCopy.ctaBanner.subtitle}
       methodology={tvaAutoliquidationCopy.methodology}

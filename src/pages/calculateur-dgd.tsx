@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { DGDCalculator } from '@/components/DGDCalculator';
 import { dgdCopy } from '@/content/dgd-copy';
 import { dgdFAQ } from '@/content/dgd-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurDGD() {
   const base = siteOrigin();
@@ -22,7 +22,7 @@ export default function CalculateurDGD() {
       ]}
       heroH1={dgdCopy.hero.h1}
       heroLede={dgdCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-dgd`}
+      signupHref={signupUrl({ source: 'calculateur-dgd' })}
       ctaBannerTitle={dgdCopy.ctaBanner.title}
       ctaBannerSubtitle={dgdCopy.ctaBanner.subtitle}
       methodology={dgdCopy.methodology}

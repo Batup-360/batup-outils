@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { SurfaceCalculator } from '@/components/SurfaceCalculator';
 import { surfaceCopy } from '@/content/surface-copy';
 import { surfaceFAQ } from '@/content/surface-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurSurface() {
   const base = siteOrigin();
@@ -18,7 +18,7 @@ export default function CalculateurSurface() {
       ]}
       heroH1={surfaceCopy.hero.h1}
       heroLede={surfaceCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-surface`}
+      signupHref={signupUrl({ source: 'calculateur-surface' })}
       ctaBannerTitle={surfaceCopy.ctaBanner.title}
       ctaBannerSubtitle={surfaceCopy.ctaBanner.subtitle}
       methodology={surfaceCopy.methodology}

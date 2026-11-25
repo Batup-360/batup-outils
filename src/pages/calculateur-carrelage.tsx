@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { CarrelageCalculator } from '@/components/CarrelageCalculator';
 import { carrelageCopy } from '@/content/carrelage-copy';
 import { carrelageFAQ } from '@/content/carrelage-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurCarrelage() {
   const base = siteOrigin();
@@ -18,7 +18,7 @@ export default function CalculateurCarrelage() {
       ]}
       heroH1={carrelageCopy.hero.h1}
       heroLede={carrelageCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-carrelage`}
+      signupHref={signupUrl({ source: 'calculateur-carrelage' })}
       ctaBannerTitle={carrelageCopy.ctaBanner.title}
       ctaBannerSubtitle={carrelageCopy.ctaBanner.subtitle}
       methodology={carrelageCopy.methodology}

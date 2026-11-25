@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { HelpCircle } from 'lucide-react';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -212,7 +212,7 @@ export function ChargesSocialesCalculator() {
       statut: inputs.statut,
     });
     if (inputs.ca > 0) params.set('ca', String(Math.round(inputs.ca)));
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [inputs.statut, inputs.ca]);
 
   const showBeneficeSlider =

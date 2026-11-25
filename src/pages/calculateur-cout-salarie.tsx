@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { CoutSalarieCalculator } from '@/components/CoutSalarieCalculator';
 import { coutSalarieCopy } from '@/content/cout-salarie-copy';
 import { coutSalarieFAQ } from '@/content/cout-salarie-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurCoutSalarie() {
   const base = siteOrigin();
@@ -22,7 +22,7 @@ export default function CalculateurCoutSalarie() {
       ]}
       heroH1={coutSalarieCopy.hero.h1}
       heroLede={coutSalarieCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-cout-salarie-btp`}
+      signupHref={signupUrl({ source: 'calculateur-cout-salarie-btp' })}
       ctaBannerTitle={coutSalarieCopy.ctaBanner.title}
       ctaBannerSubtitle={coutSalarieCopy.ctaBanner.subtitle}
       methodology={coutSalarieCopy.methodology}

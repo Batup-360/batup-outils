@@ -1,5 +1,5 @@
 import { Link } from 'wouter';
-import { APP_BASE, MARKETING_BASE } from '@/lib/urls';
+import { APP_BASE, signupUrl, MARKETING_BASE } from '@/lib/urls';
 import { ouvrirPreferencesCookies } from '@/lib/consent';
 
 /**
@@ -99,7 +99,7 @@ const SECTIONS: FooterSection[] = [
         label: "Centre d'aide",
         external: true,
       },
-      { href: `${APP_BASE}/signup`, label: "S'inscrire", external: true },
+      { href: signupUrl(), label: "S'inscrire", external: true },
       { href: `${APP_BASE}/login`, label: 'Se connecter', external: true },
     ],
   },

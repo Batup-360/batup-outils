@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link } from 'wouter';
 import { ArrowRight, HelpCircle } from 'lucide-react';
 import { computeVerdict, type VerdictKind } from '@/lib/pricing';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
 import { ResultVerdict } from './ResultVerdict';
 import { StickyResultBar } from './StickyResultBar';
@@ -98,7 +98,7 @@ export function MargeNetteCalculator() {
     const params = new URLSearchParams({ source: 'calculateur-marge-nette-coefficient' });
     if (results.coefficient > 0) params.set('coefficient', results.coefficient.toFixed(2));
     if (results.margeNette > 0) params.set('margin', results.margeNette.toFixed(2));
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [results.coefficient, results.margeNette]);
 
   return (

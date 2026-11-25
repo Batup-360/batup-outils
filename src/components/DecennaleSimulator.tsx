@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { ArrowRight, AlertTriangle, TrendingUp, TrendingDown } from 'lucide-react';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -228,7 +228,7 @@ export function DecennaleSimulator() {
       source: 'simulateur-decennale',
       metier: inputs.metier,
     });
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [inputs.metier]);
 
   return (

@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { DecennaleSimulator } from '@/components/DecennaleSimulator';
 import { decennaleCopy } from '@/content/decennale-copy';
 import { decennaleFAQ } from '@/content/decennale-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function SimulateurDecennale() {
   const base = siteOrigin();
@@ -22,7 +22,7 @@ export default function SimulateurDecennale() {
       ]}
       heroH1={decennaleCopy.hero.h1}
       heroLede={decennaleCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=simulateur-decennale`}
+      signupHref={signupUrl({ source: 'simulateur-decennale' })}
       ctaBannerTitle={decennaleCopy.ctaBanner.title}
       ctaBannerSubtitle={decennaleCopy.ctaBanner.subtitle}
       methodology={decennaleCopy.methodology}

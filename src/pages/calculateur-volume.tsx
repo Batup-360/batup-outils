@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { VolumeCalculator } from '@/components/VolumeCalculator';
 import { volumeCopy } from '@/content/volume-copy';
 import { volumeFAQ } from '@/content/volume-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurVolume() {
   const base = siteOrigin();
@@ -18,7 +18,7 @@ export default function CalculateurVolume() {
       ]}
       heroH1={volumeCopy.hero.h1}
       heroLede={volumeCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-volume`}
+      signupHref={signupUrl({ source: 'calculateur-volume' })}
       ctaBannerTitle={volumeCopy.ctaBanner.title}
       ctaBannerSubtitle={volumeCopy.ctaBanner.subtitle}
       methodology={volumeCopy.methodology}

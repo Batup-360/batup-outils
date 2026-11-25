@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { RetenueGarantieCalculator } from '@/components/RetenueGarantieCalculator';
 import { retenueGarantieCopy } from '@/content/retenue-garantie-copy';
 import { retenueGarantieFAQ } from '@/content/retenue-garantie-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurRetenueGarantie() {
   const base = siteOrigin();
@@ -22,7 +22,7 @@ export default function CalculateurRetenueGarantie() {
       ]}
       heroH1={retenueGarantieCopy.hero.h1}
       heroLede={retenueGarantieCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-retenue-de-garantie`}
+      signupHref={signupUrl({ source: 'calculateur-retenue-de-garantie' })}
       ctaBannerTitle={retenueGarantieCopy.ctaBanner.title}
       ctaBannerSubtitle={retenueGarantieCopy.ctaBanner.subtitle}
       methodology={retenueGarantieCopy.methodology}

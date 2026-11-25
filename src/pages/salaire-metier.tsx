@@ -4,7 +4,7 @@ import { SalaireMetierCalculator } from '@/components/SalaireMetierCalculator';
 import { salairesMetiersCopy } from '@/content/salaires-metiers-copy';
 import { salairesMetiersFAQ } from '@/content/salaires-metiers-faq';
 import { getMetier, metierAtomicFaq } from '@/lib/salaires-metiers-btp';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 const HUB_PATH = '/salaires-metiers-btp';
 
@@ -41,7 +41,7 @@ export default function SalaireMetier({ slug: slugProp }: { slug?: string }) {
       ]}
       heroH1={h1}
       heroLede={lede}
-      signupHref={`${APP_BASE}/signup?source=salaire-${slug ?? 'metier'}`}
+      signupHref={signupUrl({ source: `salaire-${slug ?? 'metier'}` })}
       ctaBannerTitle={salairesMetiersCopy.ctaBanner.title}
       ctaBannerSubtitle={salairesMetiersCopy.ctaBanner.subtitle}
       methodology={salairesMetiersCopy.methodology}

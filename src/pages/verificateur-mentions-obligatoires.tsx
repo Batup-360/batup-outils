@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { MentionsObligatoiresChecker } from '@/components/MentionsObligatoiresChecker';
 import { mentionsObligatoiresCopy } from '@/content/mentions-obligatoires-copy';
 import { mentionsObligatoiresFAQ } from '@/content/mentions-obligatoires-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function VerificateurMentionsObligatoires() {
   const base = siteOrigin();
@@ -25,7 +25,7 @@ export default function VerificateurMentionsObligatoires() {
       ]}
       heroH1={mentionsObligatoiresCopy.hero.h1}
       heroLede={mentionsObligatoiresCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=verificateur-mentions-obligatoires`}
+      signupHref={signupUrl({ source: 'verificateur-mentions-obligatoires' })}
       ctaBannerTitle={mentionsObligatoiresCopy.ctaBanner.title}
       ctaBannerSubtitle={mentionsObligatoiresCopy.ctaBanner.subtitle}
       methodology={mentionsObligatoiresCopy.methodology}

@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link } from 'wouter';
 import { ArrowRight, HelpCircle } from 'lucide-react';
 import { calculateBillableHourlyRate } from '@/lib/pricing';
-import { APP_BASE } from '@/lib/urls';
+import { signupUrl } from '@/lib/urls';
 import { Card, CardContent, CardHeader, CardTitle, Input, Label, Button } from './ui';
 import { StickyResultBar } from './StickyResultBar';
 import { GatedReveal } from './GatedReveal';
@@ -86,7 +86,7 @@ export function HourlyRateCalculator() {
     const params = new URLSearchParams({ source: 'calculateur-taux-horaire' });
     if (results.tauxFacturer > 0) params.set('hourly_rate', results.tauxFacturer.toFixed(2));
     if (inputs.margeCible > 0) params.set('margin', inputs.margeCible.toFixed(2));
-    return `${APP_BASE}/signup?${params.toString()}`;
+    return signupUrl(params);
   }, [results.tauxFacturer, inputs.margeCible]);
 
   return (

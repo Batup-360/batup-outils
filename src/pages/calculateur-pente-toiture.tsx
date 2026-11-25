@@ -2,7 +2,7 @@ import { PublicToolLayout } from '@/components/PublicToolLayout';
 import { PenteToitureCalculator } from '@/components/PenteToitureCalculator';
 import { penteToitureCopy } from '@/content/pente-toiture-copy';
 import { penteToitureFAQ } from '@/content/pente-toiture-faq';
-import { APP_BASE, siteOrigin } from '@/lib/urls';
+import { signupUrl, siteOrigin } from '@/lib/urls';
 
 export default function CalculateurPenteToiture() {
   const base = siteOrigin();
@@ -18,7 +18,7 @@ export default function CalculateurPenteToiture() {
       ]}
       heroH1={penteToitureCopy.hero.h1}
       heroLede={penteToitureCopy.hero.lede}
-      signupHref={`${APP_BASE}/signup?source=calculateur-pente-toiture`}
+      signupHref={signupUrl({ source: 'calculateur-pente-toiture' })}
       ctaBannerTitle={penteToitureCopy.ctaBanner.title}
       ctaBannerSubtitle={penteToitureCopy.ctaBanner.subtitle}
       methodology={penteToitureCopy.methodology}
