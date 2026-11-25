@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect, useRef } from 'react';
 import { Route, Switch, useLocation } from 'wouter';
 import { EmailGateProvider } from '@/lib/email-gate-context';
 import { EmailGate } from '@/components/EmailGate';
@@ -100,6 +100,52 @@ function AnalyticsTracker() {
   return null;
 }
 
+/**
+ * Navigation interne (liens wouter) : remonte en haut de la nouvelle page et place
+ * le focus sur son titre <h1>, pour que clavier et lecteurs d'écran suivent le
+ * changement de page. Rien au premier affichage. Le <h1> peut arriver après le
+ * chargement du code de la page (React.lazy) : on l'attend quelques secondes.
+ */
+function RouteChangeFocus() {
+  const [location] = useLocation();
+  const premier = useRef(true);
+  useEffect(() => {
+    if (premier.current) {
+      premier.current = false;
+      return;
+    }
+    if (window.location.hash) return;
+    window.scrollTo(0, 0);
+    const focusTitre = () => {
+      // L'ancienne page peut rester dans le DOM, masquée, le temps du chargement :
+      // on ne retient que le <h1> visible.
+      const h1 = [...document.querySelectorAll<HTMLElement>('#root h1')].find(
+        (el) => el.getClientRects().length > 0,
+      );
+      if (!h1) return false;
+      if (!h1.hasAttribute('tabindex')) h1.setAttribute('tabindex', '-1');
+      h1.focus({ preventScroll: true });
+      return document.activeElement === h1;
+    };
+    if (focusTitre()) return;
+    const observer = new MutationObserver(() => {
+      if (focusTitre()) observer.disconnect();
+    });
+    observer.observe(document.getElementById('root')!, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['style'],
+    });
+    const t = window.setTimeout(() => observer.disconnect(), 5000);
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(t);
+    };
+  }, [location]);
+  return null;
+}
+
 function LoadingFallback() {
   const [location] = useLocation();
   // Page d'arrivée : on garde le contenu prérendu (HTML généré au build par nous)
@@ -117,6 +163,7 @@ export default function App() {
   return (
     <EmailGateProvider>
       <AnalyticsTracker />
+      <RouteChangeFocus />
       <CookieConsent />
       <Suspense fallback={<LoadingFallback />}>
         <Switch>

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 
 export interface FAQItem {
@@ -17,11 +16,10 @@ interface FAQAccordionProps {
  * - Pastille "FAQ" violet clair en haut
  * - H2 centré "Questions fréquentes"
  * - Chaque question dans une card BLANCHE arrondie avec border light
- * - Une seule question ouverte à la fois (UX progressive disclosure)
+ * - Une seule question ouverte à la fois : <details name> natif (réponses fermées
+ *   gardées dans la page, trouvables par Ctrl+F et par les liens « text fragment »)
  */
 export function FAQAccordion({ title = 'Questions fréquentes', items }: FAQAccordionProps) {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
   return (
     <section
       className="relative z-0 -mt-[60px] overflow-hidden pt-20 pb-32 lg:pt-24 lg:pb-40"
@@ -43,36 +41,21 @@ export function FAQAccordion({ title = 'Questions fréquentes', items }: FAQAcco
 
         {/* Liste des questions : cards blanches arrondies */}
         <div className="space-y-4">
-          {items.map((item, i) => {
-            const isOpen = openIndex === i;
-            return (
-              <div
-                key={item.question}
-                className="overflow-hidden rounded-xl border border-gray-100 bg-white"
-              >
-                <button
-                  type="button"
-                  className="flex w-full items-center justify-between gap-4 p-6 text-left transition-colors hover:bg-gray-50"
-                  onClick={() => setOpenIndex(isOpen ? null : i)}
-                  aria-expanded={isOpen}
-                >
-                  <span className="pr-4 text-base font-semibold text-gray-900">
-                    {item.question}
-                  </span>
-                  <ChevronDown
-                    className={`h-5 w-5 flex-shrink-0 text-gray-500 transition-transform duration-300 ${
-                      isOpen ? 'rotate-180' : ''
-                    }`}
-                  />
-                </button>
-                {isOpen && (
-                  <div className="space-y-3 px-6 pb-6 leading-relaxed text-gray-600">
-                    <p>{item.answer}</p>
-                  </div>
-                )}
+          {items.map((item) => (
+            <details
+              key={item.question}
+              name="faq"
+              className="group overflow-hidden rounded-xl border border-gray-100 bg-white"
+            >
+              <summary className="flex w-full cursor-pointer list-none items-center justify-between gap-4 p-6 text-left transition-colors hover:bg-gray-50 [&::-webkit-details-marker]:hidden">
+                <span className="pr-4 text-base font-semibold text-gray-900">{item.question}</span>
+                <ChevronDown className="h-5 w-5 flex-shrink-0 text-gray-500 transition-transform duration-300 group-open:rotate-180" />
+              </summary>
+              <div className="space-y-3 px-6 pb-6 leading-relaxed text-gray-600">
+                <p>{item.answer}</p>
               </div>
-            );
-          })}
+            </details>
+          ))}
         </div>
       </div>
     </section>

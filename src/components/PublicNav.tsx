@@ -225,23 +225,60 @@ export function PublicNav({
   const [mobileOpen, setMobileOpen] = useState(false);
   const [ressourcesOpen, setRessourcesOpen] = useState(false);
   const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const ressourcesRef = useRef<HTMLDivElement>(null);
+  const ressourcesBtnRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDialogElement>(null);
+  const menuCloseRef = useRef<HTMLButtonElement>(null);
 
+  // Menu mobile = <dialog> natif ouvert avec showModal() : page derrière inerte,
+  // Échap et retour du focus sur le bouton burger gérés par le navigateur.
   useEffect(() => {
-    if (mobileOpen) {
-      const prev = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-      return () => {
-        document.body.style.overflow = prev;
-      };
+    const menu = menuRef.current;
+    if (!menu) return;
+    if (mobileOpen && !menu.open) {
+      menu.showModal();
+      menuCloseRef.current?.focus();
+    } else if (!mobileOpen && menu.open) {
+      menu.close();
     }
   }, [mobileOpen]);
 
+  // Ressources ouvert (clic ou clavier) : Échap ou clic ailleurs le referme.
+  useEffect(() => {
+    if (!ressourcesOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      setRessourcesOpen(false);
+      ressourcesBtnRef.current?.focus();
+    };
+    const onPointer = (e: PointerEvent) => {
+      if (!ressourcesRef.current?.contains(e.target as Node)) setRessourcesOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    document.addEventListener('pointerdown', onPointer);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('pointerdown', onPointer);
+    };
+  }, [ressourcesOpen]);
+
+  // Ouvert par le survol : le clic qui suit le garde ouvert au lieu de le refermer.
+  const ouvertAuSurvol = useRef(false);
   function showRessources() {
     if (hideTimer.current) {
       clearTimeout(hideTimer.current);
       hideTimer.current = null;
     }
+    if (!ressourcesOpen) ouvertAuSurvol.current = true;
     setRessourcesOpen(true);
+  }
+  function toggleRessources() {
+    if (ressourcesOpen && !ouvertAuSurvol.current) {
+      setRessourcesOpen(false);
+    } else {
+      ouvertAuSurvol.current = false;
+      setRessourcesOpen(true);
+    }
   }
   function scheduleHideRessources() {
     if (hideTimer.current) clearTimeout(hideTimer.current);
@@ -256,7 +293,7 @@ export function PublicNav({
       >
         <div className="flex h-12 items-center justify-between lg:h-14">
           <a href={MARKETING_BASE} className="flex shrink-0 items-center gap-2">
-            <img src="/assets/logo-batup-marketing.png" alt="BatUp" className="h-9 w-auto" />
+            <img src="/assets/logo-batup-marketing.webp" width={116} height={72} alt="BatUp" className="h-9 w-auto" />
           </a>
 
           <div className="hidden items-center gap-8 lg:flex">
@@ -289,12 +326,16 @@ export function PublicNav({
 
             {/* Ressources : DROPDOWN LOCAL */}
             <div
-              className="relative"
+              ref={ressourcesRef}
               onMouseEnter={showRessources}
               onMouseLeave={scheduleHideRessources}
             >
               <button
+                ref={ressourcesBtnRef}
                 type="button"
+                aria-expanded={ressourcesOpen}
+                aria-controls="nav-ressources"
+                onClick={toggleRessources}
                 className="flex items-center gap-1 text-sm font-medium text-white/70 transition-colors hover:text-white"
               >
                 Ressources
@@ -304,6 +345,178 @@ export function PublicNav({
                   }`}
                 />
               </button>
+              {/* Mega menu Ressources — synchronisé avec batup.fr : 4 items gauche + 2 secondaires + card compact */}
+              {ressourcesOpen && (
+                <div
+                  id="nav-ressources"
+                  className="absolute left-1/2 top-full z-50 hidden -translate-x-1/2 px-4 pt-4 sm:px-6 lg:block lg:px-8"
+                >
+                  <div className="w-[820px] max-w-[calc(100vw-2rem)] rounded-2xl border border-gray-100 bg-white px-5 py-6 shadow-2xl">
+                    <div className="grid grid-cols-2 gap-6">
+                      {/* Colonne gauche : 4 entrées principales */}
+                      <div className="space-y-1">
+                        {MAIN_RESSOURCES.map((item) => {
+                          const isInternal = item.href.startsWith('/');
+                          const linkClasses =
+                            'group flex items-start gap-4 rounded-xl p-4 transition-colors hover:bg-gray-50';
+                          const Icon = (
+                            <div
+                              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-colors"
+                              style={{ background: 'linear-gradient(135deg, #ECECFF 0%, #E0E3FA 100%)' }}
+                            >
+                              <svg
+                                className="h-5 w-5 text-brand-600"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d={item.icon}
+                                />
+                              </svg>
+                            </div>
+                          );
+                          const Body = (
+                            <div className="min-w-0 flex-1">
+                              <div className="text-base font-semibold text-gray-900 transition-colors group-hover:text-brand-600">
+                                {item.label}
+                              </div>
+                              <div className="mt-0.5 text-sm text-gray-500">{item.desc}</div>
+                            </div>
+                          );
+                          return isInternal ? (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              className={linkClasses}
+                              onClick={() => setRessourcesOpen(false)}
+                            >
+                              {Icon}
+                              {Body}
+                            </Link>
+                          ) : (
+                            <a key={item.href} href={item.href} className={linkClasses}>
+                              {Icon}
+                              {Body}
+                            </a>
+                          );
+                        })}
+                      </div>
+
+                      {/* Colonne droite : 2 secondaires + card outil le plus utilisé */}
+                      <div className="flex flex-col gap-2">
+                        {SECONDARY_RESSOURCES.map((item) => (
+                          <a
+                            key={item.href}
+                            href={item.href}
+                            className="group flex items-center gap-3 rounded-xl p-3 transition-colors hover:bg-gray-50"
+                          >
+                            <div
+                              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
+                              style={{ background: 'linear-gradient(135deg, #ECECFF 0%, #E0E3FA 100%)' }}
+                            >
+                              <svg
+                                className="h-4 w-4 text-brand-600"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d={item.icon}
+                                />
+                              </svg>
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <div className="text-sm font-semibold leading-tight text-gray-900 transition-colors group-hover:text-brand-600">
+                                {item.label}
+                              </div>
+                              <div className="mt-0.5 truncate text-[11px] leading-tight text-gray-500">
+                                {item.desc}
+                              </div>
+                            </div>
+                          </a>
+                        ))}
+
+                        {/* Card Outil le plus utilisé */}
+                        <Link
+                          href="/calculateur-taux-horaire-btp"
+                          className="group/featured relative mt-1 block overflow-hidden rounded-xl border border-brand-600/20 p-4 transition-all hover:border-brand-600/40 hover:shadow-lg"
+                          style={{
+                            background:
+                              'linear-gradient(135deg, #FFFFFF 0%, #F5F3FF 60%, #EFFDDA 100%)',
+                          }}
+                          onClick={() => setRessourcesOpen(false)}
+                        >
+                          <div
+                            className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full blur-3xl"
+                            style={{
+                              background:
+                                'radial-gradient(circle, rgba(231,251,188,0.85) 0%, transparent 70%)',
+                            }}
+                          />
+                          <div
+                            className="pointer-events-none absolute -bottom-8 -left-8 h-24 w-24 rounded-full blur-3xl"
+                            style={{
+                              background:
+                                'radial-gradient(circle, rgba(191,198,244,0.8) 0%, transparent 70%)',
+                            }}
+                          />
+                          <div className="relative flex items-start gap-3">
+                            <div
+                              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-white"
+                              style={{ background: 'linear-gradient(135deg, #BFC6F4, #5368EE)' }}
+                            >
+                              <svg
+                                className="h-4 w-4"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+                                />
+                              </svg>
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <span className="inline-block text-[9px] font-bold uppercase leading-none tracking-wider text-brand-600">
+                                Outil le plus utilisé
+                              </span>
+                              <p className="mt-1 text-sm font-bold leading-tight text-gray-900">
+                                Calculateur taux horaire BTP
+                              </p>
+                              <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-semibold text-brand-600 transition-all group-hover/featured:gap-2">
+                                Essayer
+                                <svg
+                                  className="h-3 w-3"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                  />
+                                </svg>
+                              </span>
+                            </div>
+                          </div>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             <a
@@ -353,180 +566,6 @@ export function PublicNav({
           </button>
         </div>
       </div>
-
-      {/* Mega menu Ressources — synchronisé avec batup.fr : 4 items gauche + 2 secondaires + card compact */}
-      {ressourcesOpen && (
-        <div
-          className="absolute left-1/2 top-full z-50 hidden -translate-x-1/2 px-4 pt-2 sm:px-6 lg:block lg:px-8"
-          onMouseEnter={showRessources}
-          onMouseLeave={scheduleHideRessources}
-        >
-          <div className="w-[820px] max-w-[calc(100vw-2rem)] rounded-2xl border border-gray-100 bg-white px-5 py-6 shadow-2xl">
-            <div className="grid grid-cols-2 gap-6">
-              {/* Colonne gauche : 4 entrées principales */}
-              <div className="space-y-1">
-                {MAIN_RESSOURCES.map((item) => {
-                  const isInternal = item.href.startsWith('/');
-                  const linkClasses =
-                    'group flex items-start gap-4 rounded-xl p-4 transition-colors hover:bg-gray-50';
-                  const Icon = (
-                    <div
-                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-colors"
-                      style={{ background: 'linear-gradient(135deg, #ECECFF 0%, #E0E3FA 100%)' }}
-                    >
-                      <svg
-                        className="h-5 w-5 text-brand-600"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d={item.icon}
-                        />
-                      </svg>
-                    </div>
-                  );
-                  const Body = (
-                    <div className="min-w-0 flex-1">
-                      <div className="text-base font-semibold text-gray-900 transition-colors group-hover:text-brand-600">
-                        {item.label}
-                      </div>
-                      <div className="mt-0.5 text-sm text-gray-500">{item.desc}</div>
-                    </div>
-                  );
-                  return isInternal ? (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={linkClasses}
-                      onClick={() => setRessourcesOpen(false)}
-                    >
-                      {Icon}
-                      {Body}
-                    </Link>
-                  ) : (
-                    <a key={item.href} href={item.href} className={linkClasses}>
-                      {Icon}
-                      {Body}
-                    </a>
-                  );
-                })}
-              </div>
-
-              {/* Colonne droite : 2 secondaires + card outil le plus utilisé */}
-              <div className="flex flex-col gap-2">
-                {SECONDARY_RESSOURCES.map((item) => (
-                  <a
-                    key={item.href}
-                    href={item.href}
-                    className="group flex items-center gap-3 rounded-xl p-3 transition-colors hover:bg-gray-50"
-                  >
-                    <div
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
-                      style={{ background: 'linear-gradient(135deg, #ECECFF 0%, #E0E3FA 100%)' }}
-                    >
-                      <svg
-                        className="h-4 w-4 text-brand-600"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d={item.icon}
-                        />
-                      </svg>
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="text-sm font-semibold leading-tight text-gray-900 transition-colors group-hover:text-brand-600">
-                        {item.label}
-                      </div>
-                      <div className="mt-0.5 truncate text-[11px] leading-tight text-gray-500">
-                        {item.desc}
-                      </div>
-                    </div>
-                  </a>
-                ))}
-
-                {/* Card Outil le plus utilisé */}
-                <Link
-                  href="/calculateur-taux-horaire-btp"
-                  className="group/featured relative mt-1 block overflow-hidden rounded-xl border border-brand-600/20 p-4 transition-all hover:border-brand-600/40 hover:shadow-lg"
-                  style={{
-                    background:
-                      'linear-gradient(135deg, #FFFFFF 0%, #F5F3FF 60%, #EFFDDA 100%)',
-                  }}
-                  onClick={() => setRessourcesOpen(false)}
-                >
-                  <div
-                    className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full blur-3xl"
-                    style={{
-                      background:
-                        'radial-gradient(circle, rgba(231,251,188,0.85) 0%, transparent 70%)',
-                    }}
-                  />
-                  <div
-                    className="pointer-events-none absolute -bottom-8 -left-8 h-24 w-24 rounded-full blur-3xl"
-                    style={{
-                      background:
-                        'radial-gradient(circle, rgba(191,198,244,0.8) 0%, transparent 70%)',
-                    }}
-                  />
-                  <div className="relative flex items-start gap-3">
-                    <div
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-white"
-                      style={{ background: 'linear-gradient(135deg, #BFC6F4, #5368EE)' }}
-                    >
-                      <svg
-                        className="h-4 w-4"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
-                        />
-                      </svg>
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <span className="inline-block text-[9px] font-bold uppercase leading-none tracking-wider text-brand-600">
-                        Outil le plus utilisé
-                      </span>
-                      <p className="mt-1 text-sm font-bold leading-tight text-gray-900">
-                        Calculateur taux horaire BTP
-                      </p>
-                      <span className="mt-1.5 inline-flex items-center gap-1 text-xs font-semibold text-brand-600 transition-all group-hover/featured:gap-2">
-                        Essayer
-                        <svg
-                          className="h-3 w-3"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M17 8l4 4m0 0l-4 4m4-4H3"
-                          />
-                        </svg>
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Ancien mega menu (bloc mort) — jamais rendu, kept for git diff readability */}
       {false && (
@@ -745,17 +784,23 @@ export function PublicNav({
           </div>
       )}
 
-      {/* Mobile overlay */}
-      {mobileOpen && (
-        <div className="fixed inset-0 top-0 z-[60] flex flex-col overflow-x-hidden lg:hidden">
+      {/* Menu mobile : <dialog> modal (toujours rendu, ouvert par showModal) */}
+      <dialog
+        ref={menuRef}
+        aria-label="Menu"
+        onClose={() => setMobileOpen(false)}
+        className="m-0 h-full max-h-none w-full max-w-none bg-transparent p-0"
+      >
+        <div className="flex h-full flex-col overflow-x-hidden">
           <div
             className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-4"
             style={{ backgroundColor: '#151515' }}
           >
             <a href={MARKETING_BASE} onClick={() => setMobileOpen(false)}>
-              <img src="/assets/logo-batup-marketing.png" alt="BatUp" className="h-8 w-auto" />
+              <img src="/assets/logo-batup-marketing.webp" width={116} height={72} alt="BatUp" className="h-8 w-auto" />
             </a>
             <button
+              ref={menuCloseRef}
               type="button"
               className="rounded-lg p-2 text-white hover:bg-white/10"
               aria-label="Fermer le menu"
@@ -1027,7 +1072,7 @@ export function PublicNav({
             </div>
           </div>
         </div>
-      )}
+      </dialog>
     </nav>
   );
 }

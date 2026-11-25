@@ -6,6 +6,7 @@ import { Button, Input, Label } from './ui';
 const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 type Status = 'idle' | 'submitting' | 'error';
+type Champ = 'prenom' | 'email' | 'rgpd';
 
 export function EmailGate() {
   const { pending, closeGate, markUnlocked } = useEmailGate();
@@ -14,51 +15,53 @@ export function EmailGate() {
   const [rgpd, setRgpd] = useState(false);
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const dialogRef = useRef<HTMLDivElement>(null);
+  const [erreurs, setErreurs] = useState<Partial<Record<Champ, string>>>({});
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const firstFieldRef = useRef<HTMLInputElement>(null);
   const titleId = useId();
 
   const open = pending !== null;
 
+  // <dialog> natif ouvert avec showModal() : page inerte, focus confiné, Échap géré
+  // par le navigateur. Au démontage, le focus revient sur le bouton qui a ouvert.
   useEffect(() => {
     if (!open) {
       setPrenom('');
       setEmail('');
       setStatus('idle');
       setErrorMsg(null);
+      setErreurs({});
       return;
     }
-    // focus first input
-    const t = setTimeout(() => firstFieldRef.current?.focus(), 50);
-    // lock body scroll
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    const declencheur = document.activeElement as HTMLElement | null;
+    const dialog = dialogRef.current;
+    if (dialog && !dialog.open) dialog.showModal();
+    firstFieldRef.current?.focus();
     return () => {
-      clearTimeout(t);
-      document.body.style.overflow = prevOverflow;
+      if (declencheur?.isConnected) declencheur.focus();
     };
   }, [open]);
 
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeGate();
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [open, closeGate]);
-
   if (!open) return null;
 
-  const canSubmit =
-    prenom.trim().length >= 2 &&
-    EMAIL_RX.test(email.trim()) &&
-    rgpd &&
-    status !== 'submitting';
+  function valider(): Partial<Record<Champ, string>> {
+    const e: Partial<Record<Champ, string>> = {};
+    if (prenom.trim().length < 2) e.prenom = 'Indiquez votre prénom (2 caractères minimum).';
+    if (!EMAIL_RX.test(email.trim())) e.email = 'Indiquez une adresse email valide, par exemple vous@entreprise.fr.';
+    if (!rgpd) e.rgpd = 'Cochez la case pour recevoir votre résultat par email.';
+    return e;
+  }
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!canSubmit || !pending) return;
+    if (status === 'submitting' || !pending) return;
+    const nouvelles = valider();
+    setErreurs(nouvelles);
+    const premier = (['prenom', 'email', 'rgpd'] as const).find((c) => nouvelles[c]);
+    if (premier) {
+      e.currentTarget.querySelector<HTMLElement>(`[name="${premier}"]`)?.focus();
+      return;
+    }
     setStatus('submitting');
     setErrorMsg(null);
     try {
@@ -87,19 +90,19 @@ export function EmailGate() {
   }
 
   return (
-    <div
-      className="fixed inset-0 z-[1000] flex items-end justify-center bg-gray-900/60 p-0 backdrop-blur-sm sm:items-center sm:p-4"
-      role="dialog"
-      aria-modal="true"
+    <dialog
+      ref={dialogRef}
       aria-labelledby={titleId}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) closeGate();
-      }}
+      onClose={closeGate}
+      className="m-0 h-full max-h-none w-full max-w-none bg-transparent p-0 backdrop:bg-gray-900/60 backdrop:backdrop-blur-sm"
     >
       <div
-        ref={dialogRef}
-        className="relative w-full max-w-md overflow-hidden rounded-t-3xl bg-white shadow-2xl sm:rounded-3xl"
+        className="flex min-h-full items-end justify-center p-0 sm:items-center sm:p-4"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) closeGate();
+        }}
       >
+      <div className="relative w-full max-w-md overflow-hidden rounded-t-3xl bg-white shadow-2xl sm:rounded-3xl">
         <button
           type="button"
           onClick={closeGate}
@@ -131,7 +134,7 @@ export function EmailGate() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4 px-6 pb-7 sm:px-8 sm:pb-8">
+        <form noValidate onSubmit={handleSubmit} className="space-y-4 px-6 pb-7 sm:px-8 sm:pb-8">
           <div className="space-y-1.5">
             <Label htmlFor="eg-prenom">Prénom</Label>
             <Input
@@ -145,7 +148,14 @@ export function EmailGate() {
               placeholder="Thomas"
               required
               minLength={2}
+              aria-invalid={erreurs.prenom ? true : undefined}
+              aria-describedby={erreurs.prenom ? 'eg-prenom-erreur' : undefined}
             />
+            {erreurs.prenom && (
+              <p id="eg-prenom-erreur" className="text-xs text-rose-700">
+                {erreurs.prenom}
+              </p>
+            )}
           </div>
 
           <div className="space-y-1.5">
@@ -160,12 +170,23 @@ export function EmailGate() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="vous@entreprise.fr"
               required
+              aria-invalid={erreurs.email ? true : undefined}
+              aria-describedby={erreurs.email ? 'eg-email-erreur' : undefined}
             />
+            {erreurs.email && (
+              <p id="eg-email-erreur" className="text-xs text-rose-700">
+                {erreurs.email}
+              </p>
+            )}
           </div>
 
           <label className="flex items-start gap-2.5 cursor-pointer pt-1">
             <input
               type="checkbox"
+              name="rgpd"
+              required
+              aria-invalid={erreurs.rgpd ? true : undefined}
+              aria-describedby={erreurs.rgpd ? 'eg-rgpd-erreur' : undefined}
               checked={rgpd}
               onChange={(e) => setRgpd(e.target.checked)}
               className="mt-0.5 h-4 w-4 cursor-pointer rounded border-gray-300 text-brand-500 focus:ring-brand-500"
@@ -175,16 +196,21 @@ export function EmailGate() {
               désinscrire à tout moment.
             </span>
           </label>
+          {erreurs.rgpd && (
+            <p id="eg-rgpd-erreur" className="-mt-2 text-xs text-rose-700">
+              {erreurs.rgpd}
+            </p>
+          )}
 
           {status === 'error' && errorMsg && (
-            <div className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-xs text-rose-700">
+            <div role="alert" className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-xs text-rose-700">
               {errorMsg}
             </div>
           )}
 
           <Button
             type="submit"
-            disabled={!canSubmit}
+            disabled={status === 'submitting'}
             className="h-11 w-full rounded-full text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-50"
           >
             {status === 'submitting' ? (
@@ -200,11 +226,12 @@ export function EmailGate() {
             )}
           </Button>
 
-          <p className="text-center text-[11px] leading-relaxed text-gray-400">
+          <p className="text-center text-xs leading-relaxed text-gray-600">
             Vos données restent en France et ne sont jamais revendues. Conformité RGPD.
           </p>
         </form>
       </div>
-    </div>
+      </div>
+    </dialog>
   );
 }
