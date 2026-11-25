@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, type ComponentType } from 'react';
 import { useParams } from 'wouter';
 import { EmbedProvider } from '@/lib/embed-context';
+import { postToParent } from '@/lib/embed-result';
 
 /**
  * Embed shell — renders a single calculator, bare (no nav / hero / footer /
@@ -71,7 +72,7 @@ function useReportHeight(slug: string) {
     if (typeof window === 'undefined' || window.parent === window) return;
     const send = () => {
       const height = Math.ceil(document.documentElement.getBoundingClientRect().height);
-      window.parent.postMessage({ type: 'batup-embed-height', slug, height }, '*');
+      postToParent({ type: 'batup-embed-height', slug, height });
     };
     send();
     const ro = new ResizeObserver(send);

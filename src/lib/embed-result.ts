@@ -48,8 +48,39 @@ export function emitEmbedResult(slug: string, payload: EmbedResultPayload): void
   if (typeof window === 'undefined' || window.parent === window) return;
   const lines = validEmbedLines(payload.lines);
   if (lines.length === 0) return;
-  window.parent.postMessage(
-    { type: 'batup-embed-result', slug, version: EMBED_RESULT_VERSION, payload: { ...payload, lines } },
-    '*',
-  );
+  postToParent({ type: 'batup-embed-result', slug, version: EMBED_RESULT_VERSION, payload: { ...payload, lines } });
+}
+
+/** Domaines Batup qui intègrent /embed/<slug> en iframe (seuls destinataires des messages). */
+export const EMBED_PARENT_ORIGINS = [
+  'https://app.batup.fr',
+  'https://app-dev.batup.fr',
+  'https://batup.fr',
+  'https://www.batup.fr',
+];
+
+/**
+ * Origines cibles de postMessage. Parent connu : lui seul s'il est un domaine Batup
+ * ou un serveur local (développement de l'app), sinon personne. Parent inconnu
+ * (referrer masqué) : chaque domaine Batup, le navigateur ne livre qu'au bon.
+ * Jamais `'*'` : une page tierce qui intègre l'outil ne reçoit rien.
+ */
+export function parentTargetOrigins(parentOrigin?: string | null): string[] {
+  if (!parentOrigin) return EMBED_PARENT_ORIGINS;
+  const local = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(parentOrigin);
+  return local || EMBED_PARENT_ORIGINS.includes(parentOrigin) ? [parentOrigin] : [];
+}
+
+function originOf(url: string): string | null {
+  try {
+    return new URL(url).origin;
+  } catch {
+    return null;
+  }
+}
+
+/** Envoie un message à la fenêtre parente (le navigateur l'ignore si l'origine ne correspond pas). */
+export function postToParent(message: unknown): void {
+  const parentOrigin = window.location.ancestorOrigins?.[0] ?? originOf(document.referrer);
+  for (const origin of parentTargetOrigins(parentOrigin)) window.parent.postMessage(message, origin);
 }

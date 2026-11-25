@@ -1,0 +1,18 @@
+# En-têtes HTTP Cloudflare Pages (https://developers.cloudflare.com/pages/configuration/headers/).
+# X-Content-Type-Options: nosniff et Referrer-Policy sont déjà ajoutés par Cloudflare Pages.
+#
+# CSP en Report-Only (n'empêche rien, signale seulement dans la console) : à passer en
+# Content-Security-Policy une fois vérifié qu'aucune ressource légitime n'est signalée.
+# Hôtes autorisés : polices Google, Google Analytics 4 (chargé après consentement).
+
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Frame-Options: DENY
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+
+# Les calculateurs /embed/* sont intégrés en iframe dans l'app Batup (app.batup.fr,
+# app-dev.batup.fr) : pas de X-Frame-Options, frame-ancestors limité aux domaines Batup.
+/embed/*
+  ! X-Frame-Options
+  ! Content-Security-Policy-Report-Only
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; frame-ancestors 'self' https://batup.fr https://*.batup.fr http://localhost:*; base-uri 'self'; form-action 'self'; object-src 'none'
