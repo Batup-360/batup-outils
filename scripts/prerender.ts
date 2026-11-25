@@ -10,7 +10,9 @@
  * React mounts with `createRoot().render()` (NOT hydrateRoot — see src/main.tsx),
  * so this static markup is simply replaced on mount: no hydration mismatch. While
  * the route's lazy chunk loads, the Suspense fallback re-displays this same markup
- * (src/lib/page-prerendue.ts) instead of a full-screen spinner.
+ * (src/lib/page-prerendue.ts) instead of a full-screen spinner. Each page also gets
+ * `<link rel="modulepreload">` for its route chunk + static imports (from the Vite
+ * manifest), so the page code downloads in parallel with the entry bundle.
  *
  * Node built-ins only; ESM (package is `type: module`).
  */
@@ -385,12 +387,71 @@ function routeBodyContent(route: SeoRoute): string {
   return parts.join('');
 }
 
+/**
+ * Préchargement du code de chaque page. Le HTML prérendu n'est pas un rendu React
+ * (pas d'hydratation possible) : la page n'est interactive qu'une fois son chunk
+ * `React.lazy` chargé. Sans indication, le navigateur ne le découvre qu'après avoir
+ * exécuté le bundle d'entrée (chaîne HTML → index.js → chunk de page → imports).
+ * On injecte donc `<link rel="modulepreload">` pour le chunk de la route et ses
+ * imports statiques, d'après le manifest Vite et les routes de src/App.tsx.
+ */
+const VITE_MANIFEST = path.join(DIST, '.vite', 'manifest.json');
+type ManifestChunk = { file: string; imports?: string[]; isEntry?: boolean };
+
+const PAGE_BY_ROUTE: Map<string, string> = (() => {
+  const app = fs.readFileSync(path.join(ROOT, 'src/App.tsx'), 'utf8');
+  const pageOf = new Map<string, string>();
+  for (const m of app.matchAll(/const (\w+) = lazy\(\s*\(\) => import\('\.\/pages\/([^']+)'\)\s*\)/g)) {
+    pageOf.set(m[1], `src/pages/${m[2]}.tsx`);
+  }
+  const routes = new Map<string, string>();
+  for (const m of app.matchAll(/<Route\s+path="([^"]+)"\s+component=\{(\w+)\}/g)) {
+    const page = pageOf.get(m[2]);
+    if (page) routes.set(m[1], page);
+  }
+  // Routes /salaire-<métier> déclarées en render-prop (voir App.tsx).
+  if (pageOf.has('SalaireMetier')) routes.set('/salaire-:metier', pageOf.get('SalaireMetier')!);
+  return routes;
+})();
+
+function pageFileFor(routePath: string): string | undefined {
+  if (PAGE_BY_ROUTE.has(routePath)) return PAGE_BY_ROUTE.get(routePath);
+  if (routePath.startsWith('/embed/')) return PAGE_BY_ROUTE.get('/embed/:slug');
+  if (routePath.startsWith('/grille-salaires-minima-batiment/')) {
+    return PAGE_BY_ROUTE.get('/grille-salaires-minima-batiment/:region');
+  }
+  if (routePath.startsWith('/salaire-')) return PAGE_BY_ROUTE.get('/salaire-:metier');
+  return undefined;
+}
+
+let manifestCache: Record<string, ManifestChunk> | undefined;
+
+function modulePreloads(routePath: string): string {
+  const manifest = (manifestCache ??= JSON.parse(fs.readFileSync(VITE_MANIFEST, 'utf8')) as Record<string, ManifestChunk>);
+  const page = pageFileFor(routePath);
+  if (!page || !manifest[page]) {
+    console.warn(`[prerender] pas de chunk trouvé pour ${routePath} : aucun modulepreload`);
+    return '';
+  }
+  const files = new Set<string>();
+  const visit = (key: string) => {
+    const chunk = manifest[key];
+    if (!chunk || chunk.isEntry || files.has(chunk.file)) return; // l'entrée est déjà dans le HTML
+    files.add(chunk.file);
+    chunk.imports?.forEach(visit);
+  };
+  visit(page);
+  return [...files].map((f) => `    <link rel="modulepreload" crossorigin href="/${f}">`).join('\n');
+}
+
 function writePage(relPath: string, html: string): void {
   // Home → dist/index.html (served at "/").
   // Tool route '/foo' → dist/foo.html, which Cloudflare Pages serves at the
   // clean no-slash URL "/foo" with a 200 (matching our canonical + sitemap +
   // internal links). Writing dist/foo/index.html instead would make Pages
   // 308-redirect "/foo" → "/foo/", creating a canonical/served-URL mismatch.
+  const preloads = modulePreloads(relPath);
+  if (preloads) html = injectHead(html, preloads);
   if (relPath === '/') {
     fs.writeFileSync(path.join(DIST, 'index.html'), html, 'utf8');
     return;
@@ -525,6 +586,9 @@ function main(): void {
       .join('\n') +
     '\n</urlset>\n';
   fs.writeFileSync(path.join(DIST, 'sitemap.xml'), sitemap, 'utf8');
+
+  // Le manifest Vite ne sert qu'au build : on ne le publie pas.
+  fs.rmSync(path.join(DIST, '.vite'), { recursive: true, force: true });
 
   console.log(
     `[prerender] wrote ${count} static pages (${SEO_ROUTES.length} tools + 1 home) + ${regionCount} programmatic pages (régions + métiers) + 404.html + sitemap.xml (${sitemapUrls.length} URLs)`

@@ -14,5 +14,7 @@ export default defineConfig({
     build: {
         target: 'es2020',
         sourcemap: true,
+        // Lu par scripts/prerender.ts pour précharger le code de chaque page (modulepreload).
+        manifest: true,
     },
 });
